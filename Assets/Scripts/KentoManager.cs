@@ -21,7 +21,7 @@ public class KentoManager : MonoBehaviour
 
     private void Update()
     {
-        if (gameObject.transform.position.y < -1000) Destroy(gameObject);
+        // if (gameObject.transform.position.y < -1500) Destroy(gameObject);
 
         // deltaTimeが0の場合は何もしない
         if (Mathf.Approximately(Time.deltaTime, 0)) return;
