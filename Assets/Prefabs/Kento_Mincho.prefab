@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2853353981942028491}
   - component: {fileID: 8462549529588236252}
   - component: {fileID: 2955660942168464095}
+  - component: {fileID: -246990243380817231}
   m_Layer: 5
   m_Name: Kento_Mincho
   m_TagString: Untagged
@@ -94,7 +95,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 10
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -240,3 +241,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc909cfa532a5e499357fa13f1b92c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kentoSpeed: 0
+--- !u!225 &-246990243380817231
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2853353981942028489}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
