@@ -10,14 +10,6 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     //親スクリプトの取得
     private GameManager gameManager;
 
-    // 1フレーム前の位置
-    // private Vector3 _prevPosition;
-
-    // 現在のスピード
-    // [SerializeField] private float kentoSpeed;
-    //kentoSpeedのプロパティ
-    // public float KentoSpeed { get => kentoSpeed; }
-
     //保存しておく初期position
     private Vector2 prevPos;
 
@@ -32,28 +24,7 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
     private void Start()
     {
-        // 初期位置を保持
-        // _prevPosition = transform.position;
-    }
-
-    private void Update()
-    {
-        //kentoの管理はこっち
-        if (transform.position.y < -1000) Destroy(gameObject);
-
-        // deltaTimeが0の場合は何もしない
-        // if (Mathf.Approximately(Time.deltaTime, 0)) return;
-
-        // 現在位置取得
-        // var position = transform.position;
-
-        // 現在速度計算
-        // var velocity = (position - _prevPosition) / Time.deltaTime;
-        // kentoSpeed = velocity.magnitude;
-        // Debug.Log(kentoSpeed);
-
-        // 前フレーム位置を更新
-        // _prevPosition = position;
+        //
     }
 
     // ドラッグ開始時の処理
