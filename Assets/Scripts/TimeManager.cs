@@ -15,7 +15,7 @@ public class TimeManager : MonoBehaviour
     public int AngerGauge { get => angerGauge; }
 
     //怒りの最大値
-    private int angerGaugeMax = 10;
+    private int angerGaugeMax = 30;
     public int AngerGaugeMax { get => angerGaugeMax; }
 
     //デバッグ用
@@ -30,7 +30,7 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 1)
+        if (timer > 5)
         {
             MakeAngry();
             timer = 0;
