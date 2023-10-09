@@ -44,7 +44,7 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        gameObject.GetComponent<Rigidbody2D>().gravityScale = 20;
+        gameObject.GetComponent<Rigidbody2D>().gravityScale = gameManager.KentoSpeed();
         gameObject.GetComponent<KentoManager>().enabled = false;
         Debug.Log("drag終了");
     }

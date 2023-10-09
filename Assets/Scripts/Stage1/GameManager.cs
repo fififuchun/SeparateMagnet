@@ -1,3 +1,4 @@
+// using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,6 @@ public class GameManager : MonoBehaviour
 
         //落ちてる状態、いらない？
         PutPhase,
-
-        //スピードの判定、スピードが落ち着くまで
-        // JudgePhase,
     }
 
     //canvas
@@ -58,9 +56,6 @@ public class GameManager : MonoBehaviour
                     phase = Phase.AppearPhase;
                     break;
                 case Phase.AppearPhase:
-                    // Debug.Log(timeManager.AngerGauge);
-                    // Debug.Log(timeManager.AngerGaugeMax);
-
                     PutKento();
                     //今出現したkentoがドラッグ終了するまで止めとく
                     yield return new WaitUntil(() => !placedGameObjects.Last().GetComponent<KentoManager>().enabled);
@@ -70,10 +65,6 @@ public class GameManager : MonoBehaviour
                     yield return new WaitForSeconds(1f);
                     phase = Phase.StartPhase;
                     break;
-                    // case Phase.JudgePhase:
-                    //     yield return new WaitForSeconds(1f);
-                    //     phase = Phase.StartPhase;
-                    //     break;
             }
         }
     }
@@ -93,6 +84,7 @@ public class GameManager : MonoBehaviour
         if (timeManager.AngerGauge >= timeManager.AngerGaugeMax)
         {
             Debug.Log("もうこれ以上怒れないよ");
+            timeManager.FinishGame(placedGameObjects.Count());
             return;
         }
 
@@ -108,6 +100,19 @@ public class GameManager : MonoBehaviour
 
     public void PushRotateButton()
     {
-        placedGameObjects.Last().transform.Rotate(new Vector3(0, 0, 45));
+        placedGameObjects.Last().transform.Rotate(new Vector3(0, 0, 45)); //もっと良い書き方募集中
+    }
+
+    //置かれた検討の数
+    private int putKentoCount;
+    public int KentoSpeed()
+    {
+        putKentoCount++;
+        // Debug.Log(putKentoCount);
+        // if (putKentoCount != 0 && putKentoCount % 10 == 0) エフェクト;
+
+        int kentoSpeed = Mathf.FloorToInt(putKentoCount / 10) * 5 + 20;
+        // Debug.Log(kentoSpeed);
+        return kentoSpeed;
     }
 }
