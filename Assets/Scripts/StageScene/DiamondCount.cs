@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DiamondCount : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //ダイアモンドプロパティ
+    private int diamond;
+    public int Diamond { get => diamond; }
+
+    //ヘッダーのダイアモンドテキスト
+    [SerializeField] private TextMeshProUGUI diamondText;
+
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void GetDiamond(int i)
+    {
+        diamond += i;
+    }
+
+    public void UpdateDiamond()
+    {
+        diamondText.text = Diamond.ToString();
     }
 }

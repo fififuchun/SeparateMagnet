@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     //すべてのフォントをここに入れる
     [SerializeField] private List<GameObject> allFontGameObjects = new List<GameObject>();
 
+    [SerializeField] private List<List<GameObject>> allObjects= new List<List<GameObject>>();
+
     //1ゲーム限りのallFontGameObjectsから取り出したランダムな持ちフォント
     [SerializeField] private GameObject[] myGameObjects = new GameObject[6];
 
