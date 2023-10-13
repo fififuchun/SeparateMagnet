@@ -25,6 +25,7 @@ public class DiamondCount : MonoBehaviour
     public void GetDiamond(int i)
     {
         diamond += i;
+        PlayerPrefs.SetInt("Diamond", diamond);
     }
 
     public void UpdateDiamond()

@@ -6,6 +6,10 @@ using TMPro;
 
 public class Uidirector : MonoBehaviour
 {
+    //自身のインスタンス化
+    // public static Uidirector instance;
+    // public void Awake() { instance = this; }
+
     //コイン・ダイアモンド計数スクリプトのインスタンス化
     private CoinCount coinCount;
     private DiamondCount diamondCount;
@@ -23,7 +27,8 @@ public class Uidirector : MonoBehaviour
         diamondCount = GameObject.Find("UiDirector").GetComponent<DiamondCount>();
 
         // coinCount.GetCoin(100);
-        // UpdateHeader();
+        diamondCount.GetDiamond(100);
+        UpdateHeader();
     }
 
     void Update()
@@ -35,5 +40,24 @@ public class Uidirector : MonoBehaviour
     {
         coinCount.UpdateCoin();
         diamondCount.UpdateDiamond();
+    }
+
+    //iは倍率(1,3,5)
+    public void BuyCoinDiamond(int i)
+    {
+        if (diamondCount.Diamond < i * 10)
+        {
+            Debug.Log("ダイヤが足りないよ");
+            return;
+        }
+        coinCount.GetCoin(i * 100);
+        diamondCount.GetDiamond(-i * 10);
+        UpdateHeader();
+    }
+
+    public void DebugButton()
+    {
+        coinCount.GetCoin(100);
+        diamondCount.GetDiamond(100);
     }
 }

@@ -15,7 +15,7 @@ public class TimeManager : MonoBehaviour
     public int AngerGauge { get => angerGauge; }
 
     //怒りの最大値
-    private int angerGaugeMax = 30;
+    private int angerGaugeMax = 10;
     public int AngerGaugeMax { get => angerGaugeMax; }
 
     //デバッグ用
@@ -30,7 +30,7 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 5)
+        if (timer > 1)
         {
             MakeAngry();
             timer = 0;
@@ -41,9 +41,11 @@ public class TimeManager : MonoBehaviour
         slider.value = (float)angerGauge / (float)angerGaugeMax;
     }
 
-    public void FinishGame(int kentoCount)
+    public IEnumerator FinishGame(int kentoCount)
     {
-
+        //検討が降らなくなってからしばらく待つ
+        yield return new WaitForSeconds(10f);
+        Debug.Log("result");
     }
 
     public void MakeAngry()

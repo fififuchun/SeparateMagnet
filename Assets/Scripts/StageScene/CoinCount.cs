@@ -25,6 +25,7 @@ public class CoinCount : MonoBehaviour
     public void GetCoin(int i)
     {
         coin += i;
+        PlayerPrefs.SetInt("Coin", coin);
     }
 
     public void UpdateCoin()

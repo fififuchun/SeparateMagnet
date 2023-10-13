@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
         if (timeManager.AngerGauge >= timeManager.AngerGaugeMax)
         {
             Debug.Log("もうこれ以上怒れないよ");
-            timeManager.FinishGame(placedGameObjects.Count());
+            StartCoroutine(timeManager.FinishGame(placedGameObjects.Count()));
             return;
         }
 
@@ -110,11 +110,9 @@ public class GameManager : MonoBehaviour
     public int KentoSpeed()
     {
         putKentoCount++;
-        // Debug.Log(putKentoCount);
         // if (putKentoCount != 0 && putKentoCount % 10 == 0) エフェクト;
 
         int kentoSpeed = Mathf.FloorToInt(putKentoCount / 10) * 5 + 20;
-        // Debug.Log(kentoSpeed);
         return kentoSpeed;
     }
 }
