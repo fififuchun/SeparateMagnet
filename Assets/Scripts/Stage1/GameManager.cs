@@ -1,8 +1,8 @@
-// using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
                 placedGameObjects.RemoveAt(i);
                 // Debug.Log(i + "/" + placedGameObjects.Count);
             }
+        // Debug.Log(SceneManager.GetActiveScene ().name.Split("_")[1]);
     }
 
     public void PutKento()
