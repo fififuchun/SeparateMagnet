@@ -1,25 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     //親スクリプトの取得
-    private TimeManager timeManager;
+    public TimeManager timeManager;
 
     //すべてのフォントをここに入れる
-    [SerializeField] private List<GameObject> allFontGameObjects = new List<GameObject>();
+    // [SerializeField] private List<GameObject> allFontGameObjects = new List<GameObject>();
 
-    [SerializeField] private List<List<GameObject>> allObjects= new List<List<GameObject>>();
+    // [SerializeField] private List<List<GameObject>> allObjects = new List<List<GameObject>>();
 
     //1ゲーム限りのallFontGameObjectsから取り出したランダムな持ちフォント
     [SerializeField] private GameObject[] myGameObjects = new GameObject[6];
 
     //置かれたゲームオブジェクトのKentoManagerインスタンスを格納
-    [SerializeField] private List<KentoManager> placedGameObjects = new List<KentoManager>();
+    public List<KentoManager> placedGameObjects = new List<KentoManager>();
 
+    //kentoPrefabの親オブジェクト
+    private GameObject kentos;
+
+    //生成可能か、着地したらtrue
+    public bool canInstantiate;
+    public void CanInstantiate() { canInstantiate = true; }
+
+    //canvas
+    private GameObject canvas;
+    public GameObject Canvas { get => canvas; }
+
+    //ドラッグ終了したらtrue
+    public bool isEndDrag;
+    public void IsEndDrag(bool judge) { isEndDrag = judge; }
+
+
+    //関数の部
     //phase管理
     Phase phase;
     enum Phase
@@ -34,13 +51,11 @@ public class GameManager : MonoBehaviour
         PutPhase,
     }
 
-    //canvas
-    public GameObject canvas;
-
     void Start()
     {
         canvas = GameObject.Find("Canvas");
         timeManager = GameObject.Find("GameManager").GetComponent<TimeManager>();
+        kentos = GameObject.Find("KentoObjects");
 
         phase = Phase.StartPhase;
         StartCoroutine(Loop());
@@ -54,21 +69,43 @@ public class GameManager : MonoBehaviour
             switch (phase)
             {
                 case Phase.StartPhase:
+                    IsEndDrag(false);
                     yield return new WaitForSeconds(1f);
                     phase = Phase.AppearPhase;
                     break;
                 case Phase.AppearPhase:
                     PutKento();
-                    //今出現したkentoがドラッグ終了するまで止めとく
-                    yield return new WaitUntil(() => !placedGameObjects.Last().GetComponent<KentoManager>().enabled);
+
+                    //10秒待って動きなしならドラック終了とみなす
+                    StartCoroutine(TimeOver());
+                    //ドラッグ終了まで待つ、動きがあったらTimeOver()は止める
+                    yield return new WaitUntil(() => isEndDrag);
+                    StopCoroutine(TimeOver());
+
                     phase = Phase.PutPhase;
                     break;
                 case Phase.PutPhase:
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitUntil(() => canInstantiate);
                     phase = Phase.StartPhase;
                     break;
             }
         }
+    }
+
+    //さすがに書き直し
+    IEnumerator TimeOver()
+    {
+        yield return new WaitForSeconds(5f);
+        EndDrag();
+        // IsEndDrag(true); //5秒待って動きなしならこの先を実行、まずはドラッグ終了とみなし、Phaseを進める
+        // if (kentoPrefab == null) yield break; //？？
+        // if (Random.Range(0, 2) == 2) timeManager.MakeAngry();
+        // placedGameObjects.Add(kentoPrefab.GetComponent<KentoManager>());
+        // kentoPrefab.GetComponent<KentoManager>().enabled = false;
+        // kentoPrefab.gameObject.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
+        // CanInstantiate();
+        // ResetKentoPrefab();
+        // Debug.Log("時間切れ");
     }
 
     void Update()
@@ -77,33 +114,41 @@ public class GameManager : MonoBehaviour
             {
                 Destroy(placedGameObjects[i].gameObject);
                 placedGameObjects.RemoveAt(i);
-                // Debug.Log(i + "/" + placedGameObjects.Count);
+                CanInstantiate();
             }
-        // Debug.Log(SceneManager.GetActiveScene ().name.Split("_")[1]);
     }
 
+    [SerializeField] private GameObject kentoPrefab; //現在落下準備中のkento
     public void PutKento()
     {
+        canInstantiate = false;
         if (timeManager.AngerGauge >= timeManager.AngerGaugeMax)
         {
             Debug.Log("もうこれ以上怒れないよ");
-            StartCoroutine(timeManager.FinishGame(placedGameObjects.Count()));
-            return;
+            // StartCoroutine(timeManager.FinishGame(placedGameObjects.Count()));
         }
 
         //Prefabを生成してListに追加
         int randomNum = Random.Range(0, 6);
-        GameObject kentoPrefab = Instantiate(myGameObjects[randomNum], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, canvas.transform);
-        kentoPrefab.GetComponent<RectTransform>().sizeDelta *= Mathf.Pow(2, Random.Range(-1, 2));
-        placedGameObjects.Add(kentoPrefab.GetComponent<KentoManager>());
+        kentoPrefab = Instantiate(myGameObjects[randomNum], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+    }
+    public void ResetKentoPrefab() { kentoPrefab = null; }
 
-        //50%で怒らせる
-        if (Random.Range(0, 2) == 0) timeManager.MakeAngry();
+    //ドラッグ終了
+    public void EndDrag()
+    {
+        if (Random.Range(0, 2) == 2) timeManager.MakeAngry();
+        if (kentoPrefab != null) placedGameObjects.Add(kentoPrefab.GetComponent<KentoManager>());
+        kentoPrefab.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
+        IsEndDrag(true);
+        ResetKentoPrefab();
+        Debug.Log("drag終了");
     }
 
+    //kentoPrefabの回転
     public void PushRotateButton()
     {
-        placedGameObjects.Last().transform.Rotate(new Vector3(0, 0, 45)); //もっと良い書き方募集中
+        if (kentoPrefab != null) kentoPrefab.transform.Rotate(new Vector3(0, 0, 45));
     }
 
     //置かれた検討の数

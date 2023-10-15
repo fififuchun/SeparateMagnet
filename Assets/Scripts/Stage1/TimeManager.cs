@@ -16,7 +16,7 @@ public class TimeManager : MonoBehaviour
     public int AngerGauge { get => angerGauge; }
 
     //怒りの最大値
-    private int angerGaugeMax = 5;
+    private int angerGaugeMax = 4;
     public int AngerGaugeMax { get => angerGaugeMax; }
 
     //怒りイメージ配列・初期は[2]から実装
@@ -29,19 +29,19 @@ public class TimeManager : MonoBehaviour
 
     void Start()
     {
-
+        angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
     }
 
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 1)
+        if (timer > 20)
         {
             MakeAngry();
             timer = 0;
         }
 
-        //デバッグ用
+        //デバッグ用じゃなくなった
         text.text = timer.ToString();
         slider.value = (float)AngerGauge / (float)angerGaugeMax;
     }
@@ -57,13 +57,8 @@ public class TimeManager : MonoBehaviour
     public void MakeAngry()
     {
         angerGauge++;
-        if (AngerGauge >= AngerGaugeMax - 1) return;
-        angryImage.sprite = angryImages[8 - AngerGaugeMax + AngerGauge];
+        if (AngerGauge >= AngerGaugeMax) return;
+        angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
         Debug.Log("今の怒り:" + AngerGauge);
     }
-
-    // public void MakeCalm()
-    // {
-    //     angerGaugeMax++;
-    // }
 }

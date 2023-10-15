@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -32,20 +30,32 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     {
         // ドラッグ前の位置を記憶しておく、RectTransformの場合はpositionではなくanchoredPositionを使う
         prevPos = rectTransform.anchoredPosition;
-        Debug.Log("drag開始" + prevPos);
     }
 
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = new Vector3(eventData.position.x, prevPos.y + gameManager.canvas.transform.position.y);
+        transform.position = new Vector3(eventData.position.x, prevPos.y + gameManager.Canvas.transform.position.y);
     }
 
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        gameObject.GetComponent<Rigidbody2D>().gravityScale = gameManager.KentoSpeed();
+        // if (Random.Range(0, 2) == 2) gameManager.timeManager.MakeAngry();
+        // gameManager.placedGameObjects.Add(GetComponent<KentoManager>());
+        // gameObject.GetComponent<Rigidbody2D>().gravityScale = gameManager.KentoSpeed();
+        // gameManager.IsEndDrag(true);
+        // gameManager.ResetKentoPrefab();
+        // Debug.Log("drag終了");
+        gameManager.EndDrag();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!gameObject.GetComponent<KentoManager>().enabled) return;
         gameObject.GetComponent<KentoManager>().enabled = false;
-        Debug.Log("drag終了");
+
+        gameManager.CanInstantiate();
+        Debug.Log("着地");
     }
 }
