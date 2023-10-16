@@ -35,19 +35,15 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = new Vector3(eventData.position.x, prevPos.y + gameManager.Canvas.transform.position.y);
+        if(gameManager.isEndDrag) return;
+        transform.position = new Vector3(eventData.position.x, prevPos.y + gameManager.canvas.transform.position.y);
     }
 
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        // if (Random.Range(0, 2) == 2) gameManager.timeManager.MakeAngry();
-        // gameManager.placedGameObjects.Add(GetComponent<KentoManager>());
-        // gameObject.GetComponent<Rigidbody2D>().gravityScale = gameManager.KentoSpeed();
-        // gameManager.IsEndDrag(true);
-        // gameManager.ResetKentoPrefab();
-        // Debug.Log("drag終了");
-        gameManager.EndDrag();
+        if(gameManager.isEndDrag) return;
+        gameManager.IsEndDrag(true);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
