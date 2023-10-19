@@ -11,6 +11,8 @@ public class TimeManager : MonoBehaviour
     //タイマー
     private float timer;
 
+    private float instantiateTime;
+
     //怒りゲージ
     private int angerGauge;
     public int AngerGauge { get => angerGauge; }
@@ -44,6 +46,12 @@ public class TimeManager : MonoBehaviour
         //デバッグ用じゃなくなった
         text.text = timer.ToString();
         slider.value = (float)AngerGauge / (float)angerGaugeMax;
+    }
+
+    public void ResetPutTimer()
+    {
+        instantiateTime = timer;
+        Debug.Log(instantiateTime);
     }
 
     public IEnumerator FinishGame(int kentoCount)

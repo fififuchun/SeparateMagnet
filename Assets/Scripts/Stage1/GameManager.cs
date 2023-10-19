@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,16 +14,11 @@ public class GameManager : MonoBehaviour
     //kentoPrefabの親オブジェクト
     [SerializeField] private GameObject kentos;
 
-    //すべてのフォントをここに入れる
-    // [SerializeField] private List<GameObject> allFontGameObjects = new List<GameObject>();
+    //ゲームごとの使い捨てのゲームオブジェクトをここに入れる
+    [SerializeField] private List<List<KentoData>> myGameObjects = new List<List<KentoData>>();
 
-    // [SerializeField] private List<List<GameObject>> allObjects = new List<List<GameObject>>();
-
-    //1ゲーム限りのallFontGameObjectsから取り出したランダムな持ちフォント
-    [SerializeField] private GameObject[] myGameObjects = new GameObject[6];
-    [SerializeField] private GameObject[] myGameObjects2 = new GameObject[6];
-    [SerializeField] private GameObject[] myGameObjects3 = new GameObject[6];
-    [SerializeField] private GameObject[] rareObjects = new GameObject[6];
+    //検討の元データ
+    [SerializeField] private Kento kentoSO;
 
     //置かれたゲームオブジェクトのKentoManagerインスタンスを格納
     public List<KentoManager> placedGameObjects = new List<KentoManager>();
@@ -58,6 +52,15 @@ public class GameManager : MonoBehaviour
     {
         phase = Phase.StartPhase;
         StartCoroutine(Loop());
+
+        myGameObjects.Add(kentoSO.kento[0].kentoFont);
+        myGameObjects.Add(kentoSO.kento[1].kentoFont);
+        myGameObjects.Add(kentoSO.kento[2].kentoFont);
+        myGameObjects.Add(kentoSO.kento[3].kentoFont);
+        myGameObjects.Add(kentoSO.kento[3].kentoFont);
+        myGameObjects.Add(kentoSO.kento[3].kentoFont);
+
+        Debug.Log(myGameObjects.Count());
     }
 
     IEnumerator Loop()
@@ -69,13 +72,14 @@ public class GameManager : MonoBehaviour
             {
                 case Phase.StartPhase:
                     IsEndDrag(false);
-                    // yield return new WaitUntil(() => canInstantiate);
+                    // CanInstantiate();
                     yield return new WaitForSeconds(1f);
                     phase = Phase.AppearPhase;
                     break;
                 case Phase.AppearPhase:
-                    // canInstantiate = false;
                     PutKento();
+                    isEndDrag = false;
+
                     //10秒待って動きなしならドラック終了とみなす
                     StartCoroutine(TimeOver());
                     //ドラッグ終了まで待つ、動きがあったらTimeOver()は止める
@@ -105,13 +109,13 @@ public class GameManager : MonoBehaviour
             {
                 Destroy(placedGameObjects[i].gameObject);
                 placedGameObjects.RemoveAt(i);
-                if (phase == Phase.PutPhase) CanInstantiate();
+                // if (phase == Phase.PutPhase) CanInstantiate();
                 Debug.Log("落ちたよ");
             }
     }
-    
+
     //現在落下準備中のkentoPrefabをPutKentoする
-    [SerializeField] private GameObject kentoPrefab; 
+    [SerializeField] private GameObject kentoPrefab;
     public void PutKento()
     {
         canInstantiate = false;
@@ -119,12 +123,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("もうこれ以上怒れないよ");
             return;
-            // StartCoroutine(timeManager.FinishGame(placedGameObjects.Count()));
         }
 
         //Prefabを生成してListに追加
-        int randomNum = Random.Range(0, 6);
-        kentoPrefab = Instantiate(myGameObjects[randomNum], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+        int randomFontNum = Random.Range(0, 6);
+        int randomSizeNum = Random.Range(0, 3);
+        kentoPrefab = Instantiate(myGameObjects[randomFontNum][randomSizeNum].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
     }
 
     //kentoPrefabの中身をnullに戻す
@@ -137,17 +141,14 @@ public class GameManager : MonoBehaviour
         if (Random.Range(0, 2) == 2) timeManager.MakeAngry();
         if (kentoPrefab != null) placedGameObjects.Add(kentoPrefab.GetComponent<KentoManager>());
         kentoPrefab.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
-        IsEndDrag(true);
+        // IsEndDrag(true);
         ResetKentoPrefab();
         StopCoroutine(TimeOver());
         Debug.Log("drag終了");
     }
 
     //kentoPrefabの回転
-    public void PushRotateButton()
-    {
-        if (kentoPrefab != null) kentoPrefab.transform.Rotate(new Vector3(0, 0, 45));
-    }
+    public void PushRotateButton() { if (kentoPrefab != null) kentoPrefab.transform.Rotate(new Vector3(0, 0, 45)); }
 
     //置かれた検討の数
     private int putKentoCount;
