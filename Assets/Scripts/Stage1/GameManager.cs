@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,12 +54,12 @@ public class GameManager : MonoBehaviour
         phase = Phase.StartPhase;
         StartCoroutine(Loop());
 
-        myGameObjects.Add(kentoSO.kento[0].kentoFont);
-        myGameObjects.Add(kentoSO.kento[1].kentoFont);
-        myGameObjects.Add(kentoSO.kento[2].kentoFont);
-        myGameObjects.Add(kentoSO.kento[3].kentoFont);
-        myGameObjects.Add(kentoSO.kento[3].kentoFont);
-        myGameObjects.Add(kentoSO.kento[3].kentoFont);
+        myGameObjects.Add(kentoSO.kentoData[0].kentoFont);
+        myGameObjects.Add(kentoSO.kentoData[1].kentoFont);
+        myGameObjects.Add(kentoSO.kentoData[2].kentoFont);
+        myGameObjects.Add(kentoSO.kentoData[3].kentoFont);
+        myGameObjects.Add(kentoSO.kentoData[3].kentoFont);
+        myGameObjects.Add(kentoSO.kentoData[3].kentoFont);
 
         Debug.Log(myGameObjects.Count());
     }
@@ -122,6 +123,13 @@ public class GameManager : MonoBehaviour
         if (timeManager.AngerGauge >= timeManager.AngerGaugeMax)
         {
             Debug.Log("もうこれ以上怒れないよ");
+            return;
+        }
+
+        if (Random.Range(0, 100) == 0)
+        {
+            // int index = int.Parse(SceneManager.GetActiveScene().name.Split("_")[1]);
+            kentoPrefab = Instantiate(kentoSO.kentoData[kentoSO.kentoData.Length - 1].kentoFont[0].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
             return;
         }
 

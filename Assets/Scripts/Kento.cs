@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Kento", menuName = "Create Kento")]
-public class Kento : ScriptableObject
+public class Kento : ScriptableObject //一番でかい配列
 {
-    public FontData[] kento = new FontData[5];
+    public FontData[] kentoData = new FontData[5];
 }
 
 [System.Serializable]
-public class FontData
+public class FontData //中身の配列、fontの種類のenumとkentoDataを持ってる
 {
     public Font font;
     public enum Font
@@ -25,7 +25,7 @@ public class FontData
 }
 
 [System.Serializable]
-public class KentoData
+public class KentoData //一番小さいclass、行列でいうと成分
 {
     public int score;
     public GameObject KentoPrefab;
