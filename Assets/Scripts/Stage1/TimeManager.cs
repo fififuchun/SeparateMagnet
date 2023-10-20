@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Threading;
 
 //ゲームオーバー管理
 public class TimeManager : MonoBehaviour
@@ -25,9 +26,20 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private Sprite[] angryImages = new Sprite[7];
     [SerializeField] private Image angryImage;
 
+    //
+    [SerializeField] private GameObject result;
+
     //デバッグ用
     public Slider slider;
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI timerText;
+
+    public float startTimer;
+
+    public bool debug;
+
+    public TextMeshProUGUI resultCoinText;
+
+
 
     void Start()
     {
@@ -37,15 +49,20 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 20)
+        if (timer > 5)
         {
             MakeAngry();
             timer = 0;
         }
 
+        // if (debug) timerText.text = Mathf.Ceil(12 - startTimer - timer).ToString();
+        if (!debug) timerText.text = "";
+
         //デバッグ用じゃなくなった
-        text.text = timer.ToString();
+        // timerText.text = timer.ToString();
         slider.value = (float)AngerGauge / (float)angerGaugeMax;
+
+        resultCoinText.fontSize = 150 + 20 * Mathf.Sin(5 * Time.time);
     }
 
     public void ResetPutTimer()
@@ -54,11 +71,9 @@ public class TimeManager : MonoBehaviour
         Debug.Log(instantiateTime);
     }
 
-    public IEnumerator FinishGame(int kentoCount)
+    public void FinishGame()
     {
-        //検討が降らなくなってからしばらく待つ
-        yield return new WaitForSeconds(10f);
-        Debug.Log("result");
+        result.SetActive(true);
     }
 
     //ここでしかangerGaugeいじってないはずです
@@ -68,5 +83,16 @@ public class TimeManager : MonoBehaviour
         if (AngerGauge >= AngerGaugeMax) return;
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
         Debug.Log("今の怒り:" + AngerGauge);
+    }
+
+    // public IEnumerator StartTimer(){
+    //     timer
+    //     timerText=
+    // }
+
+    public void StartTimer()
+    {
+        startTimer = timer;
+        Debug.Log(startTimer);
     }
 }

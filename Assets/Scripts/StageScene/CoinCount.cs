@@ -14,7 +14,7 @@ public class CoinCount : MonoBehaviour
 
     void Start()
     {
-
+        coin = PlayerPrefs.GetInt("Coin", 0);
     }
 
     void Update()

@@ -26,8 +26,13 @@ public class Uidirector : MonoBehaviour
         coinCount = GameObject.Find("UiDirector").GetComponent<CoinCount>();
         diamondCount = GameObject.Find("UiDirector").GetComponent<DiamondCount>();
 
+        int stageCoin = PlayerPrefs.GetInt("TmpCoin", 0);
+        Debug.Log("TmpCoin: " + stageCoin);
+        coinCount.GetCoin(stageCoin);
+        PlayerPrefs.SetInt("TmpCoin", 0);
+
         // coinCount.GetCoin(100);
-        diamondCount.GetDiamond(100);
+        // diamondCount.GetDiamond(100);
         UpdateHeader();
     }
 
