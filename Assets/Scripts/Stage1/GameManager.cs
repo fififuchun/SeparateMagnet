@@ -8,7 +8,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     //親スクリプトの取得
-    [SerializeField] private TimeManager timeManager;
+    public TimeManager timeManager;
 
     //canvas
     public GameObject canvas;
@@ -50,10 +50,6 @@ public class GameManager : MonoBehaviour
     public bool canInstantiate;
     public void CanInstantiate() { canInstantiate = true; }
 
-    //ドラッグ終了したらtrue
-    public bool isEndDrag;
-    public void IsEndDrag(bool judge) { isEndDrag = judge; }
-
 
     //関数の部
     void Start()
@@ -77,68 +73,38 @@ public class GameManager : MonoBehaviour
             switch (phase)
             {
                 case Phase.StartPhase:
-                    IsEndDrag(false);
                     coinText.text = SumCoin().ToString();
                     yield return new WaitForSeconds(1f);
+
                     phase = Phase.AppearPhase;
                     break;
                 case Phase.AppearPhase:
                     PutKento();
-                    isEndDrag = false;
-                    timeManager.debug = true;
 
                     //10秒待って動きなしならドラック終了とみなす
-                    timeOver = null;
-                    timeOver = TimeOver();
-                    StartCoroutine(timeOver);
+                    StartTimeOver();
                     //ドラッグ終了まで待つ、動きがあったらTimeOver()は止める
-                    yield return new WaitUntil(() => isEndDrag);
+                    yield return new WaitUntil(() => timeManager.isEndDrag);
                     EndDrag();
-                    timeManager.debug = false;
+
                     phase = Phase.PutPhase;
                     break;
                 case Phase.PutPhase:
                     yield return new WaitUntil(() => canInstantiate);
+
                     phase = Phase.StartPhase;
                     break;
             }
         }
     }
 
+    //timeOver用のコルーチンとリセット&実行関数
     IEnumerator timeOver;
-    //時間切れ
-    IEnumerator TimeOver()
+    public void StartTimeOver()
     {
-        // StartCoroutine(timeManager.StartTimer());
-        // timeManager.StartTimer();
-        Debug.Log("ドラッグ待ちだよ");
-
-        timeManager.timerText.text = "10";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "9";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "8";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "7";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "6";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "5";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "4";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "3";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "2";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "1";
-        yield return new WaitForSeconds(1f);
-        timeManager.timerText.text = "0";
-        Debug.Log("TIME OVER");
-        timeManager.resultCoinText.text = SumCoin().ToString();
-        if (timeManager.AngerGauge >= timeManager.AngerGaugeMax) timeManager.FinishGame();
-        IsEndDrag(true);
-        yield break;
+        timeOver = null;
+        timeOver = timeManager.TimeOver();
+        StartCoroutine(timeOver);
     }
 
     void Update()
@@ -146,7 +112,6 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < placedGameObjects.Count; i++) if (placedGameObjects[i].transform.position.y < -1000)
             {
                 Destroy(placedGameObjects[i].gameObject);
-                // Destroy(placedGameObjects[i].KentoPrefab);//変更
                 placedGameObjects.RemoveAt(i);
                 // if (phase == Phase.PutPhase) CanInstantiate();
                 Debug.Log("落ちたよ");
@@ -155,11 +120,8 @@ public class GameManager : MonoBehaviour
 
     //現在落下準備中のkentoPrefabをPutKentoする
     [SerializeField] private GameObject ReadyKento;
-    int randomFontNum;
-    int randomSizeNum;
     public void PutKento()
     {
-        timeManager.StartTimer();
         canInstantiate = false;
         if (timeManager.AngerGauge >= timeManager.AngerGaugeMax)
         {
@@ -175,12 +137,7 @@ public class GameManager : MonoBehaviour
         }
 
         //Prefabを生成してListに追加
-        randomFontNum = Random.Range(0, 6);
-        randomSizeNum = Random.Range(0, 3);
-        ReadyKento = Instantiate(myGameObjects[randomFontNum][randomSizeNum].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
-        // Debug.Log("コイン:" + CoinOf(ReadyKento.GetComponent<KentoManager>()));
-
-        // Debug.Log(ReadyKento.name.Split("(")[0]);
+        ReadyKento = Instantiate(myGameObjects[Random.Range(0, 6)][Random.Range(0, 3)].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
     }
 
     //kentoPrefabの中身をnullに戻す
@@ -193,12 +150,8 @@ public class GameManager : MonoBehaviour
         if (Random.Range(0, 2) == 2) timeManager.MakeAngry();
         if (ReadyKento != null) placedGameObjects.Add(ReadyKento.GetComponent<KentoManager>());
         ReadyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
-        // IsEndDrag(true);
         ResetKentoPrefab();
         StopCoroutine(timeOver);
-        timeOver = null;
-        // timeOver=TimeOver();
-        timeManager.timerText.text = "";
         Debug.Log("drag終了");
     }
 
@@ -214,26 +167,6 @@ public class GameManager : MonoBehaviour
 
         return Mathf.FloorToInt(putKentoCount / 10) * 5 + 20;
     }
-
-    // public int CoinOf()
-    // {
-    //     int sum = 0;
-    //     for (int i = 0; i < kentoSO.fontData.Count(); i++)
-    //     {
-    //         // Debug.Log(kentoSO.fontData.Count());
-    //         for (int j = 0; j < kentoSO.fontData[i].sizeData.Count(); j++)
-    //         {
-    //             // Debug.Log(kentoSO.fontData[i].sizeData.Count());
-    //             // return kentoSO.fontData[i].sizeData[j].FindObject(kento);
-    //             for (int k = 0; k < placedGameObjects.Count(); k++)
-    //             {
-    //                 if (kentoSO.fontData[i].sizeData[j].KentoPrefab.name == ReadyKento.name.Split("(")[0]) return kentoSO.fontData[i].sizeData[j].FindObject(placedGameObjects[k]);
-    //                 sum += placedGameObjects[k].score;
-    //             }
-    //         }
-    //     }
-    //     return sum;
-    // }
 
     public int CoinOf(KentoManager kento)
     {

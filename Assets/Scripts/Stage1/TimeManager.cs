@@ -12,8 +12,6 @@ public class TimeManager : MonoBehaviour
     //タイマー
     private float timer;
 
-    private float instantiateTime;
-
     //怒りゲージ
     private int angerGauge;
     public int AngerGauge { get => angerGauge; }
@@ -26,18 +24,18 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private Sprite[] angryImages = new Sprite[7];
     [SerializeField] private Image angryImage;
 
-    //
-    [SerializeField] private GameObject result;
+    //Header
+    [SerializeField] private Slider slider;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI resultCoinText;
 
-    //デバッグ用
-    public Slider slider;
-    public TextMeshProUGUI timerText;
+    //結果表示
+    [SerializeField] private GameObject resultObject;
+    public void FinishGame() { resultObject.SetActive(true); }
 
-    public float startTimer;
-
-    public bool debug;
-
-    public TextMeshProUGUI resultCoinText;
+    //ドラッグ終了したらtrue
+    public bool isEndDrag;
+    public void IsEndDrag(bool judge) { isEndDrag = judge; }
 
 
 
@@ -49,34 +47,19 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 5)
+        if (timer > 15)
         {
             MakeAngry();
             timer = 0;
         }
-
-        // if (debug) timerText.text = Mathf.Ceil(12 - startTimer - timer).ToString();
-        if (!debug) timerText.text = "";
-
+        
         //デバッグ用じゃなくなった
-        // timerText.text = timer.ToString();
         slider.value = (float)AngerGauge / (float)angerGaugeMax;
 
         resultCoinText.fontSize = 150 + 20 * Mathf.Sin(5 * Time.time);
     }
 
-    public void ResetPutTimer()
-    {
-        instantiateTime = timer;
-        Debug.Log(instantiateTime);
-    }
-
-    public void FinishGame()
-    {
-        result.SetActive(true);
-    }
-
-    //ここでしかangerGaugeいじってないはずです
+    //angerGauge操作はここだけ
     public void MakeAngry()
     {
         angerGauge++;
@@ -85,14 +68,19 @@ public class TimeManager : MonoBehaviour
         Debug.Log("今の怒り:" + AngerGauge);
     }
 
-    // public IEnumerator StartTimer(){
-    //     timer
-    //     timerText=
-    // }
-
-    public void StartTimer()
+    public IEnumerator TimeOver()
     {
-        startTimer = timer;
-        Debug.Log(startTimer);
+        float startTimer = Time.time;
+        Debug.Log("ドラッグ待ちだよ");
+        for (int i = 0; i < 10; i++)
+        {
+            timerText.text = Mathf.Ceil(10 + startTimer - Time.time).ToString();
+            yield return new WaitForSeconds(1f);
+        }
+        Debug.Log("TIME OVER");
+        timerText.text = "";
+        if (AngerGauge >= AngerGaugeMax) FinishGame();
+        IsEndDrag(true);
+        yield break;
     }
 }

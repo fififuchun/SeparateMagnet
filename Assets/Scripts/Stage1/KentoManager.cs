@@ -35,15 +35,15 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
-        if(gameManager.isEndDrag) return;
+        if (gameManager.timeManager.isEndDrag) return;
         transform.position = new Vector3(eventData.position.x, prevPos.y + gameManager.canvas.transform.position.y);
     }
 
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(gameManager.isEndDrag) return;
-        gameManager.IsEndDrag(true);
+        if (gameManager.timeManager.isEndDrag) return;
+        gameManager.timeManager.isEndDrag = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -51,6 +51,7 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         if (!gameObject.GetComponent<KentoManager>().enabled) return;
         gameObject.GetComponent<KentoManager>().enabled = false;
 
+        gameManager.timeManager.isEndDrag = false;
         gameManager.CanInstantiate();
         Debug.Log("着地");
     }

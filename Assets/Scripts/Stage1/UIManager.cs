@@ -6,12 +6,12 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    private TimeManager timeManager;
+    // private TimeManager timeManager;
     private GameManager gameManager;
 
     void Start()
     {
-        timeManager = GameObject.Find("GameManager").GetComponent<TimeManager>();
+        // timeManager = GameObject.Find("GameManager").GetComponent<TimeManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
