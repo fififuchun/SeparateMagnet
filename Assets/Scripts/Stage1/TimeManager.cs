@@ -9,17 +9,20 @@ using System.Threading;
 //ゲームオーバー管理
 public class TimeManager : MonoBehaviour
 {
-    //タイマー
-    private float timer;
-
     //怒りゲージ
     private int angerGauge;
     public int AngerGauge { get => angerGauge; }
 
     //怒りの最大値
-    private int angerGaugeMax = 4;
+    private int angerGaugeMax = 4;//Getset
     public int AngerGaugeMax { get => angerGaugeMax; }
 
+    //秒で国民が1怒る
+    // private int
+
+    private int canHoldTime = 10;
+
+    [Header("以下はアタッチが必要")]
     //怒りイメージ配列・初期は[2]から実装
     [SerializeField] private Sprite[] angryImages = new Sprite[7];
     [SerializeField] private Image angryImage;
@@ -28,6 +31,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI resultCoinText;
+    [SerializeField] private TextMeshProUGUI finishText;
 
     //結果表示
     [SerializeField] private GameObject resultObject;
@@ -38,24 +42,16 @@ public class TimeManager : MonoBehaviour
     public void IsEndDrag(bool judge) { isEndDrag = judge; }
 
 
-
+    //関数の部
     void Start()
     {
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
+        InvokeRepeating("MakeAngry", 3.0f, 3.0f);
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > 15)
-        {
-            MakeAngry();
-            timer = 0;
-        }
-        
-        //デバッグ用じゃなくなった
         slider.value = (float)AngerGauge / (float)angerGaugeMax;
-
         resultCoinText.fontSize = 150 + 20 * Mathf.Sin(5 * Time.time);
     }
 
@@ -63,24 +59,44 @@ public class TimeManager : MonoBehaviour
     public void MakeAngry()
     {
         angerGauge++;
-        if (AngerGauge >= AngerGaugeMax) return;
+        if (isAnger()) return;
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
         Debug.Log("今の怒り:" + AngerGauge);
     }
 
+    //gameManagerで使う用
+    public bool isAnger()
+    {
+        if (AngerGauge >= AngerGaugeMax) return true;
+        else return false;
+    }
+    //時間切れ
     public IEnumerator TimeOver()
     {
         float startTimer = Time.time;
-        Debug.Log("ドラッグ待ちだよ");
-        for (int i = 0; i < 10; i++)
+        if (isAnger())
         {
-            timerText.text = Mathf.Ceil(10 + startTimer - Time.time).ToString();
+            canHoldTime = 5;
+            timerText.color = Color.red;
+            finishText.enabled = true;
+        }
+
+        for (int i = 0; i < canHoldTime; i++)
+        {
+            timerText.text = Mathf.Ceil(canHoldTime + startTimer - Time.time).ToString();
             yield return new WaitForSeconds(1f);
         }
+        if (isAnger())
+        {
+            FinishGame();
+            //追加
+        }
+
         Debug.Log("TIME OVER");
         timerText.text = "";
-        if (AngerGauge >= AngerGaugeMax) FinishGame();
         IsEndDrag(true);
         yield break;
     }
+
+
 }

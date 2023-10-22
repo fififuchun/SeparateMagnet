@@ -8,6 +8,9 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     //親スクリプトの取得
     private GameManager gameManager;
 
+    //床のゲームオブジェクト
+    private RectTransform floorObjectRect;
+
     //保存しておく初期position
     private Vector2 prevPos;
 
@@ -18,11 +21,14 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     {
         rectTransform = GetComponent<RectTransform>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        floorObjectRect = GameObject.Find("FloorImage").GetComponent<RectTransform>();
     }
 
-    private void Start()
+    private void Update()
     {
-        //
+        if (Mathf.Abs(gameObject.transform.position.x - floorObjectRect.gameObject.transform.position.x) > floorObjectRect.sizeDelta.x / 2)
+            gameObject.transform.position = new Vector3(floorObjectRect.gameObject.transform.position.x + Mathf.Sign(gameObject.transform.localPosition.x) * floorObjectRect.sizeDelta.x / 2, gameObject.transform.position.y);
     }
 
     // ドラッグ開始時の処理
