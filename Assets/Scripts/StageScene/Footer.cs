@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Footer : MonoBehaviour
 {
+    //FooterのEmptyObject
     private GameObject footer;
-    private RectTransform[] buttonsRect = new RectTransform[5];
 
-    [SerializeField] private GameObject[] menuImages = new GameObject[5];
+    //ButtonのRect
+    private RectTransform[] buttonsRects = new RectTransform[5];
+
+    //FooterのButtonそのもの
+    [SerializeField] private GameObject[] menuObjects = new GameObject[5];
+
+    //Buttonの中のイメージ
+    [SerializeField] private RectTransform[] footerImagesRects = new RectTransform[5];
 
     void Start()
     {
         footer = GameObject.Find("Footer");
-        for (int i = 0; i < 5; i++) buttonsRect[i] = footer.transform.GetChild(i).gameObject.GetComponent<RectTransform>();
+        for (int i = 0; i < 5; i++) buttonsRects[i] = footer.transform.GetChild(i).gameObject.GetComponent<RectTransform>();
 
         PushFooterButton(2);
     }
@@ -23,17 +30,20 @@ public class Footer : MonoBehaviour
         {
             if (i == index)
             {
-                buttonsRect[i].gameObject.transform.localPosition = new Vector3(200 * index - 400, -820);
-                buttonsRect[i].sizeDelta = new Vector2(280, 280);
-                menuImages[i].SetActive(true);
+                buttonsRects[i].gameObject.transform.localPosition = new Vector3(200 * index - 400, -820);
+                buttonsRects[i].sizeDelta = new Vector2(280, 280);
+                footerImagesRects[i].sizeDelta = new Vector2(200, 200);
+                if (i == 2) footerImagesRects[i].sizeDelta = new Vector2(300, 150);
+                menuObjects[i].SetActive(true);
             }
             else if (i != index)
             {
-                buttonsRect[i].gameObject.transform.localPosition = new Vector3(200 * i - 400 + 40 * Mathf.Sign(i - index), -860);
-                buttonsRect[i].sizeDelta = new Vector2(200, 200);
-                menuImages[i].SetActive(false);
+                buttonsRects[i].gameObject.transform.localPosition = new Vector3(200 * i - 400 + 40 * Mathf.Sign(i - index), -860);
+                buttonsRects[i].sizeDelta = new Vector2(200, 200);
+                footerImagesRects[i].sizeDelta = new Vector2(100, 100);
+                if (i == 2) footerImagesRects[i].sizeDelta = new Vector2(200, 100);
+                menuObjects[i].SetActive(false);
             }
-            // Debug.Log(i + ":" + buttonsRect[i].transform.localPosition.x);
         }
     }
 }
