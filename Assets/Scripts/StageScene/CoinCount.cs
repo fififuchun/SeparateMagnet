@@ -6,15 +6,15 @@ using TMPro;
 public class CoinCount : MonoBehaviour
 {
     //コインプロパティ
-    private int coin = 0;
+    private int coin;
     public int Coin { get => coin; }
 
     //ヘッダーのコインテキスト
     [SerializeField] private TextMeshProUGUI coinText;
 
-    void Start()
+    void Awake()
     {
-        coin = PlayerPrefs.GetInt("Coin", 0);
+        GetCoin(PlayerPrefs.GetInt("Coin", 0));
     }
 
     void Update()
@@ -25,11 +25,14 @@ public class CoinCount : MonoBehaviour
     public void GetCoin(int i)
     {
         coin += i;
-        PlayerPrefs.SetInt("Coin", coin);
+        UpdateCoin();
+        PlayerPrefs.SetInt("Coin", Coin);
     }
 
     public void UpdateCoin()
     {
         coinText.text = Coin.ToString();
     }
+
+
 }

@@ -12,9 +12,9 @@ public class DiamondCount : MonoBehaviour
     //ヘッダーのダイアモンドテキスト
     [SerializeField] private TextMeshProUGUI diamondText;
 
-    void Start()
+    void Awake()
     {
-        diamond = PlayerPrefs.GetInt("Diamond", 0);
+        GetDiamond(PlayerPrefs.GetInt("Diamond", 0));
     }
 
     void Update()
@@ -25,6 +25,7 @@ public class DiamondCount : MonoBehaviour
     public void GetDiamond(int i)
     {
         diamond += i;
+        UpdateDiamond();
         PlayerPrefs.SetInt("Diamond", diamond);
     }
 

@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour
         if (placedGameObjects.Count() == 0) return 0;
         int sum = 0;
         for (int i = 0; i < placedGameObjects.Count(); i++) sum += CoinOf(placedGameObjects[i]);
+        timeManager.sumCoin = sum;
         return sum;
     }
 }

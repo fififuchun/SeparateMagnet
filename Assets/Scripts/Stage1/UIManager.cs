@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     public void PushGoHomeButton()
     {
         PlayerPrefs.SetInt("TmpCoin", gameManager.SumCoin());
-        Debug.Log(gameManager.SumCoin());
+        // Debug.Log(gameManager.SumCoin());
         SceneManager.LoadScene("StageScene");
     }
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
-using System.Threading;
+using Unity.VisualScripting;
+// using System;
+// using System.Threading;
 
 //ゲームオーバー管理
 public class TimeManager : MonoBehaviour
@@ -20,6 +21,14 @@ public class TimeManager : MonoBehaviour
     //秒で国民が1怒る
     // private int
 
+    //ゲーム終了時の最終コイン
+    public int sumCoin;
+
+    //ドラッグ終了したらtrue
+    public bool isEndDrag;
+    public void IsEndDrag(bool judge) { isEndDrag = judge; }
+
+    //検討の持ち時間
     private int canHoldTime = 10;
 
     [Header("以下はアタッチが必要")]
@@ -35,11 +44,6 @@ public class TimeManager : MonoBehaviour
 
     //結果表示
     [SerializeField] private GameObject resultObject;
-    public void FinishGame() { resultObject.SetActive(true); }
-
-    //ドラッグ終了したらtrue
-    public bool isEndDrag;
-    public void IsEndDrag(bool judge) { isEndDrag = judge; }
 
 
     //関数の部
@@ -70,6 +74,7 @@ public class TimeManager : MonoBehaviour
         if (AngerGauge >= AngerGaugeMax) return true;
         else return false;
     }
+
     //時間切れ
     public IEnumerator TimeOver()
     {
@@ -88,8 +93,11 @@ public class TimeManager : MonoBehaviour
         }
         if (isAnger())
         {
-            FinishGame();
-            //追加
+            // FinishGame(); だったところ
+            resultObject.SetActive(true);
+            resultCoinText.text = sumCoin.ToString();
+            PlayerPrefs.SetInt("TmpCoin", sumCoin);
+            yield break;
         }
 
         Debug.Log("TIME OVER");
@@ -97,6 +105,4 @@ public class TimeManager : MonoBehaviour
         IsEndDrag(true);
         yield break;
     }
-
-
 }

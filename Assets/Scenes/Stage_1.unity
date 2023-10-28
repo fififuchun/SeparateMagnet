@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 470496009}
   - component: {fileID: 470496008}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ResultText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1083,7 +1083,7 @@ GameObject:
   - component: {fileID: 855358441}
   - component: {fileID: 855358440}
   m_Layer: 5
-  m_Name: Button
+  m_Name: GoStageSceneButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1269,6 +1269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b33acee8190a942b4f4d6fa15ee014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sumCoin: 0
+  isEndDrag: 0
   angryImages:
   - {fileID: 21300000, guid: 6b06de5d19e6ce843b3da1ac25616d3e, type: 3}
   - {fileID: 21300000, guid: de1e314a9bb639a459af40fa8c02f077, type: 3}
@@ -1283,7 +1285,6 @@ MonoBehaviour:
   resultCoinText: {fileID: 971407317}
   finishText: {fileID: 434428321}
   resultObject: {fileID: 1512223353}
-  isEndDrag: 0
 --- !u!1 &971407315
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,7 +1297,7 @@ GameObject:
   - component: {fileID: 971407318}
   - component: {fileID: 971407317}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TaxText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2278,7 +2279,7 @@ GameObject:
   - component: {fileID: 1684140166}
   - component: {fileID: 1684140165}
   m_Layer: 5
-  m_Name: Image
+  m_Name: TaxImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,10 +6,6 @@ using TMPro;
 
 public class Uidirector : MonoBehaviour
 {
-    //自身のインスタンス化
-    // public static Uidirector instance;
-    // public void Awake() { instance = this; }
-
     //コイン・ダイアモンド計数スクリプトのインスタンス化
     private CoinCount coinCount;
     private DiamondCount diamondCount;
@@ -26,19 +22,8 @@ public class Uidirector : MonoBehaviour
         coinCount = GameObject.Find("UiDirector").GetComponent<CoinCount>();
         diamondCount = GameObject.Find("UiDirector").GetComponent<DiamondCount>();
 
-        int stageCoin = PlayerPrefs.GetInt("TmpCoin", 0);
-        Debug.Log("TmpCoin: " + stageCoin);
-        coinCount.GetCoin(stageCoin);
-        PlayerPrefs.SetInt("TmpCoin", 0);
-
-        // coinCount.GetCoin(100);
-        // diamondCount.GetDiamond(100);
+        GetTax();
         UpdateHeader();
-    }
-
-    void Update()
-    {
-
     }
 
     public void UpdateHeader()
@@ -64,5 +49,15 @@ public class Uidirector : MonoBehaviour
     {
         coinCount.GetCoin(100);
         diamondCount.GetDiamond(100);
+    }
+
+    public void GetTax()
+    {
+        int stageCoin = PlayerPrefs.GetInt("TmpCoin", 0);
+        // Debug.Log("TmpCoin: " + stageCoin);
+        coinCount.GetCoin(stageCoin);
+        PlayerPrefs.SetInt("TmpCoin", 0);
+
+        PlayerPrefs.SetInt("Coin", coinCount.Coin);
     }
 }
