@@ -79,19 +79,29 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Loop()
     {
-        while (phase != Phase.End)
+        while (true)
         {
-            Debug.Log(phase);
-            GoEndPhase();
             switch (phase)
             {
                 case Phase.StartPhase:
                     coinText.text = SumCoin().ToString();
+                    // GoEndPhase();
+                    if (timeManager.isAnger())
+                    {
+                        phase = Phase.End;
+                        break;
+                    }
 
                     yield return new WaitForSeconds(1f);
                     phase = Phase.AppearPhase;
                     break;
                 case Phase.AppearPhase:
+                    //怒ってたらスルー
+                    if (timeManager.isAnger())
+                    {
+                        phase = Phase.PutPhase;
+                        break;
+                    }
                     //動きなし:TimeOver / 動きあり:TimeOver Stop & isEndDrag= true
                     PutKento();
                     StartTimeOver();
@@ -103,11 +113,12 @@ public class GameManager : MonoBehaviour
                 case Phase.PutPhase:
                     yield return new WaitUntil(() => canInstantiate);
                     phase = Phase.StartPhase;
+                    // GoEndPhase();
                     break;
                 case Phase.End:
-                    timeOver = null;
-                    StartTimeOver();
-                    break;
+                    StopCoroutine(timeOver);
+                    StartCoroutine(timeManager.FinishGame());
+                    yield break;
             }
         }
     }
@@ -151,10 +162,16 @@ public class GameManager : MonoBehaviour
     //ドラッグ終了
     public void EndDrag()
     {
-        if (timeManager.isAnger()) return;
+        if (timeManager.isAnger())
+        {
+            timeOver = null;
+            StartCoroutine(timeManager.FinishGame());
+            return;
+        }
         if (Random.Range(0, 2) == 2) timeManager.MakeAngry();
         if (ReadyKento != null) placedGameObjects.Add(ReadyKento.GetComponent<KentoManager>());
         ReadyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
+        timeManager.EmptyTimerText();
         ResetKentoPrefab();
         StopCoroutine(timeOver);
         Debug.Log("drag終了");

@@ -9,6 +9,13 @@ public class Footer : MonoBehaviour
     //FooterのEmptyObject
     private GameObject footer;
 
+    //canvasのRect
+    private RectTransform canvasRect;
+
+    //バックグラウンドImage
+    private RectTransform backgroundRect;
+
+    //
     //ButtonのRect
     private RectTransform[] buttonsRects = new RectTransform[5];
 
@@ -25,6 +32,12 @@ public class Footer : MonoBehaviour
     {
         footer = GameObject.Find("Footer");
         for (int i = 0; i < 5; i++) buttonsRects[i] = footer.transform.GetChild(i).gameObject.GetComponent<RectTransform>();
+
+        canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();
+        backgroundRect = canvasRect.gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
+        backgroundRect.sizeDelta = canvasRect.sizeDelta;
+        footer.transform.localPosition = new Vector3(0, (1920 - canvasRect.sizeDelta.y) / 2);
+
 
         PushFooterButton(2);
     }

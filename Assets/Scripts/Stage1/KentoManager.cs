@@ -52,6 +52,7 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         gameManager.timeManager.isEndDrag = true;
     }
 
+    //着地時の処理
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!gameObject.GetComponent<KentoManager>().enabled) return;

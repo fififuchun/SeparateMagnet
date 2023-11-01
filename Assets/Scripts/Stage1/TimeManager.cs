@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
+// using Unity.VisualScripting;
 // using System;
 // using System.Threading;
 
@@ -18,8 +18,8 @@ public class TimeManager : MonoBehaviour
     private int angerGaugeMax = 4;//Getset
     public int AngerGaugeMax { get => angerGaugeMax; }
 
-    //秒で国民が1怒る
-    // private int
+    //angryTime秒で国民が1怒る
+    private int angryTime;
 
     //ゲーム終了時の最終コイン
     public int sumCoin;
@@ -49,8 +49,9 @@ public class TimeManager : MonoBehaviour
     //関数の部
     void Start()
     {
+        angryTime = 7;
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
-        InvokeRepeating("MakeAngry", 3.0f, 3.0f);
+        InvokeRepeating("MakeAngry", angryTime, angryTime);
     }
 
     void Update()
@@ -75,34 +76,42 @@ public class TimeManager : MonoBehaviour
         else return false;
     }
 
+    //timerTextを空にする
+    public void EmptyTimerText() { timerText.text = ""; }
+
     //時間切れ
     public IEnumerator TimeOver()
     {
         float startTimer = Time.time;
-        if (isAnger())
+        for (int i = 0; i < canHoldTime; i++)
         {
-            canHoldTime = 5;
-            timerText.color = Color.red;
-            finishText.enabled = true;
+            timerText.text = Mathf.Ceil(canHoldTime + startTimer - Time.time).ToString();
+            yield return new WaitForSeconds(1f);
         }
+
+        Debug.Log("TIME OVER");
+        EmptyTimerText();
+        IsEndDrag(true);
+        yield break;
+    }
+
+    public IEnumerator FinishGame()
+    {
+        // Debug.Log("ゲーム終了が起動");
+        float startTimer = Time.time;
+        canHoldTime = 5;
+        timerText.color = Color.red;
+        finishText.enabled = true;
 
         for (int i = 0; i < canHoldTime; i++)
         {
             timerText.text = Mathf.Ceil(canHoldTime + startTimer - Time.time).ToString();
             yield return new WaitForSeconds(1f);
         }
-        if (isAnger())
-        {
-            // FinishGame(); だったところ
-            resultObject.SetActive(true);
-            resultCoinText.text = sumCoin.ToString();
-            PlayerPrefs.SetInt("TmpCoin", sumCoin);
-            yield break;
-        }
 
-        Debug.Log("TIME OVER");
-        timerText.text = "";
-        IsEndDrag(true);
+        resultObject.SetActive(true);
+        resultCoinText.text = sumCoin.ToString();
+        PlayerPrefs.SetInt("TmpCoin", sumCoin);
         yield break;
     }
 }

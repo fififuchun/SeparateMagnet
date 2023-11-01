@@ -5,6 +5,9 @@ using TMPro;
 
 public class CoinCount : MonoBehaviour
 {
+    //インスタンス化
+    // private RankManager rankManager;
+
     //コインプロパティ
     private int coin;
     public int Coin { get => coin; }
@@ -15,13 +18,9 @@ public class CoinCount : MonoBehaviour
     void Awake()
     {
         GetCoin(PlayerPrefs.GetInt("Coin", 0));
+        // rankManager = GameObject.Find("UiDirector").GetComponent<RankManager>();
     }
-
-    void Update()
-    {
-
-    }
-
+    
     public void GetCoin(int i)
     {
         coin += i;
