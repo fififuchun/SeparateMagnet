@@ -49,7 +49,7 @@ public class TimeManager : MonoBehaviour
     //関数の部
     void Start()
     {
-        angryTime = 7;
+        angryTime = 10;
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
         InvokeRepeating("MakeAngry", angryTime, angryTime);
     }

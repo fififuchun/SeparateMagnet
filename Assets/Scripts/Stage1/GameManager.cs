@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
                         phase = Phase.PutPhase;
                         break;
                     }
+                    audioSource.Play();
                     //動きなし:TimeOver / 動きあり:TimeOver Stop & isEndDrag= true
                     PutKento();
                     StartTimeOver();
@@ -122,6 +123,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public AudioSource audioSource;
 
     //timeOver用のコルーチン、リセット&実行関数
     IEnumerator timeOver;
@@ -185,10 +188,12 @@ public class GameManager : MonoBehaviour
     public int KentoSpeed()
     {
         putKentoCount++;
-        // if (putKentoCount != 0 && putKentoCount % 10 == 0) エフェクト;
-
-        return Mathf.FloorToInt(putKentoCount / 10) * 5 + 20;
+        // Instantiate(tmpObject, canvas.transform);
+        if (putKentoCount != 0 && putKentoCount % 5 == 0) Instantiate(tmpObject, canvas.transform);
+        return Mathf.FloorToInt(putKentoCount / 5) * 5 + 20;
     }
+
+    public GameObject tmpObject;
 
     //kentoManagerのインスタンスからコインの量を計測
     public int CoinOf(KentoManager kento)
