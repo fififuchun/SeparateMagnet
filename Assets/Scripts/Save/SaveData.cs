@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SaveData : MonoBehaviour
+public class SaveData
 {
-    public const int rankCnt = 3;
+    public const int rankCnt = 7;
     public int[] rank = new int[rankCnt];
 }
