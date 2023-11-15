@@ -10,7 +10,7 @@ public class DataManager : MonoBehaviour
 
     // jsonファイルのパス
     string filepath;
-    
+
     // jsonファイル名
     string fileName = "Data.json";
 
@@ -22,13 +22,11 @@ public class DataManager : MonoBehaviour
         filepath = Application.dataPath + "/" + fileName;
 
         // ファイルがないとき、ファイル作成
-        if (!File.Exists(filepath))
-        {
-            Save(data);
-        }
+        if (!File.Exists(filepath)) Save(data);
 
         // ファイルを読み込んでdataに格納
         data = Load(filepath);
+        CheakSaveData();
     }
 
     //-------------------------------------------------------------------
@@ -56,5 +54,17 @@ public class DataManager : MonoBehaviour
     void OnDestroy()
     {
         Save(data);
+    }
+
+    void CheakSaveData()
+    {
+        if (data.level[0] < 4 || data.level[0] > 7) data.level[0] = 4;
+        if (data.level[1] < 5 || data.level[1] > 60) data.level[1] = 10;
+        if (data.level[2] < 10 || data.level[2] > 60) data.level[2] = 10;
+        if (data.level[3] < 5 || data.level[3] > 10) data.level[3] = 5;
+        if (data.level[4] < 2) data.level[4] = 2;
+        //減ってく
+        if (data.level[5] < 5 || data.level[5] > 10) data.level[5] = 10;
+        if (data.level[6] < 50 || data.level[6] > 100) data.level[6] = 100;
     }
 }

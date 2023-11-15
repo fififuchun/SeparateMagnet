@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
-    public const int rankCnt = 7;
-    public int[] rank = new int[rankCnt];
+    public const int levelCount = 7;
+    public int[] level = new int[levelCount];
 }
