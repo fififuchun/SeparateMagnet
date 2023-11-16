@@ -15,6 +15,7 @@ public class DiamondCount : MonoBehaviour
     void Awake()
     {
         GetDiamond(PlayerPrefs.GetInt("Diamond", 0));
+        GetDiamond(100);
     }
 
     void Update()
