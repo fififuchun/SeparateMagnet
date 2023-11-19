@@ -7,58 +7,60 @@ using Unity.VisualScripting;
 
 public class RPGManager : MonoBehaviour
 {
-    // CoinCountインスタンス
+    // インスタンス
     [SerializeField] private CoinCount coinCount;
+    [SerializeField] private DataManager dataManager;
 
     // ステータス確認用
-    private string[] rankNames = { "AngerLimit", "AngerTime", "LateAngerTime", "HoldTime", "AngerRate", "NextKentoTime", "RareRate" };
+    // private string[] rankNames = { "AngerLimit", "AngerTime", "LateAngerTime", "HoldTime", "AngerRate", "NextKentoTime", "RareRate" };
 
     // 保存データ数、現時点では7
     private const int levelCount = SaveData.levelCount;
 
-    //初期数値
-    private int[] initLevel = { 4, 10, 10, 5, 2, 10, 100 };
-
     // ステータス確認用のTextObject
     [SerializeField] private TextMeshProUGUI[] nextLevelAcquire = new TextMeshProUGUI[levelCount];
-
-    // 参照するセーブデータ
-    private SaveData data;
 
     //　パワーアップのデータを保存したScriptableObject
     [SerializeField] private RPGSO rpgData;
 
-    //-------------------------------------------------------------------
+
+    //関数
     void Start()
     {
-        // セーブデータをDataManagerから参照
-        data = GetComponent<DataManager>().data;
-
+        for (int i = 0; i < 7; i++) dataManager.data.level[i] = dataManager.InitLevel[i];
         UpdateAcquireCoin();
-
-        for (int i = 7; i < 7; i++) data.level[i] = initLevel[i];
     }
 
     public void UpdateAcquireCoin()
     {
         for (int i = 0; i < levelCount; i++)
         {
-            nextLevelAcquire[i].text = rpgData.AcquireCoin(i, data.level[i] - initLevel[i]).ToString();
+            if (dataManager.data.level[i] == dataManager.MaxLevel[i])
+            {
+                nextLevelAcquire[i].color = Color.red;
+                nextLevelAcquire[i].text = "Max";
+                continue;
+            }
+            nextLevelAcquire[i].color = Color.black;
+            nextLevelAcquire[i].text = rpgData.AcquireCoin(i, dataManager.data.level[i]).ToString();
         }
+        dataManager.Save(dataManager.data);
     }
 
     public void PushPowerUpButton(int i)
     {
-        // Debug.Log(i + "," + data.level[i] + "," + initLevel[i]);
-        int acquireCoin = rpgData.AcquireCoin(i, data.level[i] - initLevel[i]);
+        if (dataManager.data.level[i] >= dataManager.MaxLevel[i]) return;
+
+        int acquireCoin = rpgData.AcquireCoin(i, dataManager.data.level[i]);
         if (acquireCoin < coinCount.Coin)
         {
             coinCount.GetCoin(-acquireCoin);
-            data.level[i] += (int)Mathf.Sign(9 - 2 * i);
-            Debug.Log(data.level[i]);
-            Debug.Log(rpgData.AcquireCoin(i, data.level[i] - initLevel[i]).ToString());
+            dataManager.data.level[i]++;
         }
-        // else 
+        else {
+            Debug.Log("コインがたりないよ");
+        }
+
         UpdateAcquireCoin();
     }
 

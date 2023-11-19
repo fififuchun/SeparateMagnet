@@ -92,7 +92,8 @@ public class GameManager : MonoBehaviour
                         break;
                     }
 
-                    yield return new WaitForSeconds(1f);
+                    Debug.Log("現在の出現時間は：" + TimeManager.NextAppearTime);
+                    yield return new WaitForSeconds(TimeManager.NextAppearTime);
                     phase = Phase.AppearPhase;
                     break;
                 case Phase.AppearPhase:
@@ -149,7 +150,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (Random.Range(0, 100) == 0)
+        if (Random.Range(0, timeManager.RareRate) == 0)
         {
             ReadyKento = Instantiate(kentoSO.fontData[kentoSO.fontData.Count() - 1].sizeData[0].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
             return;
@@ -171,7 +172,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(timeManager.FinishGame());
             return;
         }
-        if (Random.Range(0, 2) == 2) timeManager.MakeAngry();
+        if (Random.Range(0, timeManager.AngerRate) == 0) timeManager.MakeAngry();
         if (ReadyKento != null) placedGameObjects.Add(ReadyKento.GetComponent<KentoManager>());
         ReadyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
         timeManager.EmptyTimerText();
