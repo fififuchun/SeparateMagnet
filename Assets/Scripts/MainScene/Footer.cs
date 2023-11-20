@@ -6,6 +6,9 @@ using TMPro;
 
 public class Footer : MonoBehaviour
 {
+    //FooterAnimationインスタンス
+    [SerializeField] private FooterAnimation[] footerAnimations = new FooterAnimation[5];
+
     //FooterのEmptyObject
     private GameObject footer;
 
@@ -38,7 +41,6 @@ public class Footer : MonoBehaviour
         backgroundRect.sizeDelta = canvasRect.sizeDelta;
         footer.transform.localPosition = new Vector3(0, (1920 - canvasRect.sizeDelta.y) / 2);
 
-
         PushFooterButton(2);
     }
 
@@ -48,11 +50,14 @@ public class Footer : MonoBehaviour
         {
             if (i == index)
             {
+                footerAnimations[i].PlayAnimation();
+
                 buttonsRects[i].gameObject.transform.localPosition = new Vector3(200 * index - 400, -820);
                 buttonsRects[i].sizeDelta = new Vector2(280, 280);
                 buttonsRects[i].GetComponent<Image>().color = new Color32(236, 193, 0, 255);
                 footerImagesRects[i].sizeDelta = new Vector2(200, 200);
                 if (i == 2) footerImagesRects[i].sizeDelta = new Vector2(300, 150);
+                footerImagesRects[i].gameObject.transform.localPosition = new Vector2(footerImagesRects[i].gameObject.transform.localPosition.x, 10);
                 footerTexts[i].gameObject.transform.localPosition = new Vector3(200 * index - 400, 0);
                 menuObjects[i].SetActive(true);
             }
@@ -63,6 +68,7 @@ public class Footer : MonoBehaviour
                 buttonsRects[i].GetComponent<Image>().color = new Color32(13, 92, 167, 255);
                 footerImagesRects[i].sizeDelta = new Vector2(100, 100);
                 if (i == 2) footerImagesRects[i].sizeDelta = new Vector2(200, 100);
+                footerImagesRects[i].gameObject.transform.localPosition = new Vector2(footerImagesRects[i].gameObject.transform.localPosition.x, 10);
                 footerTexts[i].gameObject.transform.localPosition = new Vector3(200 * i - 400 + 40 * Mathf.Sign(i - index), 0);
                 menuObjects[i].SetActive(false);
             }
