@@ -22,7 +22,14 @@ public class GameManager : MonoBehaviour
     //検討の元データ
     [SerializeField] private Kento kentoSO;
 
+    //ヘッダーのコインテキスト
     [SerializeField] private TextMeshProUGUI coinText;
+
+    //検討出現時のエフェクト
+    [SerializeField] private ParticleSystem appearEffect;
+    
+    //音楽
+    [SerializeField] private AudioSource audioSource;
 
 
     [Header("以上入力エリア")]
@@ -91,6 +98,7 @@ public class GameManager : MonoBehaviour
                         phase = Phase.End;
                         break;
                     }
+                    appearEffect.Play();
 
                     Debug.Log("現在の出現時間は：" + TimeManager.NextAppearTime);
                     yield return new WaitForSeconds(TimeManager.NextAppearTime);
@@ -124,8 +132,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    public AudioSource audioSource;
 
     //timeOver用のコルーチン、リセット&実行関数
     IEnumerator timeOver;
