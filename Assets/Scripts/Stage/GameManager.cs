@@ -156,6 +156,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        appearEffect.Stop();
+
         if (Random.Range(0, timeManager.RareRate) == 0)
         {
             ReadyKento = Instantiate(kentoSO.fontData[kentoSO.fontData.Count() - 1].sizeData[0].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
