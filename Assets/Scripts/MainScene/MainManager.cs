@@ -3,33 +3,32 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+// using UnityEditor.Experimental.GraphView;
 
 public class MainManager : MonoBehaviour
 {
-    private GameObject canvas;
     [SerializeField] private GameObject mainViewContent;
-    [SerializeField] private RectTransform[] stageButtons;
-
-    // public Slider slider;
-    // [SerializeField] private GameObject circleImage;
-    // [SerializeField] private GameObject[] circleImages = new GameObject[3];
+    [SerializeField] private RectTransform[] stageImages;
 
 
     void Awake()
     {
-        canvas = GameObject.Find("Canvas");
-
-        // stageButtons = new RectTransform[mainViewContent.transform.childCount];
-        // for (int i = 0; i < mainViewContent.transform.childCount; i++) stageButtons[i] = mainViewContent.transform.GetChild(i).GetComponent<RectTransform>();
+        //
     }
 
+    [SerializeField] private ScrollRect scrollRect;
     void Update()
     {
-        if (!Input.GetMouseButton(0))
+        if (Input.GetMouseButtonUp(0))
         {
             // Debug.Log(mainViewContent.transform.position);
-            mainViewContent.transform.position = new Vector2(Mathf.Floor((mainViewContent.transform.position.x + 415) / 830) * 830, mainViewContent.transform.position.y);
+            scrollRect.enabled = false;
+            mainViewContent.transform.DOKill();
+            mainViewContent.transform.DOMove(new Vector2(Mathf.Floor((mainViewContent.transform.position.x + 415) / 830) * 830, mainViewContent.transform.position.y), 0.5f);
         }
+        else if (!scrollRect.enabled) scrollRect.enabled = true;
+
 
         // for (int i = 0; i < mainViewContent.transform.childCount; i++)
         //     if (Mathf.Abs(stageButtons[i].transform.position.x - canvas.transform.position.x) < stageButtons[i].sizeDelta.x / 2)
@@ -40,11 +39,5 @@ public class MainManager : MonoBehaviour
         //     {
         //         stageButtons[i].sizeDelta = new Vector2(400, 400);
         //     }
-
-        // circleImage.transform.rotation = quaternion.Euler(0, 0, slider.value * 2 * Mathf.PI);
-        // for (int i = 0; i < 3; i++)
-        // {
-        //     circleImages[i].transform.localRotation = quaternion.Euler(0, 0, -slider.value * 2 * Mathf.PI);
-        // }
     }
 }
