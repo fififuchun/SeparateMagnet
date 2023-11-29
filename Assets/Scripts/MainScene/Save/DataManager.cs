@@ -50,6 +50,10 @@ public class DataManager : MonoBehaviour
         return JsonUtility.FromJson<SaveData>(json);            // jsonファイルを型に戻して返す
     }
 
+    // public void Save_Main(){
+
+    // }
+
     //-------------------------------------------------------------------
     // ゲーム終了時に保存
     void OnDestroy()
@@ -71,5 +75,17 @@ public class DataManager : MonoBehaviour
             if (data.level[i] < InitLevel[i]) data.level[i] = InitLevel[i];
             if (data.level[i] > MaxLevel[i]) data.level[i] = MaxLevel[i];
         }
+    }
+
+    //何個の枠が解放されているか、1~6のうちどれか
+    public int ReleasedFontCount()
+    {
+        int i = 0;
+        while (data.fontNumbers[i] >= 0)
+        {
+            i++;
+            if (i == 6) return i;
+        }
+        return i;
     }
 }
