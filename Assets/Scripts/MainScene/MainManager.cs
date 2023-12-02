@@ -4,9 +4,10 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-// using UnityEditor.Experimental.GraphView;
 using TMPro;
 using System;
+using Unity.VisualScripting;
+using System.Linq;
 
 public class MainManager : MonoBehaviour
 {
@@ -21,8 +22,16 @@ public class MainManager : MonoBehaviour
   //一旦オフにしてスクロールのスピードを殺す
   [SerializeField] private ScrollRect scrollRect;
 
+
   void Start()
   {
+    // Debug.Log(Library.SearchNumberIndex(source, 0));
+    //debug
+    for (int i = 0; i < dataManager.ReleasedFontCount(); i++)
+    {
+      dataManager.data.fontNumbers[i] = 0;
+    }
+
     ShowFontImage();
   }
 
@@ -37,7 +46,7 @@ public class MainManager : MonoBehaviour
     }
     else if (!scrollRect.enabled) scrollRect.enabled = true;
 
-    Debug.Log(dataManager.ReleasedFontCount());
+    // Debug.Log(dataManager.ReleasedFontCount());
   }
 
   //持ちフォントの編集
@@ -59,12 +68,16 @@ public class MainManager : MonoBehaviour
   [SerializeField] private Image[] fontImages = new Image[6];
   [SerializeField] private Sprite lockImage;
   [SerializeField] private Sprite transparencyImage;
+  [SerializeField] private Sprite[] kentoImages = new Sprite[20];
   public void ShowFontImage()
   {
     for (int i = 0; i < dataManager.ReleasedFontCount(); i++)
     {
-      if (dataManager.data.fontNumbers[i] < 0) fontImages[i].sprite = lockImage;
+      if (dataManager.data.fontNumbers[i] > 0) fontImages[i].sprite = kentoImages[dataManager.data.fontNumbers[i] - 1];
       else if (dataManager.data.fontNumbers[i] == 0) fontImages[i].sprite = transparencyImage;
+      else fontImages[i].sprite = lockImage;
+
+      dataManager.Save(dataManager.data);
     }
   }
 
@@ -76,8 +89,29 @@ public class MainManager : MonoBehaviour
     if (diamondCount.Diamond < Mathf.Pow(10, dataManager.ReleasedFontCount())) return;
 
     dataManager.data.fontNumbers[dataManager.ReleasedFontCount()] = 0;
-    dataManager.Save(dataManager.data);
+    ShowFontImage();
+  }
 
+  //手持ちのフォントを持って行くフォントに追加
+  [SerializeField] private GameObject fontViewContent;
+  public void PushAddFontButton(int i)
+  {
+    for (int j = 0; j < dataManager.ReleasedFontCount(); j++)
+    {
+      if (dataManager.data.fontNumbers[j] == i)
+      {
+        //警告
+        return;
+      }
+    }
+
+    if (dataManager.data.fontNumbers.Contains(0)) dataManager.data.fontNumbers[Library.SearchNumberIndex(dataManager.data.fontNumbers, 0)] = i;
+    ShowFontImage();
+  }
+
+  public void PushDeleteFontButton(int i)
+  {
+    dataManager.data.fontNumbers[i] = 0;
     ShowFontImage();
   }
 }

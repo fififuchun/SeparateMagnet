@@ -77,7 +77,10 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    //何個の枠が解放されているか、1~6のうちどれか
+    /// <summary>
+    /// 何個の枠が解放されているか、1~6のうちどれか
+    /// </summary>
+    /// <returns></returns>
     public int ReleasedFontCount()
     {
         int i = 0;
