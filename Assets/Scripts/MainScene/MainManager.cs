@@ -25,12 +25,12 @@ public class MainManager : MonoBehaviour
 
   void Start()
   {
-    // Debug.Log(Library.SearchNumberIndex(source, 0));
-    //debug
-    for (int i = 0; i < dataManager.ReleasedFontCount(); i++)
+    if (Library.CharacteristicFanction(dataManager.data.haveFonts) < 2)
     {
-      dataManager.data.fontNumbers[i] = 0;
+      dataManager.data.haveFonts[4] = true;
+      dataManager.data.haveFonts[10] = true;
     }
+    for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
 
     ShowFontImage();
   }

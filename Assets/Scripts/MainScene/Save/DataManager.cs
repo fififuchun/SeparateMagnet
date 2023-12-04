@@ -50,10 +50,6 @@ public class DataManager : MonoBehaviour
         return JsonUtility.FromJson<SaveData>(json);            // jsonファイルを型に戻して返す
     }
 
-    // public void Save_Main(){
-
-    // }
-
     //-------------------------------------------------------------------
     // ゲーム終了時に保存
     void OnDestroy()
