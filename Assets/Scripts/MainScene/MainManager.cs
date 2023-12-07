@@ -29,6 +29,7 @@ public class MainManager : MonoBehaviour
     {
       dataManager.data.haveFonts[4] = true;
       dataManager.data.haveFonts[10] = true;
+      // dataManager.Save(dataManager.data);
     }
     for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
 

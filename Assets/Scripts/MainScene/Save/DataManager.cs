@@ -54,6 +54,7 @@ public class DataManager : MonoBehaviour
     // ゲーム終了時に保存
     void OnDestroy()
     {
+        
         Save(data);
     }
 

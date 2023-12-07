@@ -22,13 +22,18 @@ public class FontManager : MonoBehaviour
     {
         for (int i = 0; i < fontContents.Length; i++) fontContents[i].SetActive(!dataManager.data.haveFonts[i]);
         if (Library.CharacteristicFanction(dataManager.data.haveFonts) == dataManager.data.haveFonts.Length) alreadyBuyAllFont.SetActive(true);
-        buyFontView.GetComponent<RectTransform>().sizeDelta = new Vector2(880, 430 * Mathf.Ceil((dataManager.data.haveFonts.Length - Library.CharacteristicFanction(dataManager.data.haveFonts)) / 3) - 10);
+        buyFontView.GetComponent<RectTransform>().sizeDelta = new Vector2(880, 430 * Mathf.Ceil(((float)(dataManager.data.haveFonts.Length - Library.CharacteristicFanction(dataManager.data.haveFonts))) / 3f) - 10);
     }
 
     public void PushBuyFontButton(int i)
     {
+        if (diamondCount.Diamond < 25)
+        {
+            //警告
+            return;
+        }
+        diamondCount.GetDiamond(-25);
         dataManager.data.haveFonts[i] = true;
-        
         Start();
     }
 
