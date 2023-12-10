@@ -27,4 +27,18 @@ public static class Library// : MonoBehaviour
         for (int i = 0; i < bools.Length; i++) if (bools[i]) count++;
         return count;
     }
+
+    /// <summary>
+    /// 整数の下二桁を二文字のstring型で返す
+    /// </summary>
+    /// <param name="a"></param>
+    /// <returns></returns>
+    public static string LastTwoDigits(int a)
+    {
+        int reminder = a % 100;
+
+        if (a > 9) return reminder.ToString();
+        else if (a > 0) return "0" + reminder.ToString();
+        else return "";
+    }
 }
