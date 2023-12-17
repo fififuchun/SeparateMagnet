@@ -6,7 +6,7 @@ using TMPro;
 
 public class RankManager : MonoBehaviour
 {
-    //rank iになるためにexpTable[i-1]までの累計が必要（rank 2になるためにはexpTable[2-1]までの累計、0 + 100が必要）
+    //rank i-1からrank iになるためにはexpTable[i-1]が必要（rank 1からrank 2になるためにはexpTable[2-1]、0 + 100が必要）
     private int[] expTable = new int[40] { 0,     100,   200,   300,    400,    500,    600,    700,    800,    900,
                                            1000,  1000,  1000,  1000,   1500,   2000,   2000,   2000,   2500,   2500,
                                            5000,  7500,  10000, 12500,  15000,  19000,  20000,  25000,  30000,  35000,

@@ -13,19 +13,30 @@ MonoBehaviour:
   m_Name: Mission
   m_EditorClassIdentifier: 
   missionGroupDatas:
-  - headId: 
+  - headId: 00
+    missionType: 0
     missionDatas:
-    - bottomId: 
-      id: 
+    - bottomId: 00
+      id: 0000
       missionPrefab: {fileID: 6749361448700363777, guid: bcec97d6e7847e0478841bd6f171de91, type: 3}
-      missionDataPrefab: {fileID: 0}
       currentValue: 0
       goalValue: 0
-      missionState: 0
-    - bottomId: 
-      id: 
+      missionState: 2
+    - bottomId: 01
+      id: 0001
       missionPrefab: {fileID: 6749361448700363777, guid: bcec97d6e7847e0478841bd6f171de91, type: 3}
-      missionDataPrefab: {fileID: 0}
       currentValue: 0
       goalValue: 0
-      missionState: 0
+      missionState: 2
+    - bottomId: 02
+      id: 0002
+      missionPrefab: {fileID: 0}
+      currentValue: 0
+      goalValue: 0
+      missionState: 2
+    - bottomId: 03
+      id: 0003
+      missionPrefab: {fileID: 0}
+      currentValue: 0
+      goalValue: 0
+      missionState: 2

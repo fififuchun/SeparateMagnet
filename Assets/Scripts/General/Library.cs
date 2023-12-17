@@ -38,7 +38,7 @@ public static class Library// : MonoBehaviour
         int reminder = a % 100;
 
         if (a > 9) return reminder.ToString();
-        else if (a > 0) return "0" + reminder.ToString();
+        else if (a >= 0) return "0" + reminder.ToString();
         else return "";
     }
 }

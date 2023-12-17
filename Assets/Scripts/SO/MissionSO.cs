@@ -7,13 +7,22 @@ using UnityEngine;
 public class MissionSO : ScriptableObject
 {
     public List<MissionGroupData> missionGroupDatas = new List<MissionGroupData>();
-
 }
 
 [System.Serializable]
 public class MissionGroupData
 {
     [HideInInspector] public string headId;
+
+
+    public MissionType missionType;
+    public enum MissionType
+    {
+        Through,
+        Separate,
+    }
+
+
     public List<MissionData> missionDatas = new List<MissionData>();
 }
 
@@ -25,7 +34,7 @@ public class MissionData
 
     public GameObject missionPrefab;
 
-    public MissionDataPrefab missionDataPrefab;
+    // public MissionDataPrefab missionDataPrefab;
 
     public int currentValue;
     public int goalValue;
@@ -39,6 +48,15 @@ public class MissionData
         Received,
     }
 
+
+
+    // void OnValidate()
+    // {
+    //     Debug.Log("a");
+    // }
+
+
+    //便利な関数
     //初期化
     public void InitializeMissionState()
     {
@@ -46,7 +64,7 @@ public class MissionData
     }
 
     //ミッションを達成したとき
-    public void AchieveMissionState()
+    public void JudgeAchieveMissionState()
     {
         if (goalValue < currentValue) missionState = MissionState.Acieved;
     }
@@ -56,10 +74,17 @@ public class MissionData
     {
         missionState = MissionState.Received;
     }
+
+    //IDからクラスの位置を特定
+    public Vector2Int MissionDataIndex(MissionData missionData)
+    {
+        if (missionData.id.ToCharArray().Length == 4) return new Vector2Int(Mathf.FloorToInt(int.Parse(missionData.id) / 100), int.Parse(missionData.id) % 100);
+        else return new Vector2Int(0, 0);
+    }
 }
 
 
-public class IdLibrary
+public class IdLibrary : MonoBehaviour
 {
     public string LastTwoDigits(int a)
     {
@@ -73,5 +98,10 @@ public class IdLibrary
     public void ChangeId(string previousId, string nextId)
     {
         previousId = nextId;
+    }
+
+    void OnValidate()
+    {
+        Debug.Log("a");
     }
 }
