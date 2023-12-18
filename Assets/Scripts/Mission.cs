@@ -5,23 +5,46 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEditor;
 
+
+public enum MissionType
+{
+    Through,
+    Separate,
+}
+
+public enum MissionState
+{
+    None,
+    Acieved,
+    NotAcieved,
+    Received,
+}
+
+
+
 [ExecuteAlways]
 public class Mission : MonoBehaviour
 {
-    public List<MissionGroupData> missionGroupDatas = new List<MissionGroupData>();
+    public GameObject missionPrefab;
+    public List<MissionGroupDatas> missionGroupDatas = new List<MissionGroupDatas>();
 
     void OnValidate()
     {
-        Debug.Log("a");
+        Start();
+
     }
 
     void Start()
     {
+        // SetMission(new Vector2Int(0, 1), new Vector2Int(0, 0));
+
         for (int i = 0; i < missionGroupDatas.Count(); i++)
         {
             missionGroupDatas[i].headId = Library.LastTwoDigits(i);
+
             for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
             {
+                if (missionGroupDatas[i].missionType == MissionType.Through) missionGroupDatas[i].missionDatas[j].currentValue = missionGroupDatas[i].throughCurrentValue;
                 missionGroupDatas[i].missionDatas[j].bottomId = Library.LastTwoDigits(j);
                 missionGroupDatas[i].missionDatas[j].id = missionGroupDatas[i].headId + missionGroupDatas[i].missionDatas[j].bottomId;
 
@@ -34,18 +57,24 @@ public class Mission : MonoBehaviour
     {
         if (missionGroupDatas.Count() <= place.x)
         {
-            missionGroupDatas.Add(new MissionGroupData());
-            for (int i = 0; i < place.y + 1; i++) missionGroupDatas[place.x].missionDatas.Add(new MissionData());
+            missionGroupDatas.Add(new MissionGroupDatas());
+            for (int i = 0; i < place.y + 1; i++) missionGroupDatas[place.x].missionDatas.Add(new MissionDatas());
             Debug.Log("指定の位置にミッショングループデータを新規作成しました");
         }
         else if (missionGroupDatas[place.x].missionDatas.Count() <= place.y)
         {
             for (int i = 0; i < place.y - missionGroupDatas[place.x].missionDatas.Count() + 1; i++)
-                missionGroupDatas[place.x].missionDatas.Add(new MissionData());
+                missionGroupDatas[place.x].missionDatas.Add(new MissionDatas());
         }
 
         missionGroupDatas[place.x].missionDatas[place.y].currentValue = value.x;
         missionGroupDatas[place.x].missionDatas[place.y].goalValue = value.y;
+        Debug.Log("初期化しました");
+    }
+
+    public void AppearMission()
+    {
+
     }
 }
 
@@ -56,18 +85,13 @@ public class MissionGroupDatas
 {
     [HideInInspector] public string headId;
 
+
+    public MissionType missionType;
+
     public int throughCurrentValue;
 
 
-    public MissionType missionType;
-    public enum MissionType
-    {
-        Through,
-        Separate,
-    }
-
-
-    public List<MissionData> missionDatas = new List<MissionData>();
+    public List<MissionDatas> missionDatas = new List<MissionDatas>();
 }
 
 
@@ -76,23 +100,20 @@ public class MissionGroupDatas
 public class MissionDatas
 {
     [HideInInspector] public string bottomId;
-    [ReadOnly, SerializeField] private string id;
+    [SerializeField] public string id;
 
-    public GameObject missionPrefab;
+    public string missionMessage;
+
+    public MissionState missionState;
+
+    // public GameObject missionPrefab;
 
     // public MissionDataPrefab missionDataPrefab;
 
     public int currentValue;
     public int goalValue;
 
-    public MissionState missionState;
-    public enum MissionState
-    {
-        None,
-        Acieved,
-        NotAcieved,
-        Received,
-    }
+    public int reward;
 
 
     //便利な関数
@@ -123,39 +144,100 @@ public class MissionDatas
 }
 
 
-
 #if UNITY_EDITOR
 [CanEditMultipleObjects]
-[CustomEditor(typeof(Mission))]
+[CustomEditor(typeof(Mission), true)]
 public class MissionEditor : Editor
 {
-    private Mission mission;
-    private SerializedProperty[] _throughCurrentValueProperties;
+    public Mission mission;
+
+    private SerializedProperty _missionGroupDatas;
+
+
+    // private SerializedProperty[] _throughCurrentValueProperties;
+
+    // private SerializedProperty _id;
+    // private SerializedProperty _currentValue;
+    // private SerializedProperty _goalValue;
+    // private SerializedProperty _missionState;
 
     private void OnEnable()
     {
         mission = target as Mission;
 
-        _throughCurrentValueProperties = new SerializedProperty[mission.missionGroupDatas.Count()];
-        for (int i = 0; i < _throughCurrentValueProperties.Length;i++){
-            // _throughCurrentValueProperties[i]= mission.missionGroupDatas[i].throughCurrentValue;
-        }
+        _missionGroupDatas = serializedObject.FindProperty("missionGroupDatas");
+
+        // _missionGroupDatas= serializedObject.FindProperty("missionGroupDatas");
+
+        // _throughCurrentValueProperties = new SerializedProperty[mission.missionGroupDatas.Count()];
+        // for (int i = 0; i < _throughCurrentValueProperties.Length; i++)
+        // {
+        //     // _throughCurrentValueProperties[i]= mission.missionGroupDatas[i].throughCurrentValue;
+        // }
+
+        // _id = serializedObject.FindProperty("id");
+        // _currentValue = serializedObject.FindProperty("currentValue");
+        // _goalValue = serializedObject.FindProperty("goalValue");
+        // _missionState = serializedObject.FindProperty("goalValue");
     }
 
     public override void OnInspectorGUI()
     {
+        // EditorGUILayout.PropertyField(_missionGroupDatas);
+
         base.OnInspectorGUI();
 
-        for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
-        {
-            switch (mission.missionGroupDatas[i].missionType)
-            {
-                case MissionGroupData.MissionType.Through:
-                    // EditorGUILayout.IntField("currentValue", mission.missionGroupDatas[i].throughCurrentValue);
-                    EditorGUILayout.HelpBox("表示するテキスト", MessageType.Info);
-                    break;
-            }
-        }
+
+        // serializedObject.Update();
+
+        // for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
+        // {
+        //     switch (mission.missionGroupDatas[i].missionType)
+        //     {
+        //         case MissionType.Through:
+        //             // EditorGUILayout.IntField("currentValue", mission.missionGroupDatas[i].throughCurrentValue);
+        //             EditorGUILayout.HelpBox("表示するテキスト", MessageType.Info);
+        //             break;
+        //     }
+        // }
+        // EditorGUILayout.HelpBox("表示するテキスト", MessageType.Info);
+
+        // serializedObject.ApplyModifiedProperties();
     }
 }
+
+//test
+
+
+// [CanEditMultipleObjects]
+// [CustomEditor(typeof(MissionGroupDatas))]
+// public class MissionGroupDatasEditor : Editor
+// {
+//     // private MissionGroupDatas missionGroupDatas;
+
+//     private void OnEnable()
+//     {
+//         // missionGroupDatas = MissionEditor.mission.missionGroupDatas
+//     }
+
+//     public override void OnInspectorGUI()
+//     {
+//         EditorGUILayout.HelpBox("表示するテキスト", MessageType.Info);
+//     }
+// }
+
+// [CanEditMultipleObjects]
+// [CustomEditor(typeof(MissionDatas))]
+// public class MissionDatasEditor : Editor
+// {
+//     private void OnEnable()
+//     {
+
+//     }
+
+//     public override void OnInspectorGUI()
+//     {
+
+//     }
+// }
 #endif
