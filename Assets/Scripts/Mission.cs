@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
 
 
 public enum MissionType
@@ -15,27 +16,34 @@ public enum MissionType
 public enum MissionState
 {
     None,
-    Acieved,
-    NotAcieved,
+    Achieved,
+    NotAchieved,
     Received,
 }
 
 
 
-[ExecuteAlways]
+// [ExecuteAlways]
 public class Mission : MonoBehaviour
 {
+    // public Button button;
+
+    public GameObject missionContent;
+
     public GameObject missionPrefab;
     public List<MissionGroupDatas> missionGroupDatas = new List<MissionGroupDatas>();
 
     void OnValidate()
     {
-        Start();
-
+        // Start();
     }
 
     void Start()
     {
+        for (int i = 0; i < missionContent.transform.childCount; i++)
+        {
+            Destroy(missionContent.transform.GetChild(i).gameObject);
+        }
         // SetMission(new Vector2Int(0, 1), new Vector2Int(0, 0));
 
         for (int i = 0; i < missionGroupDatas.Count(); i++)
@@ -48,8 +56,13 @@ public class Mission : MonoBehaviour
                 missionGroupDatas[i].missionDatas[j].bottomId = Library.LastTwoDigits(j);
                 missionGroupDatas[i].missionDatas[j].id = missionGroupDatas[i].headId + missionGroupDatas[i].missionDatas[j].bottomId;
 
+                missionGroupDatas[i].missionDatas[j].missionPrefab = missionPrefab;
+
                 missionGroupDatas[i].missionDatas[j].InitializeMissionState();
             }
+
+
+            AppearMissionGroup(i);
         }
     }
 
@@ -72,9 +85,24 @@ public class Mission : MonoBehaviour
         Debug.Log("初期化しました");
     }
 
-    public void AppearMission()
+    public void AppearMissionGroup(int i)
     {
-
+        for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
+        {
+            if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.NotAchieved && j + 1 == missionGroupDatas[i].missionDatas.Count())
+            {
+                Instantiate(missionGroupDatas[i].missionDatas[j].missionPrefab, missionContent.transform);
+                return;
+            }
+            else if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Achieved)
+            {
+                Instantiate(missionGroupDatas[i].missionDatas[j].missionPrefab, missionContent.transform);
+            }
+            else if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Received)
+            {
+                return;
+            }
+        }
     }
 }
 
@@ -106,7 +134,7 @@ public class MissionDatas
 
     public MissionState missionState;
 
-    // public GameObject missionPrefab;
+    public GameObject missionPrefab;
 
     // public MissionDataPrefab missionDataPrefab;
 
@@ -120,13 +148,13 @@ public class MissionDatas
     //初期化
     public void InitializeMissionState()
     {
-        if (missionState == MissionState.None) missionState = MissionState.NotAcieved;
+        if (missionState == MissionState.None) missionState = MissionState.NotAchieved;
     }
 
     //ミッションを達成したとき
     public void JudgeAchieveMissionState()
     {
-        if (goalValue < currentValue) missionState = MissionState.Acieved;
+        if (goalValue < currentValue) missionState = MissionState.Achieved;
     }
 
     //ミッション報酬を受け取ったとき
@@ -205,39 +233,4 @@ public class MissionEditor : Editor
         // serializedObject.ApplyModifiedProperties();
     }
 }
-
-//test
-
-
-// [CanEditMultipleObjects]
-// [CustomEditor(typeof(MissionGroupDatas))]
-// public class MissionGroupDatasEditor : Editor
-// {
-//     // private MissionGroupDatas missionGroupDatas;
-
-//     private void OnEnable()
-//     {
-//         // missionGroupDatas = MissionEditor.mission.missionGroupDatas
-//     }
-
-//     public override void OnInspectorGUI()
-//     {
-//         EditorGUILayout.HelpBox("表示するテキスト", MessageType.Info);
-//     }
-// }
-
-// [CanEditMultipleObjects]
-// [CustomEditor(typeof(MissionDatas))]
-// public class MissionDatasEditor : Editor
-// {
-//     private void OnEnable()
-//     {
-
-//     }
-
-//     public override void OnInspectorGUI()
-//     {
-
-//     }
-// }
 #endif
