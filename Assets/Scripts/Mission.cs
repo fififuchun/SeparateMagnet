@@ -5,7 +5,9 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-
+using TMPro;
+using System;
+using UnityEngine.Events;
 
 public enum MissionType
 {
@@ -26,24 +28,18 @@ public enum MissionState
 // [ExecuteAlways]
 public class Mission : MonoBehaviour
 {
-    // public Button button;
-
-    public GameObject missionContent;
-
-    public GameObject missionPrefab;
     public List<MissionGroupDatas> missionGroupDatas = new List<MissionGroupDatas>();
 
     void OnValidate()
     {
-        // Start();
+        Start();
     }
 
     void Start()
     {
-        for (int i = 0; i < missionContent.transform.childCount; i++)
-        {
-            Destroy(missionContent.transform.GetChild(i).gameObject);
-        }
+        // currentValues = new int[missionMethods.Length];
+
+        // for (int i = 0; i < missionContent.transform.childCount; i++) Destroy(missionContent.transform.GetChild(i).gameObject);
         // SetMission(new Vector2Int(0, 1), new Vector2Int(0, 0));
 
         for (int i = 0; i < missionGroupDatas.Count(); i++)
@@ -56,13 +52,10 @@ public class Mission : MonoBehaviour
                 missionGroupDatas[i].missionDatas[j].bottomId = Library.LastTwoDigits(j);
                 missionGroupDatas[i].missionDatas[j].id = missionGroupDatas[i].headId + missionGroupDatas[i].missionDatas[j].bottomId;
 
-                missionGroupDatas[i].missionDatas[j].missionPrefab = missionPrefab;
+                // missionGroupDatas[i].missionDatas[j].missionPrefab = missionPrefab;
 
                 missionGroupDatas[i].missionDatas[j].InitializeMissionState();
             }
-
-
-            AppearMissionGroup(i);
         }
     }
 
@@ -85,24 +78,52 @@ public class Mission : MonoBehaviour
         Debug.Log("初期化しました");
     }
 
-    public void AppearMissionGroup(int i)
+    // public void AppearMissionGroup(int i)
+    // {
+    //     for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
+    //     {
+    //         if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.NotAchieved || missionGroupDatas[i].missionDatas[j].missionState == MissionState.Achieved)
+    //         {
+    //             Instantiate(missionGroupDatas[i].missionDatas[j].missionPrefab, missionContent.transform);
+    //             return;
+    //         }
+    //         else if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Received)
+    //         {
+    //             continue;
+    //         }
+    //     }
+    // }
+
+    public int[] CurrentMissionNums()
     {
+        int[] currentMissionNums = new int[missionGroupDatas.Count()];
+        for (int i = 0; i < missionGroupDatas.Count(); i++) currentMissionNums[i] = CurrentMissionNum(i);
+        return currentMissionNums;
+    }
+
+    public int CurrentMissionNum(int i)
+    {
+        if (i < 0 || i > missionGroupDatas.Count() - 1) return -1;
+        if (missionGroupDatas[i].missionDatas.Count() == 0) return -1;
+
         for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
         {
-            if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.NotAchieved && j + 1 == missionGroupDatas[i].missionDatas.Count())
+            if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Achieved || missionGroupDatas[i].missionDatas[j].missionState == MissionState.NotAchieved)
             {
-                Instantiate(missionGroupDatas[i].missionDatas[j].missionPrefab, missionContent.transform);
-                return;
-            }
-            else if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Achieved)
-            {
-                Instantiate(missionGroupDatas[i].missionDatas[j].missionPrefab, missionContent.transform);
-            }
-            else if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Received)
-            {
-                return;
+                return j;
             }
         }
+        return -1;
+    }
+
+    public void InstantiateMission(int goal, int reward, string missionMessage)
+    {
+
+    }
+
+    public void InstantiateMission(int goal, int reward, string missionMessage, int current)
+    {
+
     }
 }
 
@@ -134,7 +155,7 @@ public class MissionDatas
 
     public MissionState missionState;
 
-    public GameObject missionPrefab;
+    // public GameObject missionPrefab;
 
     // public MissionDataPrefab missionDataPrefab;
 

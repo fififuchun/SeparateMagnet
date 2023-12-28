@@ -6,6 +6,8 @@ using TMPro;
 
 public class RankManager : MonoBehaviour
 {
+    [SerializeField] private MissionDataManager missionDataManager;
+
     //rank i-1からrank iになるためにはexpTable[i-1]が必要（rank 1からrank 2になるためにはexpTable[2-1]、0 + 100が必要）
     private int[] expTable = new int[40] { 0,     100,   200,   300,    400,    500,    600,    700,    800,    900,
                                            1000,  1000,  1000,  1000,   1500,   2000,   2000,   2000,   2500,   2500,
@@ -47,6 +49,8 @@ public class RankManager : MonoBehaviour
         // Debug.Log("rank: " + rank);
         expSlider.value = (float)(coinSum - expTotalTable[rank - 1]) / (float)expTable[rank];
         rankText.text = rank.ToString();
+
+        missionDataManager.data.missionValues[0] = rank;
     }
 
     public void GetCoinSum(int coin)

@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System.Linq;
 
-public class DataManager : MonoBehaviour
+public class MissionDataManager : MonoBehaviour
 {
+    //
+    public Mission mission;
+
     // json変換するデータのクラス
-    [HideInInspector] public SaveData data;
+    [HideInInspector] public MissionSaveData data;
 
     // jsonファイルのパス
     string filepath;
 
     // jsonファイル名
-    string fileName = "Data.json";
+    string fileName = "MissionData.json";
 
     //-------------------------------------------------------------------
     // 開始時にファイルチェック、読み込み
@@ -27,12 +29,11 @@ public class DataManager : MonoBehaviour
 
         // ファイルを読み込んでdataに格納
         data = Load(filepath);
-        CheakSaveData();
     }
 
     //-------------------------------------------------------------------
     // jsonとしてデータを保存
-    public void Save(SaveData data)
+    public void Save(MissionSaveData data)
     {
         string json = JsonUtility.ToJson(data);                 // jsonとして変換
         StreamWriter wr = new StreamWriter(filepath, false);    // ファイル書き込み指定
@@ -41,13 +42,13 @@ public class DataManager : MonoBehaviour
     }
 
     // jsonファイル読み込み
-    SaveData Load(string path)
+    MissionSaveData Load(string path)
     {
         StreamReader rd = new StreamReader(path);               // ファイル読み込み指定
         string json = rd.ReadToEnd();                           // ファイル内容全て読み込む
         rd.Close();                                             // ファイル閉じる
 
-        return JsonUtility.FromJson<SaveData>(json);            // jsonファイルを型に戻して返す
+        return JsonUtility.FromJson<MissionSaveData>(json);            // jsonファイルを型に戻して返す
     }
 
     //-------------------------------------------------------------------
@@ -55,36 +56,5 @@ public class DataManager : MonoBehaviour
     void OnDestroy()
     {
         Save(data);
-    }
-
-    //初期数値
-    private int[] initLevel = { 0, 0, 0, 0, 0, 0, 0 };
-    public int[] InitLevel { get => initLevel; }
-
-    private int[] maxlevel = { 3, 40, 10, 5, 98, 5, 50 };
-    public int[] MaxLevel { get => maxlevel; }
-
-    void CheakSaveData()
-    {
-        for (int i = 0; i < data.level.Count(); i++)
-        {
-            if (data.level[i] < InitLevel[i]) data.level[i] = InitLevel[i];
-            if (data.level[i] > MaxLevel[i]) data.level[i] = MaxLevel[i];
-        }
-    }
-
-    /// <summary>
-    /// 何個の枠が解放されているか、1~6のうちどれか
-    /// </summary>
-    /// <returns></returns>
-    public int ReleasedFontCount()
-    {
-        int i = 0;
-        while (data.fontNumbers[i] >= 0)
-        {
-            i++;
-            if (i == 6) return i;
-        }
-        return i;
     }
 }
