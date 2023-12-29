@@ -48,7 +48,7 @@ public class MissionDataManager : MonoBehaviour
         string json = rd.ReadToEnd();                           // ファイル内容全て読み込む
         rd.Close();                                             // ファイル閉じる
 
-        return JsonUtility.FromJson<MissionSaveData>(json);            // jsonファイルを型に戻して返す
+        return JsonUtility.FromJson<MissionSaveData>(json);     // jsonファイルを型に戻して返す
     }
 
     //-------------------------------------------------------------------

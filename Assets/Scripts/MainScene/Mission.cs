@@ -32,16 +32,21 @@ public class Mission : MonoBehaviour
 
     void OnValidate()
     {
-        Start();
+        Start(); //debug??
+        CheakMission();
     }
 
     void Start()
     {
-        // currentValues = new int[missionMethods.Length];
-
-        // for (int i = 0; i < missionContent.transform.childCount; i++) Destroy(missionContent.transform.GetChild(i).gameObject);
         // SetMission(new Vector2Int(0, 1), new Vector2Int(0, 0));
 
+        SetID();
+
+        Debug.Log(String.Join(",", CurrentMissionNums()));
+    }
+
+    public void SetID()
+    {
         for (int i = 0; i < missionGroupDatas.Count(); i++)
         {
             missionGroupDatas[i].headId = Library.LastTwoDigits(i);
@@ -51,8 +56,6 @@ public class Mission : MonoBehaviour
                 if (missionGroupDatas[i].missionType == MissionType.Through) missionGroupDatas[i].missionDatas[j].currentValue = missionGroupDatas[i].throughCurrentValue;
                 missionGroupDatas[i].missionDatas[j].bottomId = Library.LastTwoDigits(j);
                 missionGroupDatas[i].missionDatas[j].id = missionGroupDatas[i].headId + missionGroupDatas[i].missionDatas[j].bottomId;
-
-                // missionGroupDatas[i].missionDatas[j].missionPrefab = missionPrefab;
 
                 missionGroupDatas[i].missionDatas[j].InitializeMissionState();
             }
@@ -78,21 +81,16 @@ public class Mission : MonoBehaviour
         Debug.Log("初期化しました");
     }
 
-    // public void AppearMissionGroup(int i)
-    // {
-    //     for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
-    //     {
-    //         if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.NotAchieved || missionGroupDatas[i].missionDatas[j].missionState == MissionState.Achieved)
-    //         {
-    //             Instantiate(missionGroupDatas[i].missionDatas[j].missionPrefab, missionContent.transform);
-    //             return;
-    //         }
-    //         else if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Received)
-    //         {
-    //             continue;
-    //         }
-    //     }
-    // }
+    public void CheakMission()
+    {
+        for (int i = 0; i < missionGroupDatas.Count(); i++)
+        {
+            for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
+            {
+                missionGroupDatas[i].missionDatas[j].JudgeAchieveMissionState();
+            }
+        }
+    }
 
     public int[] CurrentMissionNums()
     {
@@ -115,16 +113,6 @@ public class Mission : MonoBehaviour
         }
         return -1;
     }
-
-    public void InstantiateMission(int goal, int reward, string missionMessage)
-    {
-
-    }
-
-    public void InstantiateMission(int goal, int reward, string missionMessage, int current)
-    {
-
-    }
 }
 
 
@@ -138,6 +126,8 @@ public class MissionGroupDatas
     public MissionType missionType;
 
     public int throughCurrentValue;
+
+    public GameObject missionObject;
 
 
     public List<MissionDatas> missionDatas = new List<MissionDatas>();
@@ -155,10 +145,6 @@ public class MissionDatas
 
     public MissionState missionState;
 
-    // public GameObject missionPrefab;
-
-    // public MissionDataPrefab missionDataPrefab;
-
     public int currentValue;
     public int goalValue;
 
@@ -175,7 +161,8 @@ public class MissionDatas
     //ミッションを達成したとき
     public void JudgeAchieveMissionState()
     {
-        if (goalValue < currentValue) missionState = MissionState.Achieved;
+        if (goalValue <= currentValue) missionState = MissionState.Achieved;
+        else missionState = MissionState.NotAchieved;
     }
 
     //ミッション報酬を受け取ったとき
