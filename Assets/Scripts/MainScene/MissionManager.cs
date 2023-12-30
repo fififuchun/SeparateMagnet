@@ -5,12 +5,15 @@ using Unity.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 //Missionの中でもゲーム特有のものをここに書きたい(詳細な値設定とかオブジェクトの管理とか)
 [ExecuteAlways]
 public class MissionManager : MonoBehaviour
 {
     [SerializeField] private Mission mission;
+    [SerializeField] private MissionDataManager missionDataManager;
+    [SerializeField] private DiamondCount diamondCount;
 
     [SerializeField] private GameObject missionPrefab;
     [SerializeField] private GameObject missionContent;
@@ -25,6 +28,8 @@ public class MissionManager : MonoBehaviour
     {
         SetMissionInformation();
         InstantiateMissions();
+        mission.RefreshAllMissions(missionDataManager.data.currentMissionNumbers);
+        UpdateMissions();
     }
 
     public void SetMissionInformation()
@@ -54,31 +59,19 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    public void UpdateMission()
-    {
-        for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
-        {
-            // mission.missionGroupDatas[i].missionObject.
-        }
-    }
-
     public void InstantiateMissions()
     {
-        for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
-        {
-            InstantiateMission(i);
-        }
+        for (int i = 0; i < mission.missionGroupDatas.Count(); i++) InstantiateMission(i);
     }
 
-    // public void InstantiateMission(string missionMessage, int current, int goal, int reward)
-    // {
-    //     GameObject missionObject = Instantiate(missionPrefab, missionContent.transform);
-    //     missionObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = missionMessage;
-    //     missionObject.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = current.ToString();
-    //     missionObject.transform.GetChild(1).GetChild(4).gameObject.GetComponent<TextMeshProUGUI>().text = goal.ToString();
-    //     missionObject.transform.GetChild(2).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = $"x{reward}";
-    //     missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(PushRecieveRewardButton);
-    // }
+    public void UpdateMissions()
+    {
+        for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
+        {
+            mission.missionGroupDatas[i].throughCurrentValue = missionDataManager.data.missionValues[i];
+            UpdateMission(i);
+        }
+    }
 
     public void InstantiateMission(int i)
     {
@@ -87,15 +80,37 @@ public class MissionManager : MonoBehaviour
         GameObject missionObject = Instantiate(missionPrefab, missionContent.transform);
         mission.missionGroupDatas[i].missionObject = missionObject;
 
-        missionObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].missionMessage;
-        missionObject.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].currentValue.ToString();
-        missionObject.transform.GetChild(1).GetChild(4).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].goalValue.ToString();
-        missionObject.transform.GetChild(2).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = $"x{mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].reward}";
-        missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(PushRecieveRewardButton);
+        UpdateMission(i);
     }
 
-    public void PushRecieveRewardButton()
+    public void UpdateMission(int i)
     {
-        // if()
+        //変更しました
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].missionMessage;
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].currentValue.ToString();
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(4).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].goalValue.ToString();
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).gameObject.GetComponent<Slider>().value = (float)mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].currentValue / (float)mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].goalValue;
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(2).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = $"x{mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].reward}";
+
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(() => PushRecieveRewardButton(i));
+    }
+
+    public void PushRecieveRewardButton(int i)
+    {
+        if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].missionState == MissionState.Achieved)
+        {
+            mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].ReceiveMissionState();
+            diamondCount.GetDiamond(mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].reward);
+
+            missionDataManager.data.currentMissionNumbers[i]++;
+            Debug.Log("報酬を受け取りました");
+        }
+        else
+        {
+            Debug.Log("クリアしてね");
+        }
+
+        UpdateMission(i);
     }
 }

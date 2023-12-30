@@ -33,7 +33,7 @@ public class Mission : MonoBehaviour
     void OnValidate()
     {
         Start(); //debug??
-        CheakMission();
+        CheckMission();
     }
 
     void Start()
@@ -81,13 +81,24 @@ public class Mission : MonoBehaviour
         Debug.Log("初期化しました");
     }
 
-    public void CheakMission()
+    public void CheckMission()
     {
         for (int i = 0; i < missionGroupDatas.Count(); i++)
         {
             for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
             {
                 missionGroupDatas[i].missionDatas[j].JudgeAchieveMissionState();
+            }
+        }
+    }
+
+    public void RefreshAllMissions(int[] missionGroupCount)
+    {
+        for (int i = 0; i < missionGroupCount.Count(); i++)
+        {
+            for (int j = 0; j < missionGroupCount[i]; j++)
+            {
+                missionGroupDatas[i].missionDatas[j].missionState = MissionState.Received;
             }
         }
     }
@@ -129,6 +140,8 @@ public class MissionGroupDatas
 
     public GameObject missionObject;
 
+    // [HideInInspector] public bool isEvent;
+
 
     public List<MissionDatas> missionDatas = new List<MissionDatas>();
 }
@@ -162,7 +175,7 @@ public class MissionDatas
     public void JudgeAchieveMissionState()
     {
         if (goalValue <= currentValue) missionState = MissionState.Achieved;
-        else missionState = MissionState.NotAchieved;
+        // else missionState = MissionState.NotAchieved;
     }
 
     //ミッション報酬を受け取ったとき
