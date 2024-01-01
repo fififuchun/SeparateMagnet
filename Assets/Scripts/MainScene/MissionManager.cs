@@ -28,7 +28,7 @@ public class MissionManager : MonoBehaviour
     {
         SetMissionInformation();
         InstantiateMissions();
-        mission.RefreshAllMissions(missionDataManager.data.currentMissionNumbers);
+        mission.RefreshAllMissions(missionDataManager.data.AchivedMissionCounts);
         UpdateMissions();
     }
 
@@ -56,6 +56,11 @@ public class MissionManager : MonoBehaviour
         for (int j = 0; j < mission.missionGroupDatas[3].missionDatas.Count(); j++)
         {
             mission.missionGroupDatas[3].missionDatas[j].missionMessage = $"国民の怒りゲージ上限を{mission.missionGroupDatas[3].missionDatas[j].goalValue + 3}にする";
+        }
+
+        for (int j = 0; j < mission.missionGroupDatas[4].missionDatas.Count(); j++)
+        {
+            mission.missionGroupDatas[4].missionDatas[j].missionMessage = $"{mission.missionGroupDatas[4].missionDatas[j].goalValue}円稼げ";
         }
     }
 
@@ -86,24 +91,25 @@ public class MissionManager : MonoBehaviour
     public void UpdateMission(int i)
     {
         //変更しました
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].missionMessage;
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].currentValue.ToString();
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(4).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].goalValue.ToString();
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).gameObject.GetComponent<Slider>().value = (float)mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].currentValue / (float)mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].goalValue;
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(2).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = $"x{mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].reward}";
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].missionMessage;
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].currentValue.ToString();
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(4).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].goalValue.ToString();
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).gameObject.GetComponent<Slider>().value = (float)mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].currentValue / (float)mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].goalValue;
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(2).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = $"x{mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].reward}";
 
         mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
         mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(() => PushRecieveRewardButton(i));
+        Debug.Log(i+" "+(float)mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].currentValue / (float)mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].goalValue);
     }
 
     public void PushRecieveRewardButton(int i)
     {
-        if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].missionState == MissionState.Achieved)
+        if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].missionState == MissionState.Achieved)
         {
-            mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].ReceiveMissionState();
-            diamondCount.GetDiamond(mission.missionGroupDatas[i].missionDatas[missionDataManager.data.currentMissionNumbers[i]].reward);
+            mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].ReceiveMissionState();
+            diamondCount.GetDiamond(mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].reward);
 
-            missionDataManager.data.currentMissionNumbers[i]++;
+            missionDataManager.data.AchivedMissionCounts[i]++;
             Debug.Log("報酬を受け取りました");
         }
         else

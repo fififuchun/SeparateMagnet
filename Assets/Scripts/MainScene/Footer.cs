@@ -6,6 +6,9 @@ using TMPro;
 
 public class Footer : MonoBehaviour
 {
+    //
+    [SerializeField] private MissionManager missionManager;
+
     //FooterAnimationインスタンス
     [SerializeField] private FooterAnimation[] footerAnimations = new FooterAnimation[5];
 
@@ -60,7 +63,12 @@ public class Footer : MonoBehaviour
                 buttonsRects[i].GetComponent<Image>().color = new Color32(236, 193, 0, 255);
                 footerImagesRects[i].sizeDelta = new Vector2(200, 200);
                 if (i == 2) footerImagesRects[i].sizeDelta = new Vector2(300, 150);
-                if (i == 3) notificationImage.SetActive(false);
+                if (i == 3)
+                {
+                    notificationImage.SetActive(false);
+                    missionManager.UpdateMissions();
+                }
+
                 footerImagesRects[i].gameObject.transform.localPosition = new Vector2(footerImagesRects[i].gameObject.transform.localPosition.x, 10);
                 footerTexts[i].gameObject.transform.localPosition = new Vector3(200 * index - 400, 0);
                 menuObjects[i].SetActive(true);
