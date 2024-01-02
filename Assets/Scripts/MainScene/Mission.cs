@@ -174,8 +174,7 @@ public class MissionDatas
     //ミッションを達成したとき
     public void JudgeAchieveMissionState()
     {
-        if (goalValue <= currentValue) missionState = MissionState.Achieved;
-        // else missionState = MissionState.NotAchieved;
+        if (goalValue <= currentValue && missionState == MissionState.NotAchieved) missionState = MissionState.Achieved;
     }
 
     //ミッション報酬を受け取ったとき

@@ -29,7 +29,6 @@ public class MainManager : MonoBehaviour
     {
       dataManager.data.haveFonts[4] = true;
       dataManager.data.haveFonts[10] = true;
-      // dataManager.Save(dataManager.data);
     }
     for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
 
@@ -40,7 +39,6 @@ public class MainManager : MonoBehaviour
   {
     if (Input.GetMouseButtonUp(0))
     {
-      // Debug.Log(mainViewContent.transform.position);
       scrollRect.enabled = false;
       mainViewContent.transform.DOKill();
       mainViewContent.transform.DOMove(new Vector2(Mathf.Floor((mainViewContent.transform.position.x + 415) / 830) * 830, mainViewContent.transform.position.y), 0.5f);
@@ -66,10 +64,19 @@ public class MainManager : MonoBehaviour
   }
 
   //持ちフォントの表示用
+  //メイン
   [SerializeField] private Image[] fontImages = new Image[6];
   [SerializeField] private Sprite lockImage;
   [SerializeField] private Sprite transparencyImage;
   [SerializeField] private Sprite[] kentoImages = new Sprite[20];
+
+  //ショッピング
+  [SerializeField] private Image FontFrameImage;
+  [SerializeField] private TextMeshProUGUI buyFontFrameText;
+  [SerializeField] private TextMeshProUGUI requireCoinText;
+  [SerializeField] private Sprite[] buyFontFrameImages = new Sprite[4];
+
+
   public void ShowFontImage()
   {
     for (int i = 0; i < dataManager.ReleasedFontCount(); i++)
@@ -80,16 +87,30 @@ public class MainManager : MonoBehaviour
 
       dataManager.Save(dataManager.data);
     }
+
+    if (dataManager.ReleasedFontCount() == 6)
+    {
+      FontFrameImage.sprite = buyFontFrameImages[dataManager.ReleasedFontCount() - 3];
+      buyFontFrameText.text = "すべてのフォント枠を開放しました";
+      requireCoinText.text = "Max";
+      requireCoinText.color = Color.red;
+
+      return;
+    }
+
+    FontFrameImage.sprite = buyFontFrameImages[dataManager.ReleasedFontCount() - 3];
+    buyFontFrameText.text = $"{dataManager.ReleasedFontCount() + 1}つ目のフォント枠を開放する";
+    requireCoinText.text = $"{Mathf.Pow(10, dataManager.ReleasedFontCount() - 1)}";
   }
 
-  //編集できるフォントの数を増やす
+  //編集できるフォントの数を増やす・ショッピングシーンのフォント枠解放ボタンにアタッチ
   public void IncreaseFontCount()
   {
-    // if(dataManager.data.)
+    if (diamondCount.Diamond < Mathf.Pow(10, dataManager.ReleasedFontCount() - 1) || dataManager.ReleasedFontCount() == 6) return;
 
-    if (diamondCount.Diamond < Mathf.Pow(10, dataManager.ReleasedFontCount())) return;
-
+    diamondCount.GetDiamond(-(int)Mathf.Pow(10, dataManager.ReleasedFontCount() - 1));
     dataManager.data.fontNumbers[dataManager.ReleasedFontCount()] = 0;
+
     ShowFontImage();
   }
 

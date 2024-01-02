@@ -8,6 +8,8 @@ using Unity.VisualScripting;
 public class RPGManager : MonoBehaviour
 {
     // インスタンス
+    [SerializeField] private MissionDataManager missionDataManager;
+
     [SerializeField] private CoinCount coinCount;
     [SerializeField] private DataManager dataManager;
 
@@ -27,7 +29,7 @@ public class RPGManager : MonoBehaviour
     //関数
     void Start()
     {
-        for (int i = 0; i < 7; i++) dataManager.data.level[i] = dataManager.InitLevel[i];
+        // for (int i = 0; i < 7; i++) dataManager.data.level[i] = dataManager.InitLevel[i];
         UpdateAcquireCoin();
     }
 
@@ -56,8 +58,13 @@ public class RPGManager : MonoBehaviour
         {
             coinCount.GetCoin(-acquireCoin);
             dataManager.data.level[i]++;
+
+            missionDataManager.data.missionValues[1] = dataManager.data.level[1];
+            missionDataManager.data.missionValues[2] = dataManager.data.level[4];
+            missionDataManager.data.missionValues[3] = dataManager.data.level[0];
         }
-        else {
+        else
+        {
             Debug.Log("コインがたりないよ");
         }
 

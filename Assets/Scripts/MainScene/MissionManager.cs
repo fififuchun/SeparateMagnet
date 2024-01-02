@@ -21,7 +21,6 @@ public class MissionManager : MonoBehaviour
     void OnValidate()
     {
         SetMissionInformation();
-
     }
 
     void Start()
@@ -45,17 +44,17 @@ public class MissionManager : MonoBehaviour
         {
             mission.missionGroupDatas[1].missionDatas[j].goalValue = (j + 1) * 5;
             mission.missionGroupDatas[1].missionDatas[j].reward = (j + 1) * 10;
-            mission.missionGroupDatas[1].missionDatas[j].missionMessage = $"国民の怒りづらさレベルを{(j + 1) * 5}にする";
+            mission.missionGroupDatas[1].missionDatas[j].missionMessage = $"国民の怒りづらさ\nレベルを{(j + 1) * 5}にする";
         }
 
         for (int j = 0; j < mission.missionGroupDatas[2].missionDatas.Count(); j++)
         {
-            mission.missionGroupDatas[2].missionDatas[j].missionMessage = $"検討を重ねた時に怒る確率を{mission.missionGroupDatas[2].missionDatas[j].goalValue}回下げる";
+            mission.missionGroupDatas[2].missionDatas[j].missionMessage = $"検討を重ねた時に\n怒る確率を{mission.missionGroupDatas[2].missionDatas[j].goalValue}回下げる";
         }
 
         for (int j = 0; j < mission.missionGroupDatas[3].missionDatas.Count(); j++)
         {
-            mission.missionGroupDatas[3].missionDatas[j].missionMessage = $"国民の怒りゲージ上限を{mission.missionGroupDatas[3].missionDatas[j].goalValue + 3}にする";
+            mission.missionGroupDatas[3].missionDatas[j].missionMessage = $"国民の怒りゲージ\n上限を{mission.missionGroupDatas[3].missionDatas[j].goalValue + 3}にする";
         }
 
         for (int j = 0; j < mission.missionGroupDatas[4].missionDatas.Count(); j++)
@@ -76,6 +75,7 @@ public class MissionManager : MonoBehaviour
             mission.missionGroupDatas[i].throughCurrentValue = missionDataManager.data.missionValues[i];
             UpdateMission(i);
         }
+        mission.CheckMission();
     }
 
     public void InstantiateMission(int i)
@@ -99,7 +99,6 @@ public class MissionManager : MonoBehaviour
 
         mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
         mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(() => PushRecieveRewardButton(i));
-        Debug.Log(i+" "+(float)mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].currentValue / (float)mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].goalValue);
     }
 
     public void PushRecieveRewardButton(int i)

@@ -51,6 +51,7 @@ public class RankManager : MonoBehaviour
         rankText.text = rank.ToString();
 
         missionDataManager.data.missionValues[0] = rank;
+        missionDataManager.data.missionValues[4] = coinSum;
     }
 
     public void GetCoinSum(int coin)
