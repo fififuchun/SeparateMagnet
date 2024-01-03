@@ -47,6 +47,7 @@ public class Mission : MonoBehaviour
         SetID();
     }
 
+    //IDをセット・currentValueを共通させる
     public void SetID()
     {
         for (int i = 0; i < missionGroupDatas.Count(); i++)
@@ -64,6 +65,7 @@ public class Mission : MonoBehaviour
         }
     }
 
+    //ミッションクラスを新規作成する
     public void SetMission(Vector2Int place, Vector2Int value)
     {
         if (missionGroupDatas.Count() <= place.x)
@@ -83,6 +85,7 @@ public class Mission : MonoBehaviour
         Debug.Log("初期化しました");
     }
 
+    //クリアしているミッションをAchievedにする
     public void CheckMission()
     {
         for (int i = 0; i < missionGroupDatas.Count(); i++)
@@ -105,6 +108,7 @@ public class Mission : MonoBehaviour
         }
     }
 
+    //CurrentMissionNumをmissionGroupDatas.Count()個を持った配列にして返す
     public int[] CurrentMissionNums()
     {
         int[] currentMissionNums = new int[missionGroupDatas.Count()];
@@ -135,18 +139,19 @@ public class Mission : MonoBehaviour
 [System.Serializable]
 public class MissionGroupDatas
 {
+    //IDの上二桁
     [HideInInspector] public string headId;
 
-
+    //ミッションのタイプ・貫通or分別
     public MissionType missionType;
 
+    //missionTypeが貫通のとき、全missionDataを通して共通の値
     public int throughCurrentValue;
 
+    //表示するゲームオブジェクト
     public GameObject missionObject;
 
-    // [HideInInspector] public bool isEvent;
-
-
+    //一個下のクラス
     public List<MissionDatas> missionDatas = new List<MissionDatas>();
 }
 
@@ -155,16 +160,21 @@ public class MissionGroupDatas
 [System.Serializable]
 public class MissionDatas
 {
+    //ID
     [HideInInspector] public string bottomId;
     [SerializeField] public string id;
 
+    //ミッションのタイトル
     public string missionMessage;
 
+    //ミッションの状態
     public MissionState missionState;
 
+    //ミッションのクリア状況
     public int currentValue;
     public int goalValue;
 
+    //クリア報酬
     public int reward;
 
 

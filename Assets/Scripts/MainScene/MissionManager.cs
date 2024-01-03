@@ -23,10 +23,6 @@ public class MissionManager : MonoBehaviour
     void OnValidate()
     {
         SetMissionInformation();
-        // mission.RefreshAllMissions(missionDataManager.data.AchivedMissionCounts);
-
-        // UpdateMissions();
-        // UpdateMissionsInEditMode();
     }
 
     //Destroy・Instantiateはここだけ
@@ -35,7 +31,7 @@ public class MissionManager : MonoBehaviour
         SetMissionInformation();
         mission.RefreshAllMissions(missionDataManager.data.AchivedMissionCounts);
         mission.onValidate.AddListener(UpdateMissions);
-        // Debug.Log(string.Join(",", missionDataManager.data.AchivedMissionCounts));
+        
         InstantiateMissions();
         UpdateMissions();
     }
@@ -89,18 +85,6 @@ public class MissionManager : MonoBehaviour
         notificationImage.SetActive(ExistAchievedMission());
         Debug.Log("ミッションを更新しました");
     }
-
-
-
-    // public void UpdateMissionsInEditMode()
-    // {
-    //     for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
-    //     {
-    //         mission.missionGroupDatas[i].throughCurrentValue = missionDataManager.Data.missionValues[i];
-    //     }
-    //     mission.CheckMission();
-    //     notificationImage.SetActive(ExistAchievedMission());
-    // }
 
     //MissionクラスのMissionGroupのi番目のGameObjectがいなかったら生成
     public void InstantiateMission(int i)
