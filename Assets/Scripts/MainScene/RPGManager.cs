@@ -9,6 +9,7 @@ public class RPGManager : MonoBehaviour
 {
     // インスタンス
     [SerializeField] private MissionDataManager missionDataManager;
+    [SerializeField] private Mission mission;
 
     [SerializeField] private CoinCount coinCount;
     [SerializeField] private DataManager dataManager;
@@ -58,10 +59,11 @@ public class RPGManager : MonoBehaviour
         {
             coinCount.GetCoin(-acquireCoin);
             dataManager.data.level[i]++;
-
-            missionDataManager.data.missionValues[1] = dataManager.data.level[1];
-            missionDataManager.data.missionValues[2] = dataManager.data.level[4];
-            missionDataManager.data.missionValues[3] = dataManager.data.level[0];
+            
+            //ミッションのクリア状況を即位反映
+            missionDataManager.ChangeMissionValue(1, dataManager.data.level[1]);
+            missionDataManager.ChangeMissionValue(2, dataManager.data.level[4]);
+            missionDataManager.ChangeMissionValue(3, dataManager.data.level[0]);
         }
         else
         {

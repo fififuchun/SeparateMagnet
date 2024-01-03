@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.IO;
 
 public class MissionDataManager : MonoBehaviour
 {
-    //
-    public Mission mission;
-
-    // json変換するデータのクラス
+    //json変換したMissionSaveData
     [HideInInspector] public MissionSaveData data;
+    // public MissionSaveData data { get => data; }
+
+    //update mission
+    public UnityEvent isChanged = new UnityEvent();
 
     // jsonファイルのパス
     string filepath;
@@ -56,5 +58,12 @@ public class MissionDataManager : MonoBehaviour
     void OnDestroy()
     {
         Save(data);
+    }
+
+    public void ChangeMissionValue(int i, float changedValue)
+    {
+        data.missionValues[i] = (int)changedValue;
+        Debug.Log($"missionDataの{i}番目を{changedValue}に変更しました");
+        isChanged.Invoke();
     }
 }

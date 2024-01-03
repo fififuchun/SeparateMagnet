@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using UnityEngine;
-using UnityEditor;
-using UnityEngine.UI;
-using TMPro;
-using System;
 using UnityEngine.Events;
+using UnityEditor;
 
 public enum MissionType
 {
@@ -25,15 +22,22 @@ public enum MissionState
 
 
 
-// [ExecuteAlways]
 public class Mission : MonoBehaviour
 {
     public List<MissionGroupDatas> missionGroupDatas = new List<MissionGroupDatas>();
 
+    //update mission
+    public UnityEvent onValidate = new UnityEvent();
+
+    //Missionクラスの情報が少しでも変更されたら走る
     void OnValidate()
     {
         Start(); //debug??
         CheckMission();
+
+        //GameObject側を変更
+        onValidate?.Invoke();
+        Debug.Log("Mission is modified.");
     }
 
     void Start()
@@ -41,8 +45,6 @@ public class Mission : MonoBehaviour
         // SetMission(new Vector2Int(0, 1), new Vector2Int(0, 0));
 
         SetID();
-
-        Debug.Log(String.Join(",", CurrentMissionNums()));
     }
 
     public void SetID()
@@ -110,6 +112,8 @@ public class Mission : MonoBehaviour
         return currentMissionNums;
     }
 
+    //i番目の現在出現中のMissionオブジェクト（未クリア・未報酬受け取り）がi番目のMissionGroupの中で何番目にいるか
+    //評価対象外・ミッション全てをクリアしている場合は-1を返す
     public int CurrentMissionNum(int i)
     {
         if (i < 0 || i > missionGroupDatas.Count() - 1) return -1;

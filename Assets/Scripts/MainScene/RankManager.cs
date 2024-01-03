@@ -50,8 +50,9 @@ public class RankManager : MonoBehaviour
         expSlider.value = (float)(coinSum - expTotalTable[rank - 1]) / (float)expTable[rank];
         rankText.text = rank.ToString();
 
-        missionDataManager.data.missionValues[0] = rank;
-        missionDataManager.data.missionValues[4] = coinSum;
+        //ミッションのクリア状況を即位反映
+        missionDataManager.ChangeMissionValue(0, rank);
+        missionDataManager.ChangeMissionValue(4, coinSum);
     }
 
     public void GetCoinSum(int coin)

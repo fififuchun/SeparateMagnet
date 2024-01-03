@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Collections;
+// using Unity.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 //Missionの中でもゲーム特有のものをここに書きたい(詳細な値設定とかオブジェクトの管理とか)
 [ExecuteAlways]
@@ -18,16 +17,26 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private GameObject missionPrefab;
     [SerializeField] private GameObject missionContent;
 
+    [SerializeField] private GameObject notificationImage;
+
+    //Missionクラスをいじるだけ
     void OnValidate()
     {
         SetMissionInformation();
+        // mission.RefreshAllMissions(missionDataManager.data.AchivedMissionCounts);
+
+        // UpdateMissions();
+        // UpdateMissionsInEditMode();
     }
 
+    //Destroy・Instantiateはここだけ
     void Start()
     {
         SetMissionInformation();
-        InstantiateMissions();
         mission.RefreshAllMissions(missionDataManager.data.AchivedMissionCounts);
+        mission.onValidate.AddListener(UpdateMissions);
+        // Debug.Log(string.Join(",", missionDataManager.data.AchivedMissionCounts));
+        InstantiateMissions();
         UpdateMissions();
     }
 
@@ -76,8 +85,24 @@ public class MissionManager : MonoBehaviour
             UpdateMission(i);
         }
         mission.CheckMission();
+        mission.SetID();
+        notificationImage.SetActive(ExistAchievedMission());
+        Debug.Log("ミッションを更新しました");
     }
 
+
+
+    // public void UpdateMissionsInEditMode()
+    // {
+    //     for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
+    //     {
+    //         mission.missionGroupDatas[i].throughCurrentValue = missionDataManager.Data.missionValues[i];
+    //     }
+    //     mission.CheckMission();
+    //     notificationImage.SetActive(ExistAchievedMission());
+    // }
+
+    //MissionクラスのMissionGroupのi番目のGameObjectがいなかったら生成
     public void InstantiateMission(int i)
     {
         if (mission.missionGroupDatas[i].missionObject != null) return;
@@ -88,8 +113,10 @@ public class MissionManager : MonoBehaviour
         UpdateMission(i);
     }
 
+    //MissionクラスのMissionGroupのi番目のGameObjectを動的に変更
     public void UpdateMission(int i)
     {
+        if (mission.CurrentMissionNum(i) < 0) return;
         //変更しました
         mission.missionGroupDatas[i].missionObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].missionMessage;
         mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].currentValue.ToString();
@@ -101,6 +128,7 @@ public class MissionManager : MonoBehaviour
         mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(() => PushRecieveRewardButton(i));
     }
 
+    //MissionクラスのMissionGroupのi番目のMissionがクリアしていたら報酬を受け取れるようにする
     public void PushRecieveRewardButton(int i)
     {
         if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].missionState == MissionState.Achieved)
@@ -116,6 +144,21 @@ public class MissionManager : MonoBehaviour
             Debug.Log("クリアしてね");
         }
 
-        UpdateMission(i);
+        // UpdateMission(i);
+        UpdateMissions();
+    }
+
+    //クリアしているMissionがあるかどうか
+    public bool ExistAchievedMission()
+    {
+        for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
+        {
+            if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].missionState == MissionState.Achieved)
+            {
+                // Debug.Log(i + " " + missionDataManager.data.AchivedMissionCounts[i] + ":クリアしたミッションがあるよ");
+                return true;
+            }
+        }
+        return false;
     }
 }
