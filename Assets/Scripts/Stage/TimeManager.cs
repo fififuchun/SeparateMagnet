@@ -44,6 +44,9 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private Sprite[] angryImages = new Sprite[7];
     [SerializeField] private Image angryImage;
 
+    //怒るときのエフェクト
+    [SerializeField] private ParticleSystem angryEffect;
+
     //Header
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI timerText;
@@ -59,7 +62,7 @@ public class TimeManager : MonoBehaviour
     void Awake()
     {
         data = Load(Application.dataPath + "/Data.json");
-        Debug.Log(string.Join(",", data.level));
+        // Debug.Log(string.Join(",", data.level));
 
         angerGaugeMax = data.level[0] + 4;
         angryTime = data.level[1] + 10;
@@ -99,6 +102,7 @@ public class TimeManager : MonoBehaviour
     {
         angerGauge++;
         if (isAnger()) return;
+        Instantiate(angryEffect);
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
         Debug.Log("今の怒り:" + AngerGauge);
     }

@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinText;
 
     //検討出現時のエフェクト
-    [SerializeField] private ParticleSystem appearEffect;
-    
+    [SerializeField] private ParticleSystem[] appearEffects = new ParticleSystem[6];
+
     //音楽
     [SerializeField] private AudioSource audioSource;
 
@@ -98,7 +98,9 @@ public class GameManager : MonoBehaviour
                         phase = Phase.End;
                         break;
                     }
-                    appearEffect.Play();
+                    // PlayAppearEffect();
+                    Instantiate(appearEffects[timeManager.data.level[5]]);
+                    // appearEffects[timeManager.data.level[5]].Play();
 
                     Debug.Log("現在の出現時間は：" + TimeManager.NextAppearTime);
                     yield return new WaitForSeconds(TimeManager.NextAppearTime);
@@ -165,6 +167,15 @@ public class GameManager : MonoBehaviour
         //Prefabを生成してListに追加
         ReadyKento = Instantiate(myGameObjects[Random.Range(0, 6)][Random.Range(0, 3)].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
     }
+
+    //出現時のエフェクトを検討の持ち時間によって調整
+    // public void PlayAppearEffect()
+    // {
+    //     trailEffect.main.startLifetime= 
+
+
+    //     appearEffect.Play();
+    // }
 
     //kentoPrefabの中身をnullに戻す
     public void ResetKentoPrefab() { ReadyKento = null; }
