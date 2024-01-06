@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -98,9 +97,7 @@ public class GameManager : MonoBehaviour
                         phase = Phase.End;
                         break;
                     }
-                    // PlayAppearEffect();
                     Instantiate(appearEffects[timeManager.data.level[5]]);
-                    // appearEffects[timeManager.data.level[5]].Play();
 
                     Debug.Log("現在の出現時間は：" + TimeManager.NextAppearTime);
                     yield return new WaitForSeconds(TimeManager.NextAppearTime);
@@ -111,6 +108,7 @@ public class GameManager : MonoBehaviour
                     if (timeManager.isAnger())
                     {
                         phase = Phase.PutPhase;
+                        if (ReadyKento != null) ReadyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
                         break;
                     }
                     audioSource.Play();
@@ -129,7 +127,7 @@ public class GameManager : MonoBehaviour
                     break;
                 case Phase.End:
                     StopCoroutine(timeOver);
-                    StartCoroutine(timeManager.FinishGame());
+                    timeManager.FinishGame();
                     yield break;
             }
         }
@@ -141,6 +139,7 @@ public class GameManager : MonoBehaviour
     {
         timeOver = null;
         timeOver = timeManager.TimeOver();
+        if(timeManager.isAnger()) return;
         StartCoroutine(timeOver);
     }
 
@@ -168,15 +167,6 @@ public class GameManager : MonoBehaviour
         ReadyKento = Instantiate(myGameObjects[Random.Range(0, 6)][Random.Range(0, 3)].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
     }
 
-    //出現時のエフェクトを検討の持ち時間によって調整
-    // public void PlayAppearEffect()
-    // {
-    //     trailEffect.main.startLifetime= 
-
-
-    //     appearEffect.Play();
-    // }
-
     //kentoPrefabの中身をnullに戻す
     public void ResetKentoPrefab() { ReadyKento = null; }
 
@@ -186,7 +176,7 @@ public class GameManager : MonoBehaviour
         if (timeManager.isAnger())
         {
             timeOver = null;
-            StartCoroutine(timeManager.FinishGame());
+            timeManager.FinishGame();
             return;
         }
         if (Random.Range(0, timeManager.AngerRate) == 0) timeManager.MakeAngry();

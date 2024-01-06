@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 //ゲームオーバー管理
 public class TimeManager : MonoBehaviour
@@ -40,6 +41,9 @@ public class TimeManager : MonoBehaviour
     public void IsEndDrag(bool judge) { isEndDrag = judge; }
 
     [Header("以下はアタッチが必要")]
+    //インスタンス
+    [SerializeField] private ResultManager resultManager;
+
     //怒りイメージ配列・初期は[2]から実装
     [SerializeField] private Sprite[] angryImages = new Sprite[7];
     [SerializeField] private Image angryImage;
@@ -62,7 +66,6 @@ public class TimeManager : MonoBehaviour
     void Awake()
     {
         data = Load(Application.dataPath + "/Data.json");
-        // Debug.Log(string.Join(",", data.level));
 
         angerGaugeMax = data.level[0] + 4;
         angryTime = data.level[1] + 10;
@@ -71,7 +74,6 @@ public class TimeManager : MonoBehaviour
         angerRate = data.level[4] + 2;
         nextAppearTime = (float)(10 - data.level[5]) / 10;
         rareRate = 100 - data.level[6];
-        // Debug.Log(angerGaugeMax + "," + angryTime + "," + angryLateTime + "," + canHoldTime + "," + angerRate + "," + nextAppearTime + "," + rareRate);
 
     }
 
@@ -89,12 +91,15 @@ public class TimeManager : MonoBehaviour
         angryTime = 10;
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
         InvokeRepeating("MakeAngry", angryLateTime, angryTime);
+        
+        resultManager.InitializeResult();
+        // resultManager.AppearResult(sumCoin);
     }
 
     void Update()
     {
         slider.value = (float)AngerGauge / (float)angerGaugeMax;
-        resultCoinText.fontSize = 150 + 20 * Mathf.Sin(5 * Time.time);
+        // resultCoinText.fontSize = 150 + 20 * Mathf.Sin(5 * Time.time);
     }
 
     //angerGauge操作はここだけ
@@ -133,9 +138,9 @@ public class TimeManager : MonoBehaviour
         yield break;
     }
 
-    public IEnumerator FinishGame()
+    public async UniTask FinishGame()
     {
-        // Debug.Log("ゲーム終了が起動");
+        Debug.Log("ゲーム終了が起動");
         float startTimer = Time.time;
         canHoldTime = 5;
         timerText.color = Color.red;
@@ -144,12 +149,12 @@ public class TimeManager : MonoBehaviour
         for (int i = 0; i < canHoldTime; i++)
         {
             timerText.text = Mathf.Ceil(canHoldTime + startTimer - Time.time).ToString();
-            yield return new WaitForSeconds(1f);
+            // yield return new WaitForSeconds(1f);
+            await UniTask.Delay(1000);
         }
 
-        resultObject.SetActive(true);
-        resultCoinText.text = sumCoin.ToString();
-        PlayerPrefs.SetInt("TmpCoin", sumCoin);
-        yield break;
+        await resultManager.AppearResult(sumCoin);
+
+        // yield break;
     }
 }
