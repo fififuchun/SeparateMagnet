@@ -6,6 +6,6 @@ using UnityEngine;
 public class MissionSaveData
 {
     public const int missionGroupCount = 6;
-    public int[] AchivedMissionCounts = new int[missionGroupCount];
+    public int[] ReceivedMissionCounts = new int[missionGroupCount];
     public int[] missionValues = new int[missionGroupCount];
 }

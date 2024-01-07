@@ -22,6 +22,7 @@ public class RankManager : MonoBehaviour
 
     //ランク、Max40
     private int rank;
+    public int Rank { get => rank; }
 
     //集めたコインの総計
     private int coinSum;

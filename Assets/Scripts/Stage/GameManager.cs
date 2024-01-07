@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -139,7 +140,7 @@ public class GameManager : MonoBehaviour
     {
         timeOver = null;
         timeOver = timeManager.TimeOver();
-        if(timeManager.isAnger()) return;
+        if (timeManager.isAnger()) return;
         StartCoroutine(timeOver);
     }
 
@@ -160,6 +161,8 @@ public class GameManager : MonoBehaviour
         if (Random.Range(0, timeManager.RareRate) == 0)
         {
             ReadyKento = Instantiate(kentoSO.fontData[kentoSO.fontData.Count() - 1].sizeData[0].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+            timeManager.data.isRareFonts[int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])] = true;
+            Debug.Log($"STAGE{int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])}のレアなフォント出現");
             return;
         }
 

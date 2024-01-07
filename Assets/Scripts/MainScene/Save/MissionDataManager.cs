@@ -8,7 +8,6 @@ public class MissionDataManager : MonoBehaviour
 {
     //json変換したMissionSaveData
     [HideInInspector] public MissionSaveData data;
-    // public MissionSaveData data { get => data; }
 
     //update mission
     public UnityEvent isChanged = new UnityEvent();
@@ -64,6 +63,7 @@ public class MissionDataManager : MonoBehaviour
     {
         data.missionValues[i] = (int)changedValue;
         Debug.Log($"missionDataの{i}番目を{changedValue}に変更しました");
+
         isChanged.Invoke();
     }
 }

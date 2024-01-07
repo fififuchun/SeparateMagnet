@@ -29,9 +29,11 @@ public class MissionManager : MonoBehaviour
     void Start()
     {
         SetMissionInformation();
-        mission.RefreshAllMissions(missionDataManager.data.AchivedMissionCounts);
+        mission.RefreshAllMissions(missionDataManager.data.ReceivedMissionCounts);
         mission.onValidate.AddListener(UpdateMissions);
-        
+        mission.toYellow.AddListener(ToYellow);
+        mission.toGray.AddListener(ToGray);
+
         InstantiateMissions();
         UpdateMissions();
     }
@@ -100,13 +102,19 @@ public class MissionManager : MonoBehaviour
     //MissionクラスのMissionGroupのi番目のGameObjectを動的に変更
     public void UpdateMission(int i)
     {
-        if (mission.CurrentMissionNum(i) < 0) return;
+        if (mission.CurrentMissionNum(i) < 0)
+        {
+            mission.missionGroupDatas[i].missionObject.SetActive(false);
+            // Debug.Log($"{i}: このミッションは完了しています");
+            return;
+        }
+        // Debug.Log($"{i}: このミッションは未完了");
         //変更しました
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].missionMessage;
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].currentValue.ToString();
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(4).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].goalValue.ToString();
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).gameObject.GetComponent<Slider>().value = (float)mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].currentValue / (float)mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].goalValue;
-        mission.missionGroupDatas[i].missionObject.transform.GetChild(2).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = $"x{mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].reward}";
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].missionMessage;
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].currentValue.ToString();
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).GetChild(4).gameObject.GetComponent<TextMeshProUGUI>().text = mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].goalValue.ToString();
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(1).gameObject.GetComponent<Slider>().value = (float)mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].currentValue / (float)mission.missionGroupDatas[i].missionDatas[mission.CurrentMissionNum(i)].goalValue;
+        mission.missionGroupDatas[i].missionObject.transform.GetChild(2).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = $"x{mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].reward}";
 
         mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
         mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(() => PushRecieveRewardButton(i));
@@ -115,13 +123,15 @@ public class MissionManager : MonoBehaviour
     //MissionクラスのMissionGroupのi番目のMissionがクリアしていたら報酬を受け取れるようにする
     public void PushRecieveRewardButton(int i)
     {
-        if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].missionState == MissionState.Achieved)
+        if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].missionState == MissionState.Achieved)
         {
-            mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].ReceiveMissionState();
-            diamondCount.GetDiamond(mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].reward);
+            mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].ReceiveMissionState();
+            diamondCount.GetDiamond(mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].reward);
 
-            missionDataManager.data.AchivedMissionCounts[i]++;
+            missionDataManager.data.ReceivedMissionCounts[i]++;
             Debug.Log("報酬を受け取りました");
+
+            if (missionDataManager.data.ReceivedMissionCounts[i] == mission.missionGroupDatas[i].missionDatas.Count()) mission.missionGroupDatas[i].missionObject.SetActive(false);
         }
         else
         {
@@ -137,12 +147,44 @@ public class MissionManager : MonoBehaviour
     {
         for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
         {
-            if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.AchivedMissionCounts[i]].missionState == MissionState.Achieved)
+            if (missionDataManager.data.ReceivedMissionCounts[i] == mission.missionGroupDatas[i].missionDatas.Count())
+            {
+                continue;
+            }
+
+            if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].missionState == MissionState.Achieved)
             {
                 // Debug.Log(i + " " + missionDataManager.data.AchivedMissionCounts[i] + ":クリアしたミッションがあるよ");
                 return true;
             }
         }
         return false;
+    }
+
+    //
+    public void ToYellow()
+    {
+        for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
+        {
+            if (missionDataManager.data.ReceivedMissionCounts[i] == mission.missionGroupDatas[i].missionDatas.Count()) return;
+
+            if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].missionState == MissionState.Achieved)
+            {
+                mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Image>().color = new Color32(255, 78, 35, 255);
+            }
+        }
+    }
+
+    public void ToGray()
+    {
+        for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
+        {
+            if (missionDataManager.data.ReceivedMissionCounts[i] == mission.missionGroupDatas[i].missionDatas.Count()) return;
+
+            if (mission.missionGroupDatas[i].missionDatas[missionDataManager.data.ReceivedMissionCounts[i]].missionState != MissionState.Achieved)
+            {
+                mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Image>().color = new Color32(200, 200, 200, 255);
+            }
+        }
     }
 }

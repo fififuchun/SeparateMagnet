@@ -29,6 +29,9 @@ public class Mission : MonoBehaviour
     //update mission
     public UnityEvent onValidate = new UnityEvent();
 
+    public UnityEvent toYellow = new UnityEvent();
+    public UnityEvent toGray = new UnityEvent();
+
     //Missionクラスの情報が少しでも変更されたら走る
     void OnValidate()
     {
@@ -94,6 +97,18 @@ public class Mission : MonoBehaviour
             {
                 missionGroupDatas[i].missionDatas[j].JudgeAchieveMissionState();
             }
+
+            for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
+            {
+                if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Achieved)
+                {
+                    toYellow?.Invoke();
+                    // Debug.Log($"{i},{j}: ミッションクリア");
+                    break;
+                }
+                else if (j == missionGroupDatas[i].missionDatas.Count() - 1) toGray?.Invoke();
+                else toGray?.Invoke();
+            }
         }
     }
 
@@ -103,6 +118,7 @@ public class Mission : MonoBehaviour
         {
             for (int j = 0; j < missionGroupCount[i]; j++)
             {
+                // if()
                 missionGroupDatas[i].missionDatas[j].missionState = MissionState.Received;
             }
         }

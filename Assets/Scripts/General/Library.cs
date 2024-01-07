@@ -17,6 +17,17 @@ public static class Library// : MonoBehaviour
     }
 
     /// <summary>
+    /// bool配列の一番最初に現れたfalseの位置を返します、全部trueだったら-1を返します
+    /// </summary>
+    /// <param name="bools"></param>
+    /// <returns></returns>
+    public static int FirstFalseIndex(bool[] bools)
+    {
+        for (int i = 0; i < bools.Length; i++) if (!bools[i]) return i;
+        return -1;
+    }
+
+    /// <summary>
     /// 特性関数、bool配列に対してTrueの数を返します
     /// </summary>
     /// <param name="bools"></param>

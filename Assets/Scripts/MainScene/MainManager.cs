@@ -12,7 +12,7 @@ using System.Linq;
 public class MainManager : MonoBehaviour
 {
   //データ管理
-  [SerializeField] private DataManager dataManager;
+  [SerializeField] private static DataManager dataManager;
   [SerializeField] private DiamondCount diamondCount;
 
   //メインシーンのアニメーション用
@@ -21,6 +21,10 @@ public class MainManager : MonoBehaviour
 
   //一旦オフにしてスクロールのスピードを殺す
   [SerializeField] private ScrollRect scrollRect;
+
+  //
+  private const int stageCount = 4;
+  [SerializeField] private Image[] lockImages = new Image[stageCount];
 
 
   void Start()
