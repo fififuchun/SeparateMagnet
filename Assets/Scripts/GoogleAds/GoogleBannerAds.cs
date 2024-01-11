@@ -53,9 +53,11 @@ public class GoogleBannerAds : MonoBehaviour
             CreateBannerView();
         }
         // create our request used to load the ad.
-        var adRequest = new AdRequest.Builder()
-            .AddKeyword("unity-admob-sample")
-            .Build();
+        var adRequest = new AdRequest();
+        
+        // var adRequest = new AdRequest.Builder()
+        //     .AddKeyword("unity-admob-sample")
+        //     .Build();
 
         // send the request to load the ad.
         Debug.Log("Loading banner ad.");
