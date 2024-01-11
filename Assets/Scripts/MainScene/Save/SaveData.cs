@@ -12,5 +12,5 @@ public class SaveData
     public int[] fontNumbers = new int[6];
     public bool[] isRareFonts = new bool[stageCount];
     public bool[] haveFonts = new bool[20];
-
+    public int currentStageCount= stageCount;
 }

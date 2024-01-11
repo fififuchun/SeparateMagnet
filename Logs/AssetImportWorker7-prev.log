@@ -15,7 +15,7 @@ C:/Users/HUCHUN/Unity project/SeparateMagnet
 -logFile
 Logs/AssetImportWorker7.log
 -srvPort
-64299
+56201
 Successfully changed project path to: C:/Users/HUCHUN/Unity project/SeparateMagnet
 C:/Users/HUCHUN/Unity project/SeparateMagnet
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -49,11 +49,11 @@ C:/Users/HUCHUN/Unity project/SeparateMagnet
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [26100] Host "[IP] 192.168.10.136 [Port] 0 [Flags] 2 [Guid] 3230653258 [EditorId] 3230653258 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-VNF68GVE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [16448] Host "[IP] 192.168.10.136 [Port] 0 [Flags] 2 [Guid] 2208013526 [EditorId] 2208013526 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-VNF68GVE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [26100] Host "[IP] 192.168.10.136 [Port] 0 [Flags] 2 [Guid] 3230653258 [EditorId] 3230653258 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-VNF68GVE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [16448] Host "[IP] 192.168.10.136 [Port] 0 [Flags] 2 [Guid] 2208013526 [EditorId] 2208013526 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-VNF68GVE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 19213.07 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 29.64 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.5f1 (9674261d40ee)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/Resources/UnitySubsystems
@@ -65,3 +65,336 @@ Direct3D:
     Vendor:   Intel
     VRAM:     3954 MB
     Driver:   30.0.101.1191
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56252
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.015291 seconds.
+- Loaded All Assemblies, in  0.516 seconds
+Native extension for WindowsStandalone target not found
+[usbmuxd] Start listen thread
+[usbmuxd] Listen thread started
+[usbmuxd] Send listen message
+Native extension for iOS target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 12370 ms
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in 13.104 seconds
+Domain Reload Profiling: 13616ms
+	BeginReloadAssembly (118ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (49ms)
+	RebuildNativeTypeToScriptingClass (22ms)
+	initialDomainReloadingComplete (87ms)
+	LoadAllAssembliesAndSetupDomain (236ms)
+		LoadAssemblies (116ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (225ms)
+			TypeCache.Refresh (223ms)
+				TypeCache.ScanAssembly (201ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (13104ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (13023ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (12552ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (3ms)
+			ProcessInitializeOnLoadAttributes (134ms)
+			ProcessInitializeOnLoadMethodAttributes (330ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\HUCHUN\Unity project\SeparateMagnet\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\HUCHUN\Unity project\SeparateMagnet\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.559 seconds
+Refreshing native plugins compatible for Editor in 14.50 ms, found 4 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for iOS target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.875 seconds
+Domain Reload Profiling: 2427ms
+	BeginReloadAssembly (247ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (6ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (22ms)
+	RebuildCommonClasses (38ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (98ms)
+	LoadAllAssembliesAndSetupDomain (1155ms)
+		LoadAssemblies (765ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (550ms)
+			TypeCache.Refresh (495ms)
+				TypeCache.ScanAssembly (471ms)
+			ScanForSourceGeneratedMonoScriptInfo (40ms)
+			ResolveRequiredComponents (15ms)
+	FinalizeReload (875ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (666ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (40ms)
+			SetLoadedEditorAssemblies (7ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (117ms)
+			ProcessInitializeOnLoadAttributes (384ms)
+			ProcessInitializeOnLoadMethodAttributes (106ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.48 seconds
+Refreshing native plugins compatible for Editor in 26.49 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6041 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 109 unused Assets / (395.6 KB). Loaded Objects now: 6520.
+Memory consumption went from 239.5 MB to 239.1 MB.
+Total: 15.473200 ms (FindLiveObjects: 1.131800 ms CreateObjectMapping: 0.614000 ms MarkObjects: 13.161900 ms  DeleteObjects: 0.564100 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: a3ef5dd2817f97addfee359851a9dba5 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 361539.246373 seconds.
+  path: Packages/com.cysharp.unitask/Runtime
+  artifactKey: Guid(aa765154468d4b34eb34304100d39e64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime using Guid(aa765154468d4b34eb34304100d39e64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c8e60c589a899b211b692e74ea53f7d') in 0.016549 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000506 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Linq/Publish.cs
+  artifactKey: Guid(93c684d1e88c09d4e89b79437d97b810) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Linq/Publish.cs using Guid(93c684d1e88c09d4e89b79437d97b810) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f765b401e4b1126de0f2684c0c716fe8') in 0.000677 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000055 seconds.
+  path: Packages/com.cysharp.unitask/Editor/SplitterGUILayout.cs
+  artifactKey: Guid(40ef2e46f900131419e869398a8d3c9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Editor/SplitterGUILayout.cs using Guid(40ef2e46f900131419e869398a8d3c9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e835780b54ec7e13d7646936c62f6f29') in 0.000571 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000105 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Linq/Average.tt
+  artifactKey: Guid(84bce45768c171d4490153eb08630a98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Linq/Average.tt using Guid(84bce45768c171d4490153eb08630a98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec4c6272495b52d8fc08a2518ed971eb') in 0.003799 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000069 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Linq/UnityExtensions
+  artifactKey: Guid(669f5459819f7284ca1b35f4d55fe226) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Linq/UnityExtensions using Guid(669f5459819f7284ca1b35f4d55fe226) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ca3148bb2e54a21e287ed60cf3d44304') in 0.000523 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000080 seconds.
+  path: Packages/jp.co.cyberagent.nova/package.json
+  artifactKey: Guid(0cb3fd4a00cad4387a3998d5ffcd147a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/jp.co.cyberagent.nova/package.json using Guid(0cb3fd4a00cad4387a3998d5ffcd147a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ddbf2f4b738a6f83f0943f3684717aa') in 0.001590 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.034535 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Linq/UnityExtensions/EveryUpdate.cs
+  artifactKey: Guid(00520eb52e49b5b4e8d9870d6ff1aced) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Linq/UnityExtensions/EveryUpdate.cs using Guid(00520eb52e49b5b4e8d9870d6ff1aced) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6fc2d778b584b9ce93d849da51964f33') in 0.000642 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.133506 seconds.
+  path: Packages/com.cysharp.unitask/Editor/UniTask.Editor.asmdef
+  artifactKey: Guid(4129704b5a1a13841ba16f230bf24a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Editor/UniTask.Editor.asmdef using Guid(4129704b5a1a13841ba16f230bf24a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa0abed25801a05b8ffaf5b5953cce6b') in 0.000524 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.021023 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Internal
+  artifactKey: Guid(633f49a8aafb6fa43894cd4646c71743) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Internal using Guid(633f49a8aafb6fa43894cd4646c71743) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '86efd46519a7975e23a66b629a0d729e') in 0.000453 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.025419 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Linq
+  artifactKey: Guid(4cc94a232b1c1154b8084bdda29c3484) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Linq using Guid(4cc94a232b1c1154b8084bdda29c3484) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '266205b94e2d6f4a91001d5e89832f6f') in 0.000473 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.179289 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Linq/Any.cs
+  artifactKey: Guid(e2b2e65745263994fbe34f3e0ec8eb12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Linq/Any.cs using Guid(e2b2e65745263994fbe34f3e0ec8eb12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2978bc096f999d34b9159cf36fe3caac') in 0.000549 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.030055 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Linq/Range.cs
+  artifactKey: Guid(d826418a813498648b10542d0a5fb173) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Linq/Range.cs using Guid(d826418a813498648b10542d0a5fb173) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9652c7e298acf5065e865eb788491a19') in 0.000635 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Linq/UnityExtensions/Timer.cs
+  artifactKey: Guid(382caacde439855418709c641e4d7b04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Linq/UnityExtensions/Timer.cs using Guid(382caacde439855418709c641e4d7b04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb078763cff5e16561991cfabff013e2') in 0.000583 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Internal/Error.cs
+  artifactKey: Guid(5f39f495294d4604b8082202faf98554) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Internal/Error.cs using Guid(5f39f495294d4604b8082202faf98554) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e33b9ba800ff90b6551e03cf44bbd4b') in 0.000598 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000079 seconds.
+  path: Packages/com.cysharp.unitask/package.json
+  artifactKey: Guid(d1a9a71f68bb0d04db91ddaa3329abf9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/package.json using Guid(d1a9a71f68bb0d04db91ddaa3329abf9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4116728514f633e763d5c5fd09fe10fe') in 0.001416 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000115 seconds.
+  path: Packages/com.cysharp.unitask/Editor/UniTaskTrackerTreeView.cs
+  artifactKey: Guid(52e2d973a2156674e8c1c9433ed031f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Editor/UniTaskTrackerTreeView.cs using Guid(52e2d973a2156674e8c1c9433ed031f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b07185854f3bb66f15dfceb0fa537b74') in 0.000451 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000163 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/UniTask.asmdef
+  artifactKey: Guid(f51ebe6a0ceec4240a699833d6309b23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/UniTask.asmdef using Guid(f51ebe6a0ceec4240a699833d6309b23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b40a87b90ed00914edbc2478e046b3d') in 0.000434 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000148 seconds.
+  path: Packages/com.cysharp.unitask/Runtime/Linq/UnityExtensions/EveryValueChanged.cs
+  artifactKey: Guid(1ec39f1c41c305344854782c935ad354) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Runtime/Linq/UnityExtensions/EveryValueChanged.cs using Guid(1ec39f1c41c305344854782c935ad354) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32e2d9358470cc2d4ac4ccd7b394dcaa') in 0.000522 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000144 seconds.
+  path: Packages/com.unity.render-pipelines.core/package.json
+  artifactKey: Guid(753d1ac2429a21a44ac5f937cbbb409f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.render-pipelines.core/package.json using Guid(753d1ac2429a21a44ac5f937cbbb409f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20fc5ade6f55e3263d4b2bc983383e16') in 0.002491 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000237 seconds.
+  path: Packages/com.unity.ugui/package.json
+  artifactKey: Guid(319b8889f363f5947acf209c17a94149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.ugui/package.json using Guid(319b8889f363f5947acf209c17a94149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8a3af6ef0a193653aefa4acdecae095') in 0.003243 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000079 seconds.
+  path: Packages/com.cysharp.unitask/Editor/UniTaskTrackerWindow.cs
+  artifactKey: Guid(5bee3e3860e37484aa3b861bf76d129f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Editor/UniTaskTrackerWindow.cs using Guid(5bee3e3860e37484aa3b861bf76d129f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0375b14be264470ef1966a57bae5989e') in 0.000557 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.131490 seconds.
+  path: Packages/com.cysharp.unitask/Editor
+  artifactKey: Guid(275b87293edc6634f9d72387851dbbdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.cysharp.unitask/Editor using Guid(275b87293edc6634f9d72387851dbbdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bff1eb87bb50d3ea875ad734ccc778a1') in 0.000753 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Packages/com.unity.mathematics/package.json
+  artifactKey: Guid(d34d0af25c21141a98c0cf3c0066444f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.mathematics/package.json using Guid(d34d0af25c21141a98c0cf3c0066444f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b7f04271fb8ab282f6d76a90239a495') in 0.001460 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 9.875220 seconds.
+  path: Packages/com.unity.ai.navigation/package.json
+  artifactKey: Guid(fbee67e09f48e4652bfa085460c895c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.ai.navigation/package.json using Guid(fbee67e09f48e4652bfa085460c895c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e2c452278b2463d79df7628fa270a93') in 0.001457 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 4.223889 seconds.
+  path: Packages/com.unity.2d.common/package.json
+  artifactKey: Guid(68f1917ec3cac45b080c26153375c2bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.2d.common/package.json using Guid(68f1917ec3cac45b080c26153375c2bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '933c49a62094dbab57aeb201d7efb493') in 0.001088 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 8.312121 seconds.
+  path: Assets/GoogleMobileAds
+  artifactKey: Guid(d057cc2a7c117be4abeb45bdd8c1832d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GoogleMobileAds using Guid(d057cc2a7c117be4abeb45bdd8c1832d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c1e8ce2191fd1e40e0627d1d8cf50587') in 0.000455 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+TcpMessagingSession - receive error: operation aborted. errorcode: 995, details: スレッドの終了またはアプリケーションの要求によって、I/O 処理は中止されました。
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

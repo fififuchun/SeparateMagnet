@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
+// using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-using System;
 using Unity.VisualScripting;
 using System.Linq;
+using UnityEngine.SceneManagement;
+using System;
 
 public class MainManager : MonoBehaviour
 {
   //データ管理
-  [SerializeField] private static DataManager dataManager;
+  [SerializeField] private DataManager dataManager;
   [SerializeField] private DiamondCount diamondCount;
+  [SerializeField] private RankManager rankManager;
 
   //メインシーンのアニメーション用
   [SerializeField] private GameObject mainViewContent;
@@ -22,11 +24,14 @@ public class MainManager : MonoBehaviour
   //一旦オフにしてスクロールのスピードを殺す
   [SerializeField] private ScrollRect scrollRect;
 
-  //
+  //ステージ増加の際は要変更
   private const int stageCount = 4;
   [SerializeField] private Image[] lockImages = new Image[stageCount];
 
+  //「検討を重ねる」のテキスト
+  [SerializeField] private TextMeshProUGUI repeatKentoText;
 
+  
   void Start()
   {
     if (Library.CharacteristicFanction(dataManager.data.haveFonts) < 2)
@@ -35,6 +40,9 @@ public class MainManager : MonoBehaviour
       dataManager.data.haveFonts[10] = true;
     }
     for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
+
+    for (int i = 0; i <= Mathf.CeilToInt(rankManager.Rank / 5); i++) lockImages[i].enabled = false;
+    // Debug.Log(Mathf.CeilToInt(rankManager.Rank / 5));
 
     ShowFontImage();
   }
@@ -46,10 +54,12 @@ public class MainManager : MonoBehaviour
       scrollRect.enabled = false;
       mainViewContent.transform.DOKill();
       mainViewContent.transform.DOMove(new Vector2(Mathf.Floor((mainViewContent.transform.position.x + 415) / 830) * 830, mainViewContent.transform.position.y), 0.5f);
+
+      int stageNum = (int)(1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830));
+      if (rankManager.Rank < (stageNum - 1) * 5) repeatKentoText.text = $"ランク{(stageNum - 1) * 5}で解放";
+      else repeatKentoText.text = $"検討を重ねる";
     }
     else if (!scrollRect.enabled) scrollRect.enabled = true;
-
-    // Debug.Log(dataManager.ReleasedFontCount());
   }
 
   //持ちフォントの編集
@@ -139,5 +149,21 @@ public class MainManager : MonoBehaviour
   {
     dataManager.data.fontNumbers[i] = 0;
     ShowFontImage();
+  }
+
+  //ステージ遷移
+  public void PushRepeatKentoButton()
+  {
+    //現在最前面にあるステージのナンバー
+    int stageNum = (int)(1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830));
+    PlayerPrefs.Save();
+
+    //ステージ遷移処理
+    if (rankManager.Rank < (stageNum - 1) * 5)
+    {
+      WarnManager.instance.AppearWarning("ランクが足りません！", $"ステージ{stageNum}に挑戦するには\nランクを{(stageNum - 1) * 5}に\nしてください");
+      return;
+    }
+    SceneManager.LoadScene($"Stage_{stageNum}");
   }
 }
