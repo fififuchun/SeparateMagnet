@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
+// using Unity.VisualScripting;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using System;
+// using System;
 
 public class MainManager : MonoBehaviour
 {

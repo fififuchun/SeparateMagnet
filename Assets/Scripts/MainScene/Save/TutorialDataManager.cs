@@ -1,22 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using System.IO;
 
-public class MissionDataManager : MonoBehaviour
+public class TutorialDataManager : MonoBehaviour
 {
-    //json変換したMissionSaveData
-    [HideInInspector] public MissionSaveData data;
-
-    //update mission
-    public UnityEvent isChanged = new UnityEvent();
+    //json変換したTutorialSaveData
+    [HideInInspector] public TutorialSaveData data;
 
     // jsonファイルのパス
     string filepath;
 
     // jsonファイル名
-    string fileName = "MissionData.json";
+    string fileName = "TutorialData.json";
 
     //-------------------------------------------------------------------
     // 開始時にファイルチェック、読み込み
@@ -34,7 +30,7 @@ public class MissionDataManager : MonoBehaviour
 
     //-------------------------------------------------------------------
     // jsonとしてデータを保存
-    public void Save(MissionSaveData data)
+    public void Save(TutorialSaveData data)
     {
         string json = JsonUtility.ToJson(data);
         StreamWriter wr = new StreamWriter(filepath, false);
@@ -43,13 +39,13 @@ public class MissionDataManager : MonoBehaviour
     }
 
     // jsonファイル読み込み
-    MissionSaveData Load(string path)
+    TutorialSaveData Load(string path)
     {
         StreamReader rd = new StreamReader(path);
         string json = rd.ReadToEnd();
         rd.Close();
 
-        return JsonUtility.FromJson<MissionSaveData>(json);
+        return JsonUtility.FromJson<TutorialSaveData>(json);
     }
 
     //-------------------------------------------------------------------
@@ -57,13 +53,5 @@ public class MissionDataManager : MonoBehaviour
     void OnDestroy()
     {
         Save(data);
-    }
-
-    public void ChangeMissionValue(int i, float changedValue)
-    {
-        data.missionValues[i] = (int)changedValue;
-        Debug.Log($"missionDataの{i}番目を{changedValue}に変更しました");
-
-        isChanged.Invoke();
     }
 }
