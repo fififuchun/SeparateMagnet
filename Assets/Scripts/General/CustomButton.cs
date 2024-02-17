@@ -16,17 +16,20 @@ public class CustomButton : MonoBehaviour,
     public void OnPointerClick(PointerEventData eventData)
     {
         onClickCallback?.Invoke();
+        Debug.Log("Click");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         transform.DOScale(0.95f, 0.24f).SetEase(Ease.OutCubic);
         _canvasGroup.DOFade(0.8f, 0.24f).SetEase(Ease.OutCubic);
+        Debug.Log("Down");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         transform.DOScale(1f, 0.24f).SetEase(Ease.OutCubic);
         _canvasGroup.DOFade(1f, 0.24f).SetEase(Ease.OutCubic);
+        Debug.Log("Up");
     }
 }
