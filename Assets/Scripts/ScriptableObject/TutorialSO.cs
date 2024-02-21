@@ -15,5 +15,5 @@ public class TutorialSO : ScriptableObject
 [System.Serializable]
 public class TutorialData
 {
-    public string[] strings;
+    [TextArea] public string[] strings;
 }
