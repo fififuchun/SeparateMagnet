@@ -25,6 +25,10 @@ public class TutorialManager : MonoBehaviour
     
     //チュートリアルの女性の画像
     [SerializeField] private Sprite[] tutorialSprites = new Sprite[8];
+    [SerializeField] private Sprite speechBubbleImage;
+    
+    //状況ごとのチュートリアルメッセージ
+    [SerializeField] private TutorialSO tutorialSO;
 
     //動的入力
     [SerializeField] private TextMeshProUGUI tutorialTextPrefab;
@@ -51,35 +55,33 @@ public class TutorialManager : MonoBehaviour
         GameObject secretaryObj = tutorialPrefab.transform.GetChild(0).gameObject;
 
         if (secretaryObj.transform.GetChild(0).GetComponent<Image>() != null)
-            secretaryObj.transform.GetChild(0).GetComponent<Image>().sprite = tutorialSprites[spriteIndex];
+            secretaryObj.transform.GetChild(0).GetComponent<Image>().sprite = speechBubbleImage;
 
-        if (secretaryObj.transform.GetChild(1).GetComponent<Button>() != null)
-            secretaryObj.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => PushTutorial(stringIndex));
+        if (tutorialPrefab.transform.GetChild(1).GetComponent<Button>() != null)
+            tutorialPrefab.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => PushTutorial(stringIndex));
 
-        if (secretaryObj.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>() != null || stringGroups.Count() <= stringIndex || stringIndex < 0)
+        if (secretaryObj.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>() != null || tutorialSO.testStringGroups.Count() <= stringIndex || stringIndex < 0)
         {
             tutorialTextPrefab = secretaryObj.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-            tutorialTextPrefab.text = stringGroups[stringIndex][0];
+            tutorialTextPrefab.text = tutorialSO.testStringGroups[stringIndex].strings[0];
         }
     }
 
     //----------------
-    //状況ごとのチュートリアルメッセージ
-    [SerializeField] private List<string[]> stringGroups = new List<string[]>();
 
     //チュートリアルを次に進める
     public void PushTutorial(int stringIndex)
     {
-        if (stringGroups.Count() <= stringIndex || stringIndex < 0)
+        if (tutorialSO.testStringGroups.Count() <= stringIndex || stringIndex < 0)
         {
             Debug.Log("指定されたチュートリアルは用意されていません");
             return;
         }
 
-        for (int i = 0; i < stringGroups[stringIndex].Length; i++)
+        for (int i = 0; i < tutorialSO.testStringGroups[stringIndex].strings.Length; i++)
         {
-            if (i == stringGroups[stringIndex].Length - 1) Destroy(tutorialPrefab);
-            tutorialTextPrefab.text = stringGroups[stringIndex][i];
+            if (i == tutorialSO.testStringGroups[stringIndex].strings.Length - 1) Destroy(tutorialPrefab);
+            tutorialTextPrefab.text = tutorialSO.testStringGroups[stringIndex].strings[i];
         }
     }
 }

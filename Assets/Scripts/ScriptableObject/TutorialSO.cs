@@ -6,7 +6,7 @@ using UnityEngine;
 public class TutorialSO : ScriptableObject
 {
     //表示用?
-    public List<string[]> tutorialDatas= new List<string[]>();
+    // public List<string[]> tutorialDatas= new List<string[]>();
 
     public List<TutorialData> testStringGroups= new List<TutorialData>();
 }
