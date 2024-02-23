@@ -21,67 +21,33 @@ public class TutorialManager : MonoBehaviour
 {
     //描画キャンバス・生成用Prefab
     [SerializeField] private GameObject canvas;
-    [SerializeField] private GameObject tutorial;
-    
-    //チュートリアルの女性の画像
-    [SerializeField] private Sprite[] tutorialSprites = new Sprite[8];
-    [SerializeField] private Sprite speechBubbleImage;
-    
-    //状況ごとのチュートリアルメッセージ
-    [SerializeField] private TutorialSO tutorialSO;
-
-    //動的入力
-    [SerializeField] private TextMeshProUGUI tutorialTextPrefab;
     [SerializeField] private GameObject tutorialPrefab;
 
+    //何番目を出力するか
+    [SerializeField, Header("ColumnNumber?")] private int matrixColumnNum;
 
 
     void Start()
     {
-        InstantiateTutorial(3, 0);
+        InstantiateTutorial(matrixColumnNum);
     }
-
 
     /// <summary>
-    /// spriteIndex番目の画像の女性がstringIndex番目のstringGroupのチュートリアルをするGameObjectを生成
+    /// tutorialを生成
     /// </summary>
-    /// <param name="spriteIndex"></param>
-    /// <param name="stringIndex"></param>
-    public void InstantiateTutorial(int spriteIndex, int stringIndex)
+    /// <param name="_matrixRowNum">行</param>
+    public void InstantiateTutorial(int _matrixRowNum)
     {
-        tutorialPrefab = Instantiate(tutorial, canvas.transform);
+        //tutorialPrefabを複製
+        GameObject tutorialObj = Instantiate(tutorialPrefab, canvas.transform);
 
-        if (tutorialPrefab.transform.GetChild(0).gameObject == null) return;
-        GameObject secretaryObj = tutorialPrefab.transform.GetChild(0).gameObject;
-
-        if (secretaryObj.transform.GetChild(0).GetComponent<Image>() != null)
-            secretaryObj.transform.GetChild(0).GetComponent<Image>().sprite = speechBubbleImage;
-
-        if (tutorialPrefab.transform.GetChild(1).GetComponent<Button>() != null)
-            tutorialPrefab.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => PushTutorial(stringIndex));
-
-        if (secretaryObj.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>() != null || tutorialSO.testStringGroups.Count() <= stringIndex || stringIndex < 0)
+        //tutorialObj直下のMatrixTextが存在するなら[_matrixRowNum, 0]を生成
+        if (tutorialObj.transform.GetChild(tutorialObj.transform.childCount - 1).GetComponent<MatrixText>() == null)
         {
-            tutorialTextPrefab = secretaryObj.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-            tutorialTextPrefab.text = tutorialSO.testStringGroups[stringIndex].strings[0];
-        }
-    }
-
-    //----------------
-
-    //チュートリアルを次に進める
-    public void PushTutorial(int stringIndex)
-    {
-        if (tutorialSO.testStringGroups.Count() <= stringIndex || stringIndex < 0)
-        {
-            Debug.Log("指定されたチュートリアルは用意されていません");
+            Debug.Log("MatrixTextコンポーネントを親ボタン直下かつ一番下のテキストオブジェクトにアタッチして下さい");
             return;
         }
 
-        for (int i = 0; i < tutorialSO.testStringGroups[stringIndex].strings.Length; i++)
-        {
-            if (i == tutorialSO.testStringGroups[stringIndex].strings.Length - 1) Destroy(tutorialPrefab);
-            tutorialTextPrefab.text = tutorialSO.testStringGroups[stringIndex].strings[i];
-        }
+        tutorialObj.transform.GetChild(tutorialObj.transform.childCount - 1).GetComponent<MatrixText>()?.Initialize(_matrixRowNum);
     }
 }

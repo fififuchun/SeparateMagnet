@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tutorial", menuName = "Create TutorialSO")]
+[CreateAssetMenu(fileName = "MatrixText", menuName = "Create MatrixTextSO")]
 public class TutorialSO : ScriptableObject
 {
-    //表示用?
-    // public List<string[]> tutorialDatas= new List<string[]>();
-
-    public List<TutorialData> testStringGroups= new List<TutorialData>();
+    public List<TutorialData> stringGroups= new List<TutorialData>();
 }
 
 //表示用のクラス
