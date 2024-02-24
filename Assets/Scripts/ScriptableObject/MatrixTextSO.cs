@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MatrixText", menuName = "Create MatrixTextSO"), System.Serializable]
 public class MatrixTextSO : ScriptableObject
 {
-    public List<MatrixTextData> stringGroups = new List<MatrixTextData>();
+    public MatrixTextData[] stringGroups; //= new List<MatrixTextData>();
 }
 
 //表示用のクラス
