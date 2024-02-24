@@ -8,7 +8,7 @@ using TMPro;
 public class MatrixText : MonoBehaviour
 {
     //状況ごとのチュートリアルメッセージ
-    [SerializeField] private TutorialSO tutorialSO;
+    [SerializeField] private MatrixTextSO tutorialSO;
 
     //自分自身
     private TextMeshProUGUI matrixElementText;

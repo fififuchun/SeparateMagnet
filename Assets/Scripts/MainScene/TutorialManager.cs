@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
 
 enum TutorialImage
 {
@@ -49,5 +50,55 @@ public class TutorialManager : MonoBehaviour
         }
 
         tutorialObj.transform.GetChild(tutorialObj.transform.childCount - 1).GetComponent<MatrixText>()?.Initialize(_matrixRowNum);
+    }
+
+    // json変換するデータのクラス
+    [HideInInspector] public MatrixText matrixTextData;
+
+    // jsonファイルのパス
+    string filepath;
+
+    // jsonファイル名
+    string fileName = "MatrixTextData.json";
+
+    //-------------------------------------------------------------------
+    // 開始時にファイルチェック、読み込み
+    void Awake()
+    {
+        // パス名取得
+        filepath = Application.dataPath + "/" + fileName;
+
+        // ファイルがないとき、ファイル作成
+        if (!File.Exists(filepath)) Save(matrixTextData);
+
+        // ファイルを読み込んでdataに格納
+        matrixTextData = Load(filepath);
+    }
+
+    //-------------------------------------------------------------------
+    // jsonとしてデータを保存
+    public void Save(MatrixText data)
+    {
+        string json = JsonUtility.ToJson(data);                 // jsonとして変換
+        StreamWriter wr = new StreamWriter(filepath, false);    // ファイル書き込み指定
+        wr.WriteLine(json);                                     // json変換した情報を書き込み
+        wr.Close();                                             // ファイル閉じる
+    }
+
+    // jsonファイル読み込み
+    MatrixText Load(string path)
+    {
+        StreamReader rd = new StreamReader(path);               // ファイル読み込み指定
+        string json = rd.ReadToEnd();                           // ファイル内容全て読み込む
+        rd.Close();                                             // ファイル閉じる
+
+        return JsonUtility.FromJson<MatrixText>(json);            // jsonファイルを型に戻して返す
+    }
+
+    //-------------------------------------------------------------------
+    // ゲーム終了時に保存
+    void OnDestroy()
+    {
+        Save(matrixTextData);
     }
 }
