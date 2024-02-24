@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceaa3231a4ab3a74189e1fc341887420, type: 3}
+  m_Name: Mission
+  m_EditorClassIdentifier: 
+  missionGroupDatas:
+  - headId: 00
+    missionType: 0
+    missionDatas:
+    - bottomId: 00
+      id: 0000
+      missionPrefab: {fileID: 6749361448700363777, guid: bcec97d6e7847e0478841bd6f171de91, type: 3}
+      currentValue: 0
+      goalValue: 0
+      missionState: 2
+    - bottomId: 01
+      id: 0001
+      missionPrefab: {fileID: 6749361448700363777, guid: bcec97d6e7847e0478841bd6f171de91, type: 3}
+      currentValue: 0
+      goalValue: 0
+      missionState: 2
+    - bottomId: 02
+      id: 0002
+      missionPrefab: {fileID: 0}
+      currentValue: 0
+      goalValue: 0
+      missionState: 2
+    - bottomId: 03
+      id: 0003
+      missionPrefab: {fileID: 0}
+      currentValue: 0
+      goalValue: 0
+      missionState: 2
