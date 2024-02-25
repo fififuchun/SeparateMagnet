@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 enum TutorialImage
 {
@@ -17,35 +18,27 @@ enum TutorialImage
 
 public class TutorialManager : MonoBehaviour
 {
-    //描画キャンバス・生成用Prefab
-    [SerializeField] private GameObject canvas;
-    [SerializeField] private GameObject tutorialPrefab;
-
     //何番目を出力するか
-    [SerializeField, Header("ColumnNumber?")] private int matrixColumnNum;
+    [SerializeField, Header("RowNumber?")] private int matrixRowNum;
 
+    //tutorial用のMatrixText
+    [SerializeField] private MatrixText tutorial;
+
+    //チュートリアルの女性
+    [SerializeField] private Sprite[] ladySprites = new Sprite[8];
+    [SerializeField] private Image ladyImage;
+
+    [SerializeField] private Button testButton;
+    public void PushTestButton(int _matrixRowNum) { InstantiateTutorial(_matrixRowNum, 3); }
 
     void Start()
     {
-        InstantiateTutorial(matrixColumnNum);
+        InstantiateTutorial(matrixRowNum, 3);
     }
 
-    /// <summary>
-    /// tutorialを生成
-    /// </summary>
-    /// <param name="_matrixRowNum">行</param>
-    public void InstantiateTutorial(int _matrixRowNum)
+    public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
     {
-        //tutorialPrefabを複製
-        GameObject tutorialObj = Instantiate(tutorialPrefab, canvas.transform);
-
-        //tutorialObj直下のMatrixTextが存在するなら[_matrixRowNum, 0]を生成
-        if (tutorialObj.transform.GetChild(tutorialObj.transform.childCount - 1).GetComponent<MatrixText>() == null)
-        {
-            Debug.Log("MatrixTextコンポーネントを親ボタン直下かつ一番下のテキストオブジェクトにアタッチして下さい");
-            return;
-        }
-
-        // tutorialObj.transform.GetChild(tutorialObj.transform.childCount - 1).GetComponent<MatrixText>()?.Initialize(_matrixRowNum);/
+        tutorial.Initialize(_matrixRowNum);
+        ladyImage.sprite = ladySprites[_ladyNum];
     }
 }

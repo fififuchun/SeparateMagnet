@@ -5,7 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
+// using Cysharp.Threading.Tasks;
 
+//Load用
 // public struct MatrixTextDatas
 // {
 
@@ -44,15 +46,11 @@ public class MatrixText : MonoBehaviour
         filepath = Application.dataPath + "/" + fileName;
 
         // ファイルがないとき、ファイル作成
-        if (!File.Exists(filepath)) Save(matrixTextSO);
+        // if (!File.Exists(filepath)) Save(matrixTextSO);
+        if (matrixTextSO.stringGroups.Length != 0) Save(matrixTextSO);
 
-        // ファイルを読み込んでdataに格納
+        // ファイルを読み込む
         // matrixTextSO.stringGroups = Load(filepath);
-    }
-
-    void Start()
-    {
-        Initialize(matrixRowNum);
     }
 
     // jsonとしてデータを保存
@@ -71,8 +69,8 @@ public class MatrixText : MonoBehaviour
         wr.Close();
     }
 
-    // // jsonファイル読み込み
-    MatrixTextData[] Load(string path)
+    // jsonファイル読み込み
+    private MatrixTextData[] Load(string path)
     {
         // ファイル読み込み指定
         StreamReader rd = new StreamReader(path);
@@ -88,12 +86,6 @@ public class MatrixText : MonoBehaviour
         return JsonUtility.FromJson<MatrixTextData[]>(json);
     }
 
-    // ゲーム終了時に保存
-    void OnDestroy()
-    {
-        Save(matrixTextSO);
-    }
-
     /// <summary>
     /// matrixRowNumを初期化
     /// </summary>
@@ -102,45 +94,50 @@ public class MatrixText : MonoBehaviour
         //指定された_matrixRowNumがtutorialSOの行数を超えてたらreturn
         if (_matrixRowNum < 0 || matrixTextSO.stringGroups.Count() <= _matrixRowNum)
         {
-            // Destroy(transform.parent.gameObject);
             gameObject.transform.parent.gameObject.SetActive(false);
             Debug.Log("入力されたmatrixRowNumは存在しません");
             return;
         }
+        //指定された_matrixRowNum行目にテキストがないならreturn
+        if (matrixTextSO.stringGroups[_matrixRowNum].strings.Length == 0)
+        {
+            gameObject.transform.parent.gameObject.SetActive(false);
+            Debug.Log("入力されたmatrixRowNumにテキストは存在しません");
+            return;
+        }
+
         //指定された_matrixRowNumがtutorialSOの行数を超えてなかったら初期化
         matrixRowNum = _matrixRowNum;
 
-        InitializeText();
-        transform.parent.GetComponent<Button>()?.onClick.AddListener(PushGoNextButton);
-        // Debug.Log($"{matrixRowNum}に変更");
-    }
-
-    /// <summary>
-    /// テキストを初期化
-    /// </summary>
-    public void InitializeText()
-    {
+        //MatrixTextがアタッチされているGameObjectにTextコンポーネントがないなら
         if (gameObject.GetComponent<TextMeshProUGUI>() == null)
         {
             Debug.Log("textコンポーネントをアタッチしてください");
             return;
         }
         matrixElementText = gameObject.GetComponent<TextMeshProUGUI>();
-        Debug.Log("MatrixText: 初期化されました");
 
+        //親のボタンをAppear
+        gameObject.transform.parent.gameObject.SetActive(true);
+
+        //表示すべきSOが存在し、Textコンポーネントもあるなら、それを初期化
         matrixElementText.text = matrixTextSO.stringGroups[matrixRowNum].strings[matrixColumnNum];
+
+        //親のボタンにmatrixTextの列を次に進める関数を設定
+        transform.parent.GetComponent<Button>()?.onClick.RemoveAllListeners();
+        transform.parent.GetComponent<Button>()?.onClick.AddListener(PushGoNextButton);
     }
 
     /// <summary>
     /// matrixTextの列を次に進める
     /// </summary>
-    public void PushGoNextButton()
+    private void PushGoNextButton()
     {
-        Debug.Log("次へ進む");
+        // Debug.Log($"{matrixColumnNum}へ進む");
         matrixColumnNum++;
         if (matrixTextSO.stringGroups[matrixRowNum].strings.Length <= matrixColumnNum)
         {
-            Debug.Log("テキストがありません");
+            // Debug.Log($"{matrixColumnNum}, テキストがありません");
             matrixColumnNum = 0;
             gameObject.transform.parent.gameObject.SetActive(false);
             return;
