@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class TutorialSaveData
 {
-    public const int tutorialCount = 2;
-    public bool[] tutorialMessages = new bool[tutorialCount];
+    public const int tutorialCount = 4;
+    public bool[] isFinishedTutorial = new bool[tutorialCount];
 }

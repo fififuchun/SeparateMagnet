@@ -28,17 +28,23 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private Sprite[] ladySprites = new Sprite[8];
     [SerializeField] private Image ladyImage;
 
-    [SerializeField] private Button testButton;
+    //セーブデータ
+    [SerializeField] private TutorialDataManager tutorialDataManager;
+
+    //test
+    // [SerializeField] private Button testButton;
     public void PushTestButton(int _matrixRowNum) { InstantiateTutorial(_matrixRowNum, 3); }
 
     void Start()
     {
-        InstantiateTutorial(matrixRowNum, 3);
+        if (!tutorialDataManager.data.isFinishedTutorial[0]) InstantiateTutorial(0, 3);
     }
 
     public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
     {
         tutorial.Initialize(_matrixRowNum);
         ladyImage.sprite = ladySprites[_ladyNum];
+
+        tutorialDataManager.data.isFinishedTutorial[_matrixRowNum] = true;
     }
 }

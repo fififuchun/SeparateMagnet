@@ -51,6 +51,7 @@ public class MatrixText : MonoBehaviour
 
         // ファイルを読み込む
         // matrixTextSO.stringGroups = Load(filepath);
+        // Initialize(matrixRowNum);
     }
 
     // jsonとしてデータを保存
