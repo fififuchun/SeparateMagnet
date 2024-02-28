@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-enum TutorialImage
+enum TutorialImageInGame
 {
     Bow = 0,
     Cheak = 1,
@@ -16,7 +16,7 @@ enum TutorialImage
     Wink = 7,
 }
 
-public class TutorialManager : MonoBehaviour
+public class TutorialInGame : MonoBehaviour
 {
     //何番目を出力するか
     [SerializeField, Header("RowNumber?")] private int matrixRowNum;
@@ -38,10 +38,6 @@ public class TutorialManager : MonoBehaviour
     void Start()
     {
         if (!tutorialDataManager.data.isFinishedTutorial[0]) InstantiateTutorial(0, 3);
-
-        shoppingTutorialButton.onClickCallback += PushShoppingTutorialButton;
-        rpgTutorialButton.onClickCallback += PushRPGTutorialButton;
-        missionTutorialButton.onClickCallback += PushMissionTutorialButton;
     }
 
     public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
@@ -52,26 +48,5 @@ public class TutorialManager : MonoBehaviour
 
         tutorial.Initialize(_matrixRowNum);
         ladyImage.sprite = ladySprites[_ladyNum];
-    }
-
-    [SerializeField] private CustomButton shoppingTutorialButton;
-    public void PushShoppingTutorialButton()
-    {
-        tutorial.Initialize(1);
-        ladyImage.sprite = ladySprites[(int)TutorialImage.Cheak];
-    }
-
-    [SerializeField] private CustomButton rpgTutorialButton;
-    public void PushRPGTutorialButton()
-    {
-        tutorial.Initialize(2);
-        ladyImage.sprite = ladySprites[(int)TutorialImage.Good];
-    }
-
-    [SerializeField] private CustomButton missionTutorialButton;
-    public void PushMissionTutorialButton()
-    {
-        tutorial.Initialize(3);
-        ladyImage.sprite = ladySprites[(int)TutorialImage.Info];
     }
 }
