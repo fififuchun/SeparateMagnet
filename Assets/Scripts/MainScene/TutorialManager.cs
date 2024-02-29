@@ -31,6 +31,9 @@ public class TutorialManager : MonoBehaviour
     //セーブデータ
     [SerializeField] private TutorialDataManager tutorialDataManager;
 
+    //フッター
+    // [SerializeField] private Footer footer;
+
     //test
     // [SerializeField] private Button testButton;
     public void PushTestButton(int _matrixRowNum) { InstantiateTutorial(_matrixRowNum, 3); }

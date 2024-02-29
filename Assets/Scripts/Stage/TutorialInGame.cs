@@ -4,18 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-enum TutorialImageInGame
-{
-    Bow = 0,
-    Cheak = 1,
-    Glad = 2,
-    Go = 3,
-    Good = 4,
-    Info = 5,
-    Tele = 6,
-    Wink = 7,
-}
-
 public class TutorialInGame : MonoBehaviour
 {
     //何番目を出力するか
@@ -37,7 +25,7 @@ public class TutorialInGame : MonoBehaviour
 
     void Start()
     {
-        if (!tutorialDataManager.data.isFinishedTutorial[0]) InstantiateTutorial(0, 3);
+        if (!tutorialDataManager.data.isFinishedTutorial[4]) InstantiateTutorial(4, 3);
     }
 
     public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
@@ -48,5 +36,7 @@ public class TutorialInGame : MonoBehaviour
 
         tutorial.Initialize(_matrixRowNum);
         ladyImage.sprite = ladySprites[_ladyNum];
+
+        
     }
 }

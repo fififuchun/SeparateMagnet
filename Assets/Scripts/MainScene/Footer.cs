@@ -37,6 +37,9 @@ public class Footer : MonoBehaviour
     //びっくり
     [SerializeField] private GameObject notificationImage;
 
+    //チュートリアル用
+    [SerializeField] private TutorialManager tutorialManager;
+
     void Start()
     {
         footer = GameObject.Find("Footer");
@@ -62,11 +65,24 @@ public class Footer : MonoBehaviour
                 buttonsRects[i].sizeDelta = new Vector2(280, 280);
                 buttonsRects[i].GetComponent<Image>().color = new Color32(236, 193, 0, 255);
                 footerImagesRects[i].sizeDelta = new Vector2(200, 200);
-                if (i == 2) footerImagesRects[i].sizeDelta = new Vector2(300, 150);
-                if (i == 3)
+
+                if (i == 0)
+                {
+                    tutorialManager.InstantiateTutorial(1, (int)TutorialImage.Cheak);
+                }
+                else if (i == 1)
+                {
+                    tutorialManager.InstantiateTutorial(2, (int)TutorialImage.Good);
+                }
+                else if (i == 2)
+                {
+                    footerImagesRects[i].sizeDelta = new Vector2(300, 150);
+                }
+                else if (i == 3)
                 {
                     notificationImage.SetActive(false);
                     missionManager.UpdateMissions();
+                    tutorialManager.InstantiateTutorial(3, (int)TutorialImage.Info);
                 }
 
                 footerImagesRects[i].gameObject.transform.localPosition = new Vector2(footerImagesRects[i].gameObject.transform.localPosition.x, 10);
