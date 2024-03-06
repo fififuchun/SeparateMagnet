@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class GameManager : MonoBehaviour
     //音楽
     [SerializeField] private AudioSource audioSource;
 
+    //MatrixTextButtonのGameObject
+    [SerializeField] GameObject matrixTextPatentObj;
+
 
     [Header("以上入力エリア")]
     //置かれたゲームオブジェクトのKentoManagerインスタンスを格納
@@ -42,9 +46,10 @@ public class GameManager : MonoBehaviour
 
 
     //関数の部
-    void Start()
+    async void Start()
     {
         phase = Phase.StartPhase;
+        await UniTask.WaitUntil(() => !matrixTextPatentObj.activeSelf);
         StartCoroutine(Loop());
 
         //要修正

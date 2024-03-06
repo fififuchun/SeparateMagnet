@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class TutorialInGame : MonoBehaviour
 {
@@ -19,13 +20,16 @@ public class TutorialInGame : MonoBehaviour
     //セーブデータ
     [SerializeField] private TutorialDataManager tutorialDataManager;
 
-    //test
-    // [SerializeField] private Button testButton;
-    public void PushTestButton(int _matrixRowNum) { InstantiateTutorial(_matrixRowNum, 3); }
+    //指のナビゲーション
+    [SerializeField] private GameObject fingerNavi;
 
     void Start()
     {
-        if (!tutorialDataManager.data.isFinishedTutorial[4]) InstantiateTutorial(4, 3);
+        if (!tutorialDataManager.data.isFinishedTutorial[4])
+        {
+            InstantiateTutorial(4, 3);
+            fingerNavi.SetActive(true);
+        }
     }
 
     public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
@@ -36,7 +40,5 @@ public class TutorialInGame : MonoBehaviour
 
         tutorial.Initialize(_matrixRowNum);
         ladyImage.sprite = ladySprites[_ladyNum];
-
-        
     }
 }
