@@ -31,16 +31,16 @@ public class TutorialManager : MonoBehaviour
     //セーブデータ
     [SerializeField] private TutorialDataManager tutorialDataManager;
 
-    //フッター
-    // [SerializeField] private Footer footer;
+    //mainフッターの指のナビゲーション
+    [SerializeField] private GameObject fingerNavi;
 
-    //test
-    // [SerializeField] private Button testButton;
-    public void PushTestButton(int _matrixRowNum) { InstantiateTutorial(_matrixRowNum, 3); }
 
     void Start()
     {
+        //isFinishedTutorial[0]がfalseなら、チュートリアルを出現させる
         if (!tutorialDataManager.data.isFinishedTutorial[0]) InstantiateTutorial(0, 3);
+        //isFinishedTutorial[4]がfalseなら、MainのfingerNaviをtrueにする
+        if (!tutorialDataManager.data.isFinishedTutorial[4]) fingerNavi.SetActive(true);
 
         shoppingTutorialButton.onClickCallback += PushShoppingTutorialButton;
         rpgTutorialButton.onClickCallback += PushRPGTutorialButton;
