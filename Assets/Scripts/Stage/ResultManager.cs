@@ -22,7 +22,7 @@ public class ResultManager : MonoBehaviour
         InitializeResult();
 
         stageNum = int.Parse(SceneManager.GetActiveScene().name.Split('_')[1]);
-        Debug.Log(stageNum);
+        // Debug.Log(stageNum);
     }
 
     public void InitializeResult()

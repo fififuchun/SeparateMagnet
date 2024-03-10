@@ -28,6 +28,8 @@ public class DataManager : MonoBehaviour
         // ファイルを読み込んでdataに格納
         data = Load(filepath);
         CheakSaveData();
+
+        Debug.Log(data.fontNumbers[0]);
     }
 
     //-------------------------------------------------------------------

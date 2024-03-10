@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject kentos;
 
     //ゲームごとの使い捨てのゲームオブジェクトをここに入れる
-    [SerializeField] private List<List<KentoData>> myGameObjects = new List<List<KentoData>>();
+    // [SerializeField] private List<List<KentoData>> myGameObjects = new List<List<KentoData>>();
+    private GameObject[,] myGameObjects = new GameObject[3, 6];
 
     //検討の元データ
     [SerializeField] private Kento kentoSO;
@@ -34,6 +35,9 @@ public class GameManager : MonoBehaviour
 
     //MatrixTextButtonのGameObject
     [SerializeField] GameObject matrixTextPatentObj;
+
+    //
+    [SerializeField] DataManager dataManager;
 
 
     [Header("以上入力エリア")]
@@ -52,13 +56,22 @@ public class GameManager : MonoBehaviour
         await UniTask.WaitUntil(() => !matrixTextPatentObj.activeSelf);
         StartCoroutine(Loop());
 
+        //myGameObjectsを初期化
+        for (int i = 0; i < myGameObjects.GetLength(0); i++)
+        {
+            for (int j = 0; j < myGameObjects.GetLength(1); j++)
+            {
+                myGameObjects[i, j] = kentoSO.sizeData[i].kentoPrefabs[dataManager.data.fontNumbers[j]];
+            }
+        }
+
         //要修正
-        myGameObjects.Add(kentoSO.fontData[0].sizeData);
-        myGameObjects.Add(kentoSO.fontData[1].sizeData);
-        myGameObjects.Add(kentoSO.fontData[2].sizeData);
-        myGameObjects.Add(kentoSO.fontData[2].sizeData);
-        myGameObjects.Add(kentoSO.fontData[3].sizeData);
-        myGameObjects.Add(kentoSO.fontData[3].sizeData);
+        // myGameObjects.Add(kentoSO.sizeData[0].fontData);
+        // myGameObjects.Add(kentoSO.sizeData[1].fontData);
+        // myGameObjects.Add(kentoSO.sizeData[2].fontData);
+        // myGameObjects.Add(kentoSO.sizeData[2].fontData);
+        // myGameObjects.Add(kentoSO.sizeData[3].fontData);
+        // myGameObjects.Add(kentoSO.sizeData[3].fontData);
     }
 
     void Update()
@@ -163,16 +176,17 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        //要修正
         if (Random.Range(0, timeManager.RareRate) == 0)
         {
-            ReadyKento = Instantiate(kentoSO.fontData[kentoSO.fontData.Count() - 1].sizeData[0].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
-            timeManager.data.isRareFonts[int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])] = true;
-            Debug.Log($"STAGE{int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])}のレアなフォント出現");
-            return;
+            // ReadyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].fontData[0].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+            // timeManager.data.isRareFonts[int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])] = true;
+            // Debug.Log($"STAGE{int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])}のレアなフォント出現");
+            // return;
         }
 
-        //Prefabを生成してListに追加
-        ReadyKento = Instantiate(myGameObjects[Random.Range(0, 6)][Random.Range(0, 3)].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+        //Prefabを生成してListに追加・修正
+        // ReadyKento = Instantiate(myGameObjects[Random.Range(0, 6)][Random.Range(0, 3)].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
     }
 
     //kentoPrefabの中身をnullに戻す
@@ -212,9 +226,11 @@ public class GameManager : MonoBehaviour
     public GameObject tmpObject;
 
     //kentoManagerのインスタンスからコインの量を計測
+    //修正
     public int CoinOf(KentoManager kento)
     {
-        for (int i = 0; i < kentoSO.fontData.Count(); i++) for (int j = 0; j < kentoSO.fontData[i].sizeData.Count(); j++) if (kentoSO.fontData[i].sizeData[j].KentoPrefab.name == kento.name.Split("(")[0]) return kentoSO.fontData[i].sizeData[j].score;
+        // for (int i = 0; i < kentoSO.sizeData.Count(); i++) for (int j = 0; j < kentoSO.sizeData[i].fontData.Count(); j++) if (kentoSO.sizeData[i].fontData[j].KentoPrefab.name == kento.name.Split("(")[0]) return kentoSO.sizeData[i].fontData[j].score;
+
         return 0;
     }
 
