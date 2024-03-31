@@ -15,7 +15,7 @@ C:/Users/HUCHUN/Unity project/SeparateMagnet
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-55279
+59561
 Successfully changed project path to: C:/Users/HUCHUN/Unity project/SeparateMagnet
 C:/Users/HUCHUN/Unity project/SeparateMagnet
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -49,11 +49,11 @@ C:/Users/HUCHUN/Unity project/SeparateMagnet
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [15508] Host "[IP] 192.168.10.232 [Port] 0 [Flags] 2 [Guid] 2998216636 [EditorId] 2998216636 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-VNF68GVE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [19588] Host "[IP] 192.168.10.232 [Port] 0 [Flags] 2 [Guid] 3464816701 [EditorId] 3464816701 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-VNF68GVE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [15508] Host "[IP] 192.168.10.232 [Port] 0 [Flags] 2 [Guid] 2998216636 [EditorId] 2998216636 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-VNF68GVE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [19588] Host "[IP] 192.168.10.232 [Port] 0 [Flags] 2 [Guid] 3464816701 [EditorId] 3464816701 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-VNF68GVE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 3428.12 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 3181.13 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.5f1 (9674261d40ee)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/Resources/UnitySubsystems
@@ -69,54 +69,55 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56132
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56072
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.469372 seconds.
-- Loaded All Assemblies, in  8.387 seconds
+Registered in 0.027060 seconds.
+- Loaded All Assemblies, in  1.384 seconds
 Native extension for WindowsStandalone target not found
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
+[usbmuxd] Attached: 1 00008110-001931CA36D0401E
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 516 ms
+Android Extension - Scanning For ADB Devices 796 ms
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.314 seconds
-Domain Reload Profiling: 9697ms
-	BeginReloadAssembly (5540ms)
+- Finished resetting the current domain, in  1.916 seconds
+Domain Reload Profiling: 3298ms
+	BeginReloadAssembly (598ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (532ms)
-	RebuildNativeTypeToScriptingClass (21ms)
-	initialDomainReloadingComplete (563ms)
-	LoadAllAssembliesAndSetupDomain (1727ms)
-		LoadAssemblies (5536ms)
+		CreateAndSetChildDomain (3ms)
+	RebuildCommonClasses (51ms)
+	RebuildNativeTypeToScriptingClass (16ms)
+	initialDomainReloadingComplete (138ms)
+	LoadAllAssembliesAndSetupDomain (575ms)
+		LoadAssemblies (592ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (1713ms)
-			TypeCache.Refresh (1712ms)
-				TypeCache.ScanAssembly (1370ms)
+		AnalyzeDomain (559ms)
+			TypeCache.Refresh (556ms)
+				TypeCache.ScanAssembly (526ms)
 			ScanForSourceGeneratedMonoScriptInfo (1ms)
-			ResolveRequiredComponents (1ms)
-	FinalizeReload (1314ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (1919ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1233ms)
+		SetupLoadedEditorAssemblies (1741ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (1010ms)
-			SetLoadedEditorAssemblies (5ms)
+			InitializePlatformSupportModulesInManaged (1311ms)
+			SetLoadedEditorAssemblies (7ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (3ms)
-			ProcessInitializeOnLoadAttributes (146ms)
-			ProcessInitializeOnLoadMethodAttributes (70ms)
+			BeforeProcessingInitializeOnLoad (5ms)
+			ProcessInitializeOnLoadAttributes (190ms)
+			ProcessInitializeOnLoadMethodAttributes (229ms)
 			AfterProcessingInitializeOnLoad (0ms)
-			EditorAssembliesLoaded (0ms)
+			EditorAssembliesLoaded (1ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (0ms)
 ========================================================================
@@ -124,76 +125,53 @@ Worker process is ready to serve import requests
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\HUCHUN\Unity project\SeparateMagnet\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\HUCHUN\Unity project\SeparateMagnet\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in 15.904 seconds
-Refreshing native plugins compatible for Editor in 15.96 ms, found 4 plugins.
+- Loaded All Assemblies, in 11.429 seconds
+Refreshing native plugins compatible for Editor in 25.72 ms, found 4 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for iOS target not found
 Native extension for Android target not found
-Unable to write to 'ProjectSettings\GvhProjectSettings.xml' (System.IO.IOException: Sharing violation on path C:\Users\HUCHUN\Unity project\SeparateMagnet\ProjectSettings\GvhProjectSettings.xml
-  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.Boolean anonymous, System.IO.FileOptions options) [0x0019e] in <eef08f56e2e042f1b3027eca477293d9>:0 
-  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.IO.FileOptions options) [0x00000] in <eef08f56e2e042f1b3027eca477293d9>:0 
-  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.Boolean useAsync) [0x00000] in <eef08f56e2e042f1b3027eca477293d9>:0 
-  at (wrapper remoting-invoke-with-check) System.IO.FileStream..ctor(string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int,bool)
-  at System.Xml.XmlWriterSettings.CreateWriter (System.String outputFileName) [0x00051] in <74563226b0cb46d4bef551949104f4db>:0 
-  at System.Xml.XmlWriter.Create (System.String outputFileName, System.Xml.XmlWriterSettings settings) [0x0000a] in <74563226b0cb46d4bef551949104f4db>:0 
-  at Google.ProjectSettings.Save () [0x000a1] in Z:\tmp\tmp.0RQl0B2vU0\third_party\unity\unity_jar_resolver\source\VersionHandlerImpl\src\ProjectSettings.cs:828 , Project settings were not saved!
-UnityEngine.StackTraceUtility:ExtractStackTrace ()
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-Google.Logger:Log (string,Google.LogLevel) (at Z:/tmp/tmp.0RQl0B2vU0/third_party/unity/unity_jar_resolver/source/VersionHandlerImpl/src/Logger.cs:136)
-Google.ProjectSettings:Save () (at Z:/tmp/tmp.0RQl0B2vU0/third_party/unity/unity_jar_resolver/source/VersionHandlerImpl/src/ProjectSettings.cs:844)
-Google.ProjectSettings:SetBool (string,bool,Google.SettingsLocation) (at Z:/tmp/tmp.0RQl0B2vU0/third_party/unity/unity_jar_resolver/source/VersionHandlerImpl/src/ProjectSettings.cs:485)
-Google.ProjectSettings:SetBool (string,bool) (at Z:/tmp/tmp.0RQl0B2vU0/third_party/unity/unity_jar_resolver/source/VersionHandlerImpl/src/ProjectSettings.cs:497)
-Google.IOSResolver:set_VerboseLoggingEnabled (bool) (at Z:/tmp/tmp.jynVJkQz6J/third_party/unity/unity_jar_resolver/source/IOSResolver/src/IOSResolver.cs:1041)
-Google.IOSResolver:.cctor () (at Z:/tmp/tmp.jynVJkQz6J/third_party/unity/unity_jar_resolver/source/IOSResolver/src/IOSResolver.cs:727)
-System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
-UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
-
-(Filename: Z:/tmp/tmp.0RQl0B2vU0/third_party/unity/unity_jar_resolver/source/VersionHandlerImpl/src/ProjectSettings.cs Line: 844)
-
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.330 seconds
-Domain Reload Profiling: 17225ms
-	BeginReloadAssembly (294ms)
+- Finished resetting the current domain, in  2.598 seconds
+Domain Reload Profiling: 14002ms
+	BeginReloadAssembly (384ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (8ms)
+		DisableScriptedObjects (14ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (32ms)
-	RebuildCommonClasses (54ms)
-	RebuildNativeTypeToScriptingClass (15ms)
-	initialDomainReloadingComplete (77ms)
-	LoadAllAssembliesAndSetupDomain (15453ms)
-		LoadAssemblies (14551ms)
+		CreateAndSetChildDomain (40ms)
+	RebuildCommonClasses (160ms)
+	RebuildNativeTypeToScriptingClass (23ms)
+	initialDomainReloadingComplete (95ms)
+	LoadAllAssembliesAndSetupDomain (10740ms)
+		LoadAssemblies (9540ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (1085ms)
-			TypeCache.Refresh (1007ms)
-				TypeCache.ScanAssembly (918ms)
-			ScanForSourceGeneratedMonoScriptInfo (58ms)
-			ResolveRequiredComponents (20ms)
-	FinalizeReload (1331ms)
+		AnalyzeDomain (1402ms)
+			TypeCache.Refresh (1316ms)
+				TypeCache.ScanAssembly (1187ms)
+			ScanForSourceGeneratedMonoScriptInfo (61ms)
+			ResolveRequiredComponents (25ms)
+	FinalizeReload (2599ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1062ms)
+		SetupLoadedEditorAssemblies (1951ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (62ms)
-			SetLoadedEditorAssemblies (10ms)
+			InitializePlatformSupportModulesInManaged (99ms)
+			SetLoadedEditorAssemblies (45ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (141ms)
-			ProcessInitializeOnLoadAttributes (701ms)
-			ProcessInitializeOnLoadMethodAttributes (135ms)
-			AfterProcessingInitializeOnLoad (13ms)
+			BeforeProcessingInitializeOnLoad (435ms)
+			ProcessInitializeOnLoadAttributes (926ms)
+			ProcessInitializeOnLoadMethodAttributes (426ms)
+			AfterProcessingInitializeOnLoad (19ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (11ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 15.29 ms, found 4 plugins.
+		AwakeInstancesAfterBackupRestoration (13ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.23 seconds
+Refreshing native plugins compatible for Editor in 38.12 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 6049 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 109 unused Assets / (396.8 KB). Loaded Objects now: 6528.
-Memory consumption went from 241.0 MB to 240.6 MB.
-Total: 5.594300 ms (FindLiveObjects: 0.661300 ms CreateObjectMapping: 0.582900 ms MarkObjects: 4.067700 ms  DeleteObjects: 0.281400 ms)
+Memory consumption went from 240.8 MB to 240.4 MB.
+Total: 8.859700 ms (FindLiveObjects: 0.712000 ms CreateObjectMapping: 0.985000 ms MarkObjects: 6.455700 ms  DeleteObjects: 0.705300 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
@@ -208,279 +186,3 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 1373059.372892 seconds.
-  path: Assets/Prefabs/0.5/Kento_Maka_0.prefab
-  artifactKey: Guid(44db4159e9832ee4aa8853f36d3f5398) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/0.5/Kento_Maka_0.prefab using Guid(44db4159e9832ee4aa8853f36d3f5398) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ef0382d7a9db4cfb304eaaf46b35d8c') in 0.017690 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 2375.438067 seconds.
-  path: Assets/Prefabs/0.5/Kento_Gothic_0 1.prefab
-  artifactKey: Guid(49b92913ae036724ea25c23021b0aba8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/0.5/Kento_Gothic_0 1.prefab using Guid(49b92913ae036724ea25c23021b0aba8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9a62465cc9e1780a1df41f72514e1b7') in 0.016717 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 59.502291 seconds.
-  path: Assets/Prefabs/0.5/Kento_Scary_0.prefab
-  artifactKey: Guid(b461206a7d320994aac39870d790f81d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/0.5/Kento_Scary_0.prefab using Guid(b461206a7d320994aac39870d790f81d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'acde03a2bfb8da8bae72c7a9de79f946') in 0.001867 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 2.988264 seconds.
-  path: Assets/Prefabs/1/Kento_Scary.prefab
-  artifactKey: Guid(21fc5b6844e183b488c93435b3e07d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/1/Kento_Scary.prefab using Guid(21fc5b6844e183b488c93435b3e07d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e82c8dc5e267a8b2b9daf0af1f2b21c') in 0.002262 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 3.461985 seconds.
-  path: Assets/Prefabs/2/Kento_Scary_2.prefab
-  artifactKey: Guid(ff77bfc70c78a1d45a715462037bf97d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/2/Kento_Scary_2.prefab using Guid(ff77bfc70c78a1d45a715462037bf97d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '949da8c364d2dd925826ff23a3f49d48') in 0.002153 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 26.261004 seconds.
-  path: Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/Rewarded/768x1024.prefab
-  artifactKey: Guid(4e3dd9a9607da46da8125b4b59a18db2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/Rewarded/768x1024.prefab using Guid(4e3dd9a9607da46da8125b4b59a18db2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '968023649b761d203394741c4aecd269') in 0.034915 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 29
-========================================================================
-Received Import Request.
-  Time since last request: 0.000020 seconds.
-  path: Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/AppOpen/768x1024.prefab
-  artifactKey: Guid(7d86e5c9e525f4fadbbea7ee54246b94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/AppOpen/768x1024.prefab using Guid(7d86e5c9e525f4fadbbea7ee54246b94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2599f2dbb3b59d8290c9a6c59eda6115') in 0.002145 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 25
-========================================================================
-Received Import Request.
-  Time since last request: 0.000023 seconds.
-  path: Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/Rewarded/1024x768.prefab
-  artifactKey: Guid(ac0a546bb4fb349229fc5824b288ec00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/Rewarded/1024x768.prefab using Guid(ac0a546bb4fb349229fc5824b288ec00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af6e481aa864a29c0fbee2099ab4ce38') in 0.011659 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 29
-========================================================================
-Received Import Request.
-  Time since last request: 0.001606 seconds.
-  path: Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/AdInspector/768x1024.prefab
-  artifactKey: Guid(d09dfea4c722a4e239e771200d3639cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/AdInspector/768x1024.prefab using Guid(d09dfea4c722a4e239e771200d3639cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01eeb8e0cbf298862aff3830ec5ed0a0') in 0.008745 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 25
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Water/CFX2_Big_Splash (No Collision).prefab
-  artifactKey: Guid(77c69ec12208c4c4380d15e30b6f8f68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Water/CFX2_Big_Splash (No Collision).prefab using Guid(77c69ec12208c4c4380d15e30b6f8f68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e04df34739c40fbd25735d5d9f7e886f') in 0.013818 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 18
-========================================================================
-Received Import Request.
-  Time since last request: 0.000015 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Pickup Items/CFX2_PickupDiamond2.prefab
-  artifactKey: Guid(aa3fed151f536ee49b583c6a3ac4a2e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Pickup Items/CFX2_PickupDiamond2.prefab using Guid(aa3fed151f536ee49b583c6a3ac4a2e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '099a90f62d5564dc89c1db1fdfffd6c6') in 0.001914 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Pickup Items/CFX2_PickupSmiley2.prefab
-  artifactKey: Guid(1bc4a709f24528b40984e62f32e398a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Pickup Items/CFX2_PickupSmiley2.prefab using Guid(1bc4a709f24528b40984e62f32e398a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2de25777f6e1599ce0cd526644540bc') in 0.001589 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/Banners/BANNER.prefab
-  artifactKey: Guid(b2a8ac187bcca47a286cb00c8094da36) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/Banners/BANNER.prefab using Guid(b2a8ac187bcca47a286cb00c8094da36) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a169ad39ce9663d426d73c92d81c2c9') in 0.006383 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 12
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Electric/CFX2_SparksHit_B Sphere.prefab
-  artifactKey: Guid(4961a16ba01e09547be3e1c9d16d5ad0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Electric/CFX2_SparksHit_B Sphere.prefab using Guid(4961a16ba01e09547be3e1c9d16d5ad0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41e329048f7f6e8e9c519bdd4c4960e2') in 0.001559 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Pickup Items/CFX2_PickupHeart.prefab
-  artifactKey: Guid(3af6f68141914ca43ba39b2403757bd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Pickup Items/CFX2_PickupHeart.prefab using Guid(3af6f68141914ca43ba39b2403757bd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90b6291c51e209df6ed45d6d183827e1') in 0.002007 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 18
-========================================================================
-Received Import Request.
-  Time since last request: 0.000013 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Blood/CFX2_Blood.prefab
-  artifactKey: Guid(bc98890f6028f444eaa7789bde5e2eeb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX2 Prefabs/Blood/CFX2_Blood.prefab using Guid(bc98890f6028f444eaa7789bde5e2eeb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '96e2e19918e99ec8734f54bb4145ebfd') in 0.001717 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 0.000013 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Fire/CFX3_Fire_Shield.prefab
-  artifactKey: Guid(b0bc1b6b391734647b9bb142bafc0819) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Fire/CFX3_Fire_Shield.prefab using Guid(b0bc1b6b391734647b9bb142bafc0819) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b19d0099ef0a3a2cd94293c3cc17f645') in 0.005428 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 25
-========================================================================
-Received Import Request.
-  Time since last request: 0.000013 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Electric/CFX3_Hit_Electric_A_Ground.prefab
-  artifactKey: Guid(1ca16f2a31fb6a548ad8954bed1d321f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Electric/CFX3_Hit_Electric_A_Ground.prefab using Guid(1ca16f2a31fb6a548ad8954bed1d321f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '06ed8c167cc4ad06dae8558d83990bd0') in 0.002074 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 22
-========================================================================
-Received Import Request.
-  Time since last request: 0.000013 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Fire/CFX3_Flying_Ember_Upward.prefab
-  artifactKey: Guid(f89732ea99785b94c87bbba1e27f75a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Fire/CFX3_Flying_Ember_Upward.prefab using Guid(f89732ea99785b94c87bbba1e27f75a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b38bed1b46e2be34e2c04cb06eb4b44') in 0.001427 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000013 seconds.
-  path: Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/Banners/CENTER.prefab
-  artifactKey: Guid(452d0eeb28d68420d95c05a6712689be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GoogleMobileAds/Editor/Resources/PlaceholderAds/Banners/CENTER.prefab using Guid(452d0eeb28d68420d95c05a6712689be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c52f1717dc18c394964edd80d78f2224') in 0.001269 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 15
-========================================================================
-Received Import Request.
-  Time since last request: 0.000084 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Misc/CFX3_Hit_Misc_D.prefab
-  artifactKey: Guid(979632a27455af442bd2d8f36eb0ffce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Misc/CFX3_Hit_Misc_D.prefab using Guid(979632a27455af442bd2d8f36eb0ffce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3ee2e4866b9c936b4f2d985c2ee16bd') in 0.001577 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Electric/CFX3_Hit_Electric_C_Air.prefab
-  artifactKey: Guid(e243632bb3aff9549abdcfcc2ef0c4f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Electric/CFX3_Hit_Electric_C_Air.prefab using Guid(e243632bb3aff9549abdcfcc2ef0c4f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aebdd0e3a129bc823d03e8617b010387') in 0.002276 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 22
-========================================================================
-Received Import Request.
-  Time since last request: 0.006318 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Magic Misc/CFX3_MagicAura_B_Runic.prefab
-  artifactKey: Guid(60bc526f4be1e044ab9e46340b82ffb3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Magic Misc/CFX3_MagicAura_B_Runic.prefab using Guid(60bc526f4be1e044ab9e46340b82ffb3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23fd5492e03f381f7071ffdb2a6bb5a2') in 0.002298 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 19
-========================================================================
-Received Import Request.
-  Time since last request: 0.006157 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Light/CFX3_ResurrectionLight_Circle.prefab
-  artifactKey: Guid(ada5d62ffe762ce4fbccc70dcdbc9022) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Light/CFX3_ResurrectionLight_Circle.prefab using Guid(ada5d62ffe762ce4fbccc70dcdbc9022) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f219557a6843f55c0a17eadaa7b22db6') in 0.001855 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 18
-========================================================================
-Received Import Request.
-  Time since last request: 0.003361 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Environment/CFX3_Snow_Dense.prefab
-  artifactKey: Guid(de07bf378e7247444a0715ad2ff509e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX3 Prefabs/Environment/CFX3_Snow_Dense.prefab using Guid(de07bf378e7247444a0715ad2ff509e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6674200632b73550031c89c538c5afaf') in 0.001415 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.002715 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Light/CFX4 Aura Bubble C.prefab
-  artifactKey: Guid(968c924d2be019d4b9e67647551eec3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Light/CFX4 Aura Bubble C.prefab using Guid(968c924d2be019d4b9e67647551eec3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f29e3882e7f79bd24ba9a15de1c9c4ee') in 0.001752 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 13
-========================================================================
-Received Import Request.
-  Time since last request: 0.000952 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Magic/CFX4 Disruptive Force.prefab
-  artifactKey: Guid(db50ab1c866680e4bb870bf5eb72dd3d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Magic/CFX4 Disruptive Force.prefab using Guid(db50ab1c866680e4bb870bf5eb72dd3d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70472dc146bf2cbe24d011469e6e72d2') in 0.001703 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 9
-========================================================================
-Received Import Request.
-  Time since last request: 0.000105 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Water/CFX4 Environment Bubbles Denser.prefab
-  artifactKey: Guid(37bd362d795dc334d8676f4781d66578) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Water/CFX4 Environment Bubbles Denser.prefab using Guid(37bd362d795dc334d8676f4781d66578) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa88432aa5303346e7321e78d27931c9') in 0.001529 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.002175 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Misc/CFX4 Hit B (Orange).prefab
-  artifactKey: Guid(e9391f622091e1449bdef4ef15af4948) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Misc/CFX4 Hit B (Orange).prefab using Guid(e9391f622091e1449bdef4ef15af4948) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '92b2ee00085e1b22e45d3e6eeb3f0007') in 0.001522 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 0.004875 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Misc/CFX4 Hit Paint C (Cyan).prefab
-  artifactKey: Guid(f2dba9e16cd347f44a395b8204544ee5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Misc/CFX4 Hit Paint C (Cyan).prefab using Guid(f2dba9e16cd347f44a395b8204544ee5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d11c8b15c0784c89f50d8f8fe94863f') in 0.001623 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Magic/CFX4 Magic Hit.prefab
-  artifactKey: Guid(b395d5d6eb4b4b846acc021ee036b744) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX4 Prefabs/Magic/CFX4 Magic Hit.prefab using Guid(b395d5d6eb4b4b846acc021ee036b744) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8d9bad9f1018819234e077b69b48b52') in 0.001889 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 21
-========================================================================
-Received Import Request.
-  Time since last request: 0.004892 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX Prefabs/Electric/CFX_ElectricityBall.prefab
-  artifactKey: Guid(77ec3c4e07a36814fb3169ecef41b50a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX Prefabs/Electric/CFX_ElectricityBall.prefab using Guid(77ec3c4e07a36814fb3169ecef41b50a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62c0eeb6101304806489693999a72202') in 0.002469 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 14
-========================================================================
-Received Import Request.
-  Time since last request: 0.001766 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX Prefabs/Explosions/CFX_Firework_Trails_Gravity.prefab
-  artifactKey: Guid(4adffb0018aeda44e9263f901167af1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX Prefabs/Explosions/CFX_Firework_Trails_Gravity.prefab using Guid(4adffb0018aeda44e9263f901167af1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e70f0aba6a6d3cf6a370e824bafec0e5') in 0.001594 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 6
-========================================================================
-Received Import Request.
-  Time since last request: 0.004010 seconds.
-  path: Assets/JMO Assets/Cartoon FX (legacy)/CFX Prefabs/Hits/CFX_Hit_C White.prefab
-  artifactKey: Guid(f06e78284f831ae469c74624ab5d513b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/JMO Assets/Cartoon FX (legacy)/CFX Prefabs/Hits/CFX_Hit_C White.prefab using Guid(f06e78284f831ae469c74624ab5d513b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5432f0de4b6e839b5e9372d8ffaf0c7') in 0.002244 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 6
-[usbmuxd] Attached: 1 00008110-001931CA36D0401E
-[usbmuxd] Detached: 1 00008110-001931CA36D0401E
-[usbmuxd] Attached: 2 00008110-001931CA36D0401E
-[usbmuxd] Detached: 2 00008110-001931CA36D0401E
