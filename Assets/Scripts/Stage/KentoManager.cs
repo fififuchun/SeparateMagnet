@@ -17,6 +17,9 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     // 移動したいオブジェクトのRectTransform
     private RectTransform rectTransform;
 
+    //スコア
+    public int score;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();

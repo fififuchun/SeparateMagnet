@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     //MatrixTextButtonのGameObject
     [SerializeField] GameObject matrixTextPatentObj;
 
-    //
+    //data
     [SerializeField] DataManager dataManager;
 
 
@@ -61,17 +61,15 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < myGameObjects.GetLength(1); j++)
             {
-                myGameObjects[i, j] = kentoSO.sizeData[i].kentoPrefabs[dataManager.data.fontNumbers[j]];
+                if (dataManager.data.fontNumbers[j] <= 0)
+                {
+                    myGameObjects[i, j] = kentoSO.sizeData[i].kentoPrefabs[Random.Range(0, 21)];
+                    continue;
+                }
+
+                myGameObjects[i, j] = kentoSO.sizeData[i].kentoPrefabs[dataManager.data.fontNumbers[j] - 1];
             }
         }
-
-        //要修正
-        // myGameObjects.Add(kentoSO.sizeData[0].fontData);
-        // myGameObjects.Add(kentoSO.sizeData[1].fontData);
-        // myGameObjects.Add(kentoSO.sizeData[2].fontData);
-        // myGameObjects.Add(kentoSO.sizeData[2].fontData);
-        // myGameObjects.Add(kentoSO.sizeData[3].fontData);
-        // myGameObjects.Add(kentoSO.sizeData[3].fontData);
     }
 
     void Update()
@@ -127,7 +125,7 @@ public class GameManager : MonoBehaviour
                     if (timeManager.isAnger())
                     {
                         phase = Phase.PutPhase;
-                        if (ReadyKento != null) ReadyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
+                        if (readyKento != null) readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
                         break;
                     }
                     audioSource.Play();
@@ -166,7 +164,7 @@ public class GameManager : MonoBehaviour
     public void GoEndPhase() { if (timeManager.isAnger()) phase = Phase.End; }
 
     //現在落下準備中のkentoPrefabをPutKentoする
-    [SerializeField] private GameObject ReadyKento;
+    [SerializeField] private GameObject readyKento;
     public void PutKento()
     {
         canInstantiate = false;
@@ -176,21 +174,24 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        //要修正
         if (Random.Range(0, timeManager.RareRate) == 0)
         {
-            // ReadyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].fontData[0].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
-            // timeManager.data.isRareFonts[int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])] = true;
+            //要修正
+            readyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].kentoPrefabs[1/*ステージ数*/], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+
+            timeManager.data.isRareFonts[int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])] = true;
             // Debug.Log($"STAGE{int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])}のレアなフォント出現");
-            // return;
+            return;
         }
 
         //Prefabを生成してListに追加・修正
-        // ReadyKento = Instantiate(myGameObjects[Random.Range(0, 6)][Random.Range(0, 3)].KentoPrefab, new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+        int randomSizeNumber = Random.Range(0, 3);
+        readyKento = Instantiate(myGameObjects[randomSizeNumber, Random.Range(0, 6)], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+        readyKento.GetComponent<KentoManager>().score = kentoSO.sizeData[randomSizeNumber].score;
     }
 
     //kentoPrefabの中身をnullに戻す
-    public void ResetKentoPrefab() { ReadyKento = null; }
+    public void ResetKentoPrefab() { readyKento = null; }
 
     //ドラッグ終了
     public void EndDrag()
@@ -202,8 +203,8 @@ public class GameManager : MonoBehaviour
             return;
         }
         if (Random.Range(0, timeManager.AngerRate) == 0) timeManager.MakeAngry();
-        if (ReadyKento != null) placedGameObjects.Add(ReadyKento.GetComponent<KentoManager>());
-        ReadyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
+        if (readyKento != null) placedGameObjects.Add(readyKento.GetComponent<KentoManager>());
+        readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
         timeManager.EmptyTimerText();
         ResetKentoPrefab();
         StopCoroutine(timeOver);
@@ -211,7 +212,7 @@ public class GameManager : MonoBehaviour
     }
 
     //kentoPrefabの回転
-    public void PushRotateButton() { if (ReadyKento != null) ReadyKento.transform.Rotate(new Vector3(0, 0, 45)); }
+    public void PushRotateButton() { if (readyKento != null) readyKento.transform.Rotate(new Vector3(0, 0, 45)); }
 
     //置かれた検討の数とそれに応じたスピード
     private int putKentoCount;
@@ -227,19 +228,19 @@ public class GameManager : MonoBehaviour
 
     //kentoManagerのインスタンスからコインの量を計測
     //修正
-    public int CoinOf(KentoManager kento)
-    {
-        // for (int i = 0; i < kentoSO.sizeData.Count(); i++) for (int j = 0; j < kentoSO.sizeData[i].fontData.Count(); j++) if (kentoSO.sizeData[i].fontData[j].KentoPrefab.name == kento.name.Split("(")[0]) return kentoSO.sizeData[i].fontData[j].score;
+    // public int CoinOf(KentoManager kento)
+    // {
+    //     // for (int i = 0; i < kentoSO.sizeData.Count(); i++) for (int j = 0; j < kentoSO.sizeData[i].fontData.Count(); j++) if (kentoSO.sizeData[i].fontData[j].KentoPrefab.name == kento.name.Split("(")[0]) return kentoSO.sizeData[i].fontData[j].score;
 
-        return 0;
-    }
+    //     return 0;
+    // }
 
     //コインの合計
     public int SumCoin()
     {
         if (placedGameObjects.Count() == 0) return 0;
         int sum = 0;
-        for (int i = 0; i < placedGameObjects.Count(); i++) sum += CoinOf(placedGameObjects[i]);
+        for (int i = 0; i < placedGameObjects.Count(); i++) sum += placedGameObjects[i].score;
         timeManager.sumCoin = sum;
         return sum;
     }

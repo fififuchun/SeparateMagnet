@@ -8,39 +8,34 @@ using UnityEditor;
 
 public enum KentoFont
 {
-    Chark = 0,
-    Dot = 1,
-    Gothic = 2,
-    Gothic_Bold = 3,
-    Gothic_Modify = 4,
-    Gothic_Rounded = 5,
-    Gyosho = 6,
-    Handwritten = 7,
-    Kaisho = 8,
-    Maka = 9,
-    Mincho = 10,
-    Pop = 11,
-    Scary = 12,
-    Shake = 13,
-    Sloopy = 14,
-    Strong = 15,
-    Textbook = 16,
-    Textbook_Rounded = 17,
-    Thin = 18,
-    Unknown = 19,
-    Weak = 20,
-    Rare = 21,
+    Chark = 1,
+    Dot = 2,
+    Gothic = 3,
+    Gothic_Bold = 4,
+    Gothic_Modify = 5,
+    Gothic_Rounded = 6,
+    Gyosho = 7,
+    Handwritten = 8,
+    Kaisho = 9,
+    Maka = 10,
+    Mincho = 11,
+    Pop = 12,
+    Scary = 13,
+    Shake = 14,
+    Sloopy = 15,
+    Strong = 16,
+    Textbook = 17,
+    Textbook_Rounded = 18,
+    Thin = 19,
+    Unknown = 20,
+    Weak = 21,
+    Rare = 22,
 }
 
 [CreateAssetMenu(fileName = "Kento", menuName = "Create Kento")]
 public class Kento : ScriptableObject //一番でかいclass
 {
     public List<FontData> sizeData = new List<FontData>();
-
-    // public List<FontData> GetFontData(FontData.Font font)
-    // {
-    //     return fontData.FindAll(data => data.font == font);
-    // }
 }
 
 [System.Serializable]
@@ -48,25 +43,8 @@ public class FontData //中身の配列、fontの種類のenumとkentoDataを持
 {
     public int score;
 
-    public GameObject[] kentoPrefabs = new GameObject[20];
-
-    // public List<KentoData> fontData = new List<KentoData>();
-
-    // public Font font;
+    public GameObject[] kentoPrefabs = new GameObject[21];
 }
-
-// [System.Serializable]
-// public class KentoData //一番小さいclass、行列でいうと成分
-// {
-//     // public int score;
-//     // public GameObject KentoPrefab;
-
-//     // public int FindObject(KentoManager kento)
-//     // {
-//     //     if (kento.gameObject.name.Split("(")[0] == KentoPrefab.name) return score;
-//     //     else return 0;
-//     // }
-// }
 
 #if UNITY_EDITOR
 // [CanEditMultipleObjects]
