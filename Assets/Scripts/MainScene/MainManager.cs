@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-// using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-// using Unity.VisualScripting;
 using System.Linq;
 using UnityEngine.SceneManagement;
-// using System;
 
 public class MainManager : MonoBehaviour
 {
@@ -151,11 +148,13 @@ public class MainManager : MonoBehaviour
     ShowFontImage();
   }
 
+  //ステージ番号
+  public static int stageNum;
   //ステージ遷移
   public void PushRepeatKentoButton()
   {
     //現在最前面にあるステージのナンバー
-    int stageNum = (int)(1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830));
+    stageNum = (int)(1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830));
     PlayerPrefs.Save();
 
     //ステージ遷移処理
@@ -164,6 +163,6 @@ public class MainManager : MonoBehaviour
       WarnManager.instance.AppearWarning("ランクが足りません！", $"ステージ{stageNum}に挑戦するには\nランクを{(stageNum - 1) * 5}に\nしてください");
       return;
     }
-    SceneManager.LoadScene($"Stage_{stageNum}");
+    SceneManager.LoadScene($"Stage");
   }
 }

@@ -12,7 +12,7 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private GameObject resultImage;
 
     //
-    private int stageNum;
+    [SerializeField] private int stageNum;
 
     //
     [SerializeField] ParticleSystem[] fireWorks = new ParticleSystem[2];
@@ -20,8 +20,9 @@ public class ResultManager : MonoBehaviour
     void Start()
     {
         InitializeResult();
+        stageNum = MainManager.stageNum;
 
-        stageNum = int.Parse(SceneManager.GetActiveScene().name.Split('_')[1]);
+        // stageNum = int.Parse(SceneManager.GetActiveScene().name.Split('_')[1]);
         // Debug.Log(stageNum);
     }
 

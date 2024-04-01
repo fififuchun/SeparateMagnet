@@ -216,6 +216,7 @@ public class GameManager : MonoBehaviour
 
     //置かれた検討の数とそれに応じたスピード
     private int putKentoCount;
+    public GameObject tmpObject;
     public int KentoSpeed()
     {
         putKentoCount++;
@@ -223,17 +224,6 @@ public class GameManager : MonoBehaviour
         if (putKentoCount != 0 && putKentoCount % 5 == 0) Instantiate(tmpObject, canvas.transform);
         return Mathf.FloorToInt(putKentoCount / 5) * 5 + 20;
     }
-
-    public GameObject tmpObject;
-
-    //kentoManagerのインスタンスからコインの量を計測
-    //修正
-    // public int CoinOf(KentoManager kento)
-    // {
-    //     // for (int i = 0; i < kentoSO.sizeData.Count(); i++) for (int j = 0; j < kentoSO.sizeData[i].fontData.Count(); j++) if (kentoSO.sizeData[i].fontData[j].KentoPrefab.name == kento.name.Split("(")[0]) return kentoSO.sizeData[i].fontData[j].score;
-
-    //     return 0;
-    // }
 
     //コインの合計
     public int SumCoin()
