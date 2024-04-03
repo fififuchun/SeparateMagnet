@@ -8,22 +8,25 @@ using System;
 
 public class ResultManager : MonoBehaviour
 {
-    //
+    //リザルト画面のゲームオブジェクト
     [SerializeField] private GameObject resultImage;
 
-    //
+    //ステージ番号をMainManagerのstatic変数から動的に取得
     [SerializeField] private int stageNum;
 
-    //
+    //リザルト画面の2種類の花火
     [SerializeField] ParticleSystem[] fireWorks = new ParticleSystem[2];
+
+    //床のゲームオブジェクト
+    [SerializeField] private GameObject[] floorObjects;
+
 
     void Start()
     {
         InitializeResult();
         stageNum = MainManager.stageNum;
 
-        // stageNum = int.Parse(SceneManager.GetActiveScene().name.Split('_')[1]);
-        // Debug.Log(stageNum);
+        Instantiate(floorObjects[MainManager.stageNum]);
     }
 
     public void InitializeResult()

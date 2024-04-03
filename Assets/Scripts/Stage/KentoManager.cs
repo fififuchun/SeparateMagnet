@@ -24,7 +24,7 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     {
         rectTransform = GetComponent<RectTransform>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
+        //
         floorObjectRect = GameObject.Find("FloorImage").GetComponent<RectTransform>();
     }
 
