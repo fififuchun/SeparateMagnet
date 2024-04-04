@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using UnityEngine.SceneManagement;
+// using UnityEngine.SceneManagement;
 using TMPro;
-using System;
 
 public class ResultManager : MonoBehaviour
 {
@@ -20,13 +19,19 @@ public class ResultManager : MonoBehaviour
     //床のゲームオブジェクト
     [SerializeField] private GameObject[] floorObjects;
 
+    //Canvas
+    [SerializeField] private GameObject canvas;
+
+    //床のオブジェクト
+    public static GameObject floorObject;
+
 
     void Start()
     {
         InitializeResult();
         stageNum = MainManager.stageNum;
 
-        Instantiate(floorObjects[MainManager.stageNum]);
+        floorObject = Instantiate(floorObjects[stageNum - 1], canvas.transform);
     }
 
     public void InitializeResult()

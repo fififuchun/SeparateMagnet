@@ -93,13 +93,11 @@ public class TimeManager : MonoBehaviour
         InvokeRepeating("MakeAngry", angryLateTime, angryTime);
         
         resultManager.InitializeResult();
-        // resultManager.AppearResult(sumCoin);
     }
 
     void Update()
     {
         slider.value = (float)AngerGauge / (float)angerGaugeMax;
-        // resultCoinText.fontSize = 150 + 20 * Mathf.Sin(5 * Time.time);
     }
 
     //angerGauge操作はここだけ
@@ -149,12 +147,9 @@ public class TimeManager : MonoBehaviour
         for (int i = 0; i < canHoldTime; i++)
         {
             timerText.text = Mathf.Ceil(canHoldTime + startTimer - Time.time).ToString();
-            // yield return new WaitForSeconds(1f);
             await UniTask.Delay(1000);
         }
 
         await resultManager.AppearResult(sumCoin);
-
-        // yield break;
     }
 }

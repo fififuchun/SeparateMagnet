@@ -108,7 +108,6 @@ public class GameManager : MonoBehaviour
             {
                 case Phase.StartPhase:
                     coinText.text = SumCoin().ToString();
-                    // GoEndPhase();
                     if (timeManager.isAnger())
                     {
                         phase = Phase.End;
@@ -140,10 +139,11 @@ public class GameManager : MonoBehaviour
                 case Phase.PutPhase:
                     yield return new WaitUntil(() => canInstantiate);
                     phase = Phase.StartPhase;
-                    // GoEndPhase();
                     break;
                 case Phase.End:
                     StopCoroutine(timeOver);
+                    //
+                    EndDrag();
                     timeManager.FinishGame();
                     yield break;
             }
@@ -176,11 +176,9 @@ public class GameManager : MonoBehaviour
 
         if (Random.Range(0, timeManager.RareRate) == 0)
         {
-            //要修正
-            readyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].kentoPrefabs[1/*ステージ数*/], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
-
-            timeManager.data.isRareFonts[int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])] = true;
-            // Debug.Log($"STAGE{int.Parse(SceneManager.GetActiveScene().name.Split('_')[1])}のレアなフォント出現");
+            readyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].kentoPrefabs[MainManager.stageNum - 1], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+            //ミッション用
+            timeManager.data.isRareFonts[MainManager.stageNum - 1] = true;
             return;
         }
 
@@ -220,7 +218,6 @@ public class GameManager : MonoBehaviour
     public int KentoSpeed()
     {
         putKentoCount++;
-        // Instantiate(tmpObject, canvas.transform);
         if (putKentoCount != 0 && putKentoCount % 5 == 0) Instantiate(tmpObject, canvas.transform);
         return Mathf.FloorToInt(putKentoCount / 5) * 5 + 20;
     }
