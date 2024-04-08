@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+// using UnityEngine.SceneManagement;
 using TMPro;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class GameManager : MonoBehaviour
 {
@@ -48,13 +49,18 @@ public class GameManager : MonoBehaviour
     public bool canInstantiate;
     public void CanInstantiate() { canInstantiate = true; }
 
+    //Unitaskキャンセル周り
+    CancellationTokenSource cts;
+
 
     //関数の部
     async void Start()
     {
         phase = Phase.StartPhase;
         await UniTask.WaitUntil(() => !matrixTextPatentObj.activeSelf);
-        StartCoroutine(Loop());
+
+        cts = new CancellationTokenSource();
+        Loop(cts.Token).Forget();
 
         //myGameObjectsを初期化
         for (int i = 0; i < myGameObjects.GetLength(0); i++)
@@ -70,6 +76,12 @@ public class GameManager : MonoBehaviour
                 myGameObjects[i, j] = kentoSO.sizeData[i].kentoPrefabs[dataManager.data.fontNumbers[j] - 1];
             }
         }
+    }
+
+    void OnDestroy()
+    {
+        // GameObject破棄時にキャンセル実行
+        cts?.Cancel();
     }
 
     void Update()
@@ -100,75 +112,57 @@ public class GameManager : MonoBehaviour
         End
     }
 
-    IEnumerator Loop()
+    async UniTask Loop(CancellationToken ct)
     {
-        while (true)
+        while (!timeManager.IsAnger())
         {
             switch (phase)
             {
                 case Phase.StartPhase:
                     coinText.text = SumCoin().ToString();
-                    if (timeManager.isAnger())
-                    {
-                        phase = Phase.End;
-                        break;
-                    }
                     Instantiate(appearEffects[timeManager.data.level[5]]);
 
-                    Debug.Log("現在の出現時間は：" + TimeManager.NextAppearTime);
-                    yield return new WaitForSeconds(TimeManager.NextAppearTime);
+                    // Debug.Log("現在の出現時間は：" + TimeManager.NextAppearTime);
+                    await UniTask.Delay((int)TimeManager.NextAppearTime, cancellationToken: ct);
                     phase = Phase.AppearPhase;
                     break;
+
                 case Phase.AppearPhase:
-                    //怒ってたらスルー
-                    if (timeManager.isAnger())
-                    {
-                        phase = Phase.PutPhase;
-                        if (readyKento != null) readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
-                        break;
-                    }
                     audioSource.Play();
+
                     //動きなし:TimeOver / 動きあり:TimeOver Stop & isEndDrag= true
                     PutKento();
-                    StartTimeOver();
 
-                    yield return new WaitUntil(() => timeManager.isEndDrag);
+                    float currentTime = Time.time;
+                    // Debug.Log(Time.time - currentTime);
+                    timeManager.TimeOver(ct).Forget();
+                    await UniTask.WaitUntil(() => timeManager.isEndDrag || currentTime + timeManager.CanHoldTime < Time.time, cancellationToken: ct);
                     EndDrag();
                     phase = Phase.PutPhase;
                     break;
+
                 case Phase.PutPhase:
-                    yield return new WaitUntil(() => canInstantiate);
+                    if (timeManager.IsAnger()) phase = Phase.End;
+
+                    await UniTask.WaitUntil(() => canInstantiate, cancellationToken: ct);
                     phase = Phase.StartPhase;
                     break;
-                case Phase.End:
-                    StopCoroutine(timeOver);
-                    //
-                    EndDrag();
-                    timeManager.FinishGame();
-                    yield break;
             }
         }
-    }
 
-    //timeOver用のコルーチン、リセット&実行関数
-    IEnumerator timeOver;
-    public void StartTimeOver()
-    {
-        timeOver = null;
-        timeOver = timeManager.TimeOver();
-        if (timeManager.isAnger()) return;
-        StartCoroutine(timeOver);
+        //怒りゲージMax以降の動き
+        timeManager.FinishGame(ct).Forget();
     }
 
     //怒りゲージによってEndにする
-    public void GoEndPhase() { if (timeManager.isAnger()) phase = Phase.End; }
+    public void GoEndPhase() { if (timeManager.IsAnger()) phase = Phase.End; }
 
     //現在落下準備中のkentoPrefabをPutKentoする
     [SerializeField] private GameObject readyKento;
     public void PutKento()
     {
         canInstantiate = false;
-        if (timeManager.isAnger())
+        if (timeManager.IsAnger())
         {
             Debug.Log("もうこれ以上怒れないよ");
             return;
@@ -194,10 +188,10 @@ public class GameManager : MonoBehaviour
     //ドラッグ終了
     public void EndDrag()
     {
-        if (timeManager.isAnger())
+        if (timeManager.IsAnger())
         {
-            timeOver = null;
-            timeManager.FinishGame();
+            readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
+            // timeManager.FinishGame().Forget();
             return;
         }
         if (Random.Range(0, timeManager.AngerRate) == 0) timeManager.MakeAngry();
@@ -205,7 +199,6 @@ public class GameManager : MonoBehaviour
         readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
         timeManager.EmptyTimerText();
         ResetKentoPrefab();
-        StopCoroutine(timeOver);
         Debug.Log("drag終了");
     }
 

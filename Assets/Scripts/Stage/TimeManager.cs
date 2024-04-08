@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using TMPro;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 //ゲームオーバー管理
 public class TimeManager : MonoBehaviour
@@ -23,6 +24,7 @@ public class TimeManager : MonoBehaviour
 
     //RPGの各データ
     private int canHoldTime;
+    public int CanHoldTime { get => canHoldTime; }
 
     private int angerRate;
     public int AngerRate { get => angerRate; }
@@ -60,6 +62,9 @@ public class TimeManager : MonoBehaviour
     //結果表示
     [SerializeField] private GameObject resultObject;
 
+    //Unitaskキャンセル周り
+    private CancellationTokenSource cts;
+
 
     //関数の部
     [HideInInspector] public SaveData data;
@@ -75,6 +80,7 @@ public class TimeManager : MonoBehaviour
         nextAppearTime = (float)(10 - data.level[5]) / 10;
         rareRate = 100 - data.level[6];
 
+        cts = new CancellationTokenSource();
     }
 
     SaveData Load(string path)
@@ -91,7 +97,7 @@ public class TimeManager : MonoBehaviour
         angryTime = 10;
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
         InvokeRepeating("MakeAngry", angryLateTime, angryTime);
-        
+
         resultManager.InitializeResult();
     }
 
@@ -104,14 +110,14 @@ public class TimeManager : MonoBehaviour
     public void MakeAngry()
     {
         angerGauge++;
-        if (isAnger()) return;
+        if (IsAnger()) return;
         Instantiate(angryEffect);
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
         Debug.Log("今の怒り:" + AngerGauge);
     }
 
     //gameManagerで使う用
-    public bool isAnger()
+    public bool IsAnger()
     {
         if (AngerGauge >= AngerGaugeMax) return true;
         else return false;
@@ -121,23 +127,23 @@ public class TimeManager : MonoBehaviour
     public void EmptyTimerText() { timerText.text = ""; }
 
     //時間切れ
-    public IEnumerator TimeOver()
+    public async UniTask TimeOver(CancellationToken ct)
     {
         float startTimer = Time.time;
         for (int i = 0; i < canHoldTime; i++)
         {
             timerText.text = Mathf.Ceil(canHoldTime + startTimer - Time.time).ToString();
-            yield return new WaitForSeconds(1f);
+            await UniTask.Delay(1000, cancellationToken: ct);
         }
 
         Debug.Log("TIME OVER");
         EmptyTimerText();
         IsEndDrag(true);
-        yield break;
     }
 
-    public async UniTask FinishGame()
+    public async UniTask FinishGame(CancellationToken ct)
     {
+        IsEndDrag(true);
         Debug.Log("ゲーム終了が起動");
         float startTimer = Time.time;
         canHoldTime = 5;
@@ -147,7 +153,7 @@ public class TimeManager : MonoBehaviour
         for (int i = 0; i < canHoldTime; i++)
         {
             timerText.text = Mathf.Ceil(canHoldTime + startTimer - Time.time).ToString();
-            await UniTask.Delay(1000);
+            await UniTask.Delay(1000, cancellationToken: ct);
         }
 
         await resultManager.AppearResult(sumCoin);
