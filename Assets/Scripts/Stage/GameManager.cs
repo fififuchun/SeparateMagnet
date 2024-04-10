@@ -6,6 +6,7 @@ using UnityEngine;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+// using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -124,36 +125,36 @@ public class GameManager : MonoBehaviour
             switch (phase)
             {
                 case Phase.StartPhase:
-                    cts.Cancel();
                     coinText.text = SumCoin().ToString();
                     Instantiate(appearEffects[timeManager.data.level[5]]);
-                    Debug.Log($"エフェクト出現、{timeManager.NextAppearTime}秒待機");
 
-                    // Debug.Log("現在の出現時間は：" + TimeManager.NextAppearTime);
-                    await UniTask.Delay((int)timeManager.NextAppearTime, cancellationToken: ct_loop);
-                    Debug.Log($"待機完了");
+                    // Debug.Log($"エフェクト出現、{timeManager.NextAppearTime}秒待機");
+                    await UniTask.Delay((int)timeManager.NextAppearTime * 1000, cancellationToken: ct_loop);
+                    // Debug.Log($"待機完了");
 
                     phase = Phase.AppearPhase;
                     break;
 
                 case Phase.AppearPhase:
                     audioSource.Play();
-
-                    //動きなし:TimeOver / 動きあり:TimeOver Stop & isEndDrag= true
                     PutKento();
 
                     //時間記録
                     float currentTime = Time.time;
-                    
+
                     cts = new CancellationTokenSource();
-                    timeManager.TimeOver(cts.Token).Forget();
+
+                    //動きなし:Count10Seconds / 動きあり: cts.TokenをStartPhaseでCancel & isEndDrag= true
+                    timeManager.Count10Seconds(cts.Token).Forget();
                     await UniTask.WaitUntil(() => timeManager.isEndDrag || currentTime + timeManager.CanHoldTime < Time.time, cancellationToken: ct_loop);
+
                     EndDrag();
                     phase = Phase.PutPhase;
                     break;
 
                 case Phase.PutPhase:
-                    if (timeManager.IsAnger()) phase = Phase.End;
+                    // if (timeManager.IsAnger()) phase = Phase.End;
+                    cts.Cancel();
 
                     await UniTask.WaitUntil(() => canInstantiate, cancellationToken: ct_loop);
                     phase = Phase.StartPhase;
@@ -162,6 +163,7 @@ public class GameManager : MonoBehaviour
         }
 
         //怒りゲージMax以降の動き
+        phase = Phase.End;
         timeManager.FinishGame(cts.Token).Forget();
     }
 
@@ -202,7 +204,6 @@ public class GameManager : MonoBehaviour
         if (timeManager.IsAnger())
         {
             readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
-            // timeManager.FinishGame().Forget();
             return;
         }
         if (Random.Range(0, timeManager.AngerRate) == 0) timeManager.MakeAngry();
@@ -210,7 +211,7 @@ public class GameManager : MonoBehaviour
         readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
         timeManager.EmptyTimerText();
         ResetKentoPrefab();
-        Debug.Log("drag終了");
+        Debug.Log("Drag終了");
     }
 
     //kentoPrefabの回転

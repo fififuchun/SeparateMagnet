@@ -21,7 +21,6 @@ public class Footer : MonoBehaviour
     //バックグラウンドImage
     private RectTransform backgroundRect;
 
-    //
     //ButtonのRect
     private RectTransform[] buttonsRects = new RectTransform[5];
 
@@ -40,9 +39,13 @@ public class Footer : MonoBehaviour
     //チュートリアル用
     [SerializeField] private TutorialManager tutorialManager;
 
+    //bannar広告の下部間隔
+    [SerializeField] private int bottomAdPadding = 100;
+
     void Start()
     {
         footer = GameObject.Find("Footer");
+        footer.transform.position = new Vector3(0, bottomAdPadding, 0);
         for (int i = 0; i < 5; i++) buttonsRects[i] = footer.transform.GetChild(i).gameObject.GetComponent<RectTransform>();
 
         canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();

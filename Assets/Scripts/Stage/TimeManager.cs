@@ -124,10 +124,14 @@ public class TimeManager : MonoBehaviour
     }
 
     //timerTextを空にする
-    public void EmptyTimerText() { timerText.text = ""; }
+    public void EmptyTimerText()
+    {
+        timerText.text = "";
+        Debug.Log("テキストを空に");
+    }
 
     //時間切れ
-    public async UniTask TimeOver(CancellationToken ct)
+    public async UniTask Count10Seconds(CancellationToken ct)
     {
         float startTimer = Time.time;
         for (int i = 0; i < canHoldTime; i++)
