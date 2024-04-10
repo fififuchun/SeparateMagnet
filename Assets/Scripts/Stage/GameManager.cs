@@ -50,7 +50,10 @@ public class GameManager : MonoBehaviour
     public void CanInstantiate() { canInstantiate = true; }
 
     //Unitaskキャンセル周り
+    //ループ以外のCancellationTokenSource
     CancellationTokenSource cts;
+    //ループ処理用のCancellationTokenSource
+    CancellationTokenSource cts_loop;
 
 
     //関数の部
@@ -60,7 +63,8 @@ public class GameManager : MonoBehaviour
         await UniTask.WaitUntil(() => !matrixTextPatentObj.activeSelf);
 
         cts = new CancellationTokenSource();
-        Loop(cts.Token).Forget();
+        cts_loop = new CancellationTokenSource();
+        Loop(cts_loop.Token).Forget();
 
         //myGameObjectsを初期化
         for (int i = 0; i < myGameObjects.GetLength(0); i++)
@@ -82,6 +86,7 @@ public class GameManager : MonoBehaviour
     {
         // GameObject破棄時にキャンセル実行
         cts?.Cancel();
+        cts_loop?.Cancel();
     }
 
     void Update()
@@ -112,18 +117,22 @@ public class GameManager : MonoBehaviour
         End
     }
 
-    async UniTask Loop(CancellationToken ct)
+    async UniTask Loop(CancellationToken ct_loop)
     {
         while (!timeManager.IsAnger())
         {
             switch (phase)
             {
                 case Phase.StartPhase:
+                    cts.Cancel();
                     coinText.text = SumCoin().ToString();
                     Instantiate(appearEffects[timeManager.data.level[5]]);
+                    Debug.Log($"エフェクト出現、{timeManager.NextAppearTime}秒待機");
 
                     // Debug.Log("現在の出現時間は：" + TimeManager.NextAppearTime);
-                    await UniTask.Delay((int)TimeManager.NextAppearTime, cancellationToken: ct);
+                    await UniTask.Delay((int)timeManager.NextAppearTime, cancellationToken: ct_loop);
+                    Debug.Log($"待機完了");
+
                     phase = Phase.AppearPhase;
                     break;
 
@@ -133,10 +142,12 @@ public class GameManager : MonoBehaviour
                     //動きなし:TimeOver / 動きあり:TimeOver Stop & isEndDrag= true
                     PutKento();
 
+                    //時間記録
                     float currentTime = Time.time;
-                    // Debug.Log(Time.time - currentTime);
-                    timeManager.TimeOver(ct).Forget();
-                    await UniTask.WaitUntil(() => timeManager.isEndDrag || currentTime + timeManager.CanHoldTime < Time.time, cancellationToken: ct);
+                    
+                    cts = new CancellationTokenSource();
+                    timeManager.TimeOver(cts.Token).Forget();
+                    await UniTask.WaitUntil(() => timeManager.isEndDrag || currentTime + timeManager.CanHoldTime < Time.time, cancellationToken: ct_loop);
                     EndDrag();
                     phase = Phase.PutPhase;
                     break;
@@ -144,14 +155,14 @@ public class GameManager : MonoBehaviour
                 case Phase.PutPhase:
                     if (timeManager.IsAnger()) phase = Phase.End;
 
-                    await UniTask.WaitUntil(() => canInstantiate, cancellationToken: ct);
+                    await UniTask.WaitUntil(() => canInstantiate, cancellationToken: ct_loop);
                     phase = Phase.StartPhase;
                     break;
             }
         }
 
         //怒りゲージMax以降の動き
-        timeManager.FinishGame(ct).Forget();
+        timeManager.FinishGame(cts.Token).Forget();
     }
 
     //怒りゲージによってEndにする

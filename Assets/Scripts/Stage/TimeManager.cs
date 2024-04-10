@@ -29,8 +29,8 @@ public class TimeManager : MonoBehaviour
     private int angerRate;
     public int AngerRate { get => angerRate; }
 
-    private static float nextAppearTime;
-    public static float NextAppearTime { get => nextAppearTime; }
+    private float nextAppearTime;
+    public float NextAppearTime { get => nextAppearTime; }
 
     private int rareRate;
     public int RareRate { get => rareRate; }
@@ -156,6 +156,6 @@ public class TimeManager : MonoBehaviour
             await UniTask.Delay(1000, cancellationToken: ct);
         }
 
-        await resultManager.AppearResult(sumCoin);
+        resultManager.AppearResult(sumCoin).Forget();
     }
 }
