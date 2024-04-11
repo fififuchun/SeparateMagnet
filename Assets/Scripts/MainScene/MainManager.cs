@@ -17,6 +17,8 @@ public class MainManager : MonoBehaviour
   //メインシーンのアニメーション用
   [SerializeField] private GameObject mainViewContent;
   [SerializeField] private RectTransform[] stageImages;
+  [SerializeField] private RectTransform[] outlineImages = new RectTransform[stageCount];
+
 
   //一旦オフにしてスクロールのスピードを殺す
   [SerializeField] private ScrollRect scrollRect;
@@ -28,7 +30,7 @@ public class MainManager : MonoBehaviour
   //「検討を重ねる」のテキスト
   [SerializeField] private TextMeshProUGUI repeatKentoText;
 
-  
+
   void Start()
   {
     if (Library.CharacteristicFanction(dataManager.data.haveFonts) < 2)
@@ -39,8 +41,8 @@ public class MainManager : MonoBehaviour
     for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
 
     for (int i = 0; i <= Mathf.CeilToInt(rankManager.Rank / 5); i++) lockImages[i].enabled = false;
-    // Debug.Log(Mathf.CeilToInt(rankManager.Rank / 5));
 
+    outlineImages[0].DOSizeDelta(new Vector3(600, 600), 0.5f);
     ShowFontImage();
   }
 
@@ -55,6 +57,20 @@ public class MainManager : MonoBehaviour
       int stageNum = (int)(1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830));
       if (rankManager.Rank < (stageNum - 1) * 5) repeatKentoText.text = $"ランク{(stageNum - 1) * 5}で解放";
       else repeatKentoText.text = $"検討を重ねる";
+
+      //アニメーション
+      for (int i = 0; i < stageCount; i++)
+      {
+        if (i == stageNum - 1)
+        {
+          // float ratio = 1.15f;
+          outlineImages[i].DOSizeDelta(new Vector3(600, 600), 0.5f);
+        }
+        else
+        {
+          outlineImages[i].sizeDelta = new Vector3(525, 525);
+        }
+      }
     }
     else if (!scrollRect.enabled) scrollRect.enabled = true;
   }
