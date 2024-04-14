@@ -35,8 +35,8 @@ public class MainManager : MonoBehaviour
   {
     if (Library.CharacteristicFanction(dataManager.data.haveFonts) < 2)
     {
-      dataManager.data.haveFonts[4] = true;
-      dataManager.data.haveFonts[10] = true;
+      dataManager.data.haveFonts[(int)KentoFont.Dot - 1] = true;
+      dataManager.data.haveFonts[(int)KentoFont.Gyosho - 1] = true;
     }
     for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
 
@@ -61,15 +61,8 @@ public class MainManager : MonoBehaviour
       //アニメーション
       for (int i = 0; i < stageCount; i++)
       {
-        if (i == stageNum - 1)
-        {
-          // float ratio = 1.15f;
-          outlineImages[i].DOSizeDelta(new Vector3(600, 600), 0.5f);
-        }
-        else
-        {
-          outlineImages[i].sizeDelta = new Vector3(525, 525);
-        }
+        if (i == stageNum - 1) outlineImages[i].DOSizeDelta(new Vector3(600, 600), 0.5f);
+        else outlineImages[i].sizeDelta = new Vector3(525, 525);
       }
     }
     else if (!scrollRect.enabled) scrollRect.enabled = true;
@@ -77,14 +70,14 @@ public class MainManager : MonoBehaviour
 
   //持ちフォントの編集
   [SerializeField] private TextMeshProUGUI editButtonText;
-  [SerializeField] private GameObject fontviewObject;
+  [SerializeField] private GameObject fontViewObject;
   private bool canEdit;
   public void PushEditButton()
   {
     canEdit = !canEdit;
 
     mainViewContent.transform.parent.parent.gameObject.SetActive(canEdit);
-    fontviewObject.SetActive(!canEdit);
+    fontViewObject.SetActive(!canEdit);
 
     if (canEdit) editButtonText.text = "編集する";
     else editButtonText.text = "編集完了";
@@ -98,7 +91,7 @@ public class MainManager : MonoBehaviour
   [SerializeField] private Sprite[] kentoImages = new Sprite[20];
 
   //ショッピング
-  [SerializeField] private Image FontFrameImage;
+  [SerializeField] private Image fontFrameImage;
   [SerializeField] private TextMeshProUGUI buyFontFrameText;
   [SerializeField] private TextMeshProUGUI requireCoinText;
   [SerializeField] private Sprite[] buyFontFrameImages = new Sprite[4];
@@ -108,7 +101,7 @@ public class MainManager : MonoBehaviour
   {
     for (int i = 0; i < dataManager.ReleasedFontCount(); i++)
     {
-      if (dataManager.data.fontNumbers[i] > 0) fontImages[i].sprite = kentoImages[dataManager.data.fontNumbers[i] - 1];
+      if (dataManager.data.fontNumbers[i] > 0) fontImages[i].sprite = kentoImages[dataManager.data.fontNumbers[i]];
       else if (dataManager.data.fontNumbers[i] == 0) fontImages[i].sprite = transparencyImage;
       else fontImages[i].sprite = lockImage;
 
@@ -117,7 +110,8 @@ public class MainManager : MonoBehaviour
 
     if (dataManager.ReleasedFontCount() == 6)
     {
-      FontFrameImage.sprite = buyFontFrameImages[dataManager.ReleasedFontCount() - 3];
+      // Debug.Log(dataManager.ReleasedFontCount() - 3);
+      fontFrameImage.sprite = buyFontFrameImages[dataManager.ReleasedFontCount() - 3];
       buyFontFrameText.text = "すべてのフォント枠を開放しました";
       requireCoinText.text = "Max";
       requireCoinText.color = Color.red;
@@ -125,7 +119,7 @@ public class MainManager : MonoBehaviour
       return;
     }
 
-    FontFrameImage.sprite = buyFontFrameImages[dataManager.ReleasedFontCount() - 3];
+    fontFrameImage.sprite = buyFontFrameImages[dataManager.ReleasedFontCount() - 3];
     buyFontFrameText.text = $"{dataManager.ReleasedFontCount() + 1}つ目のフォント枠を開放する";
     requireCoinText.text = $"{Mathf.Pow(10, dataManager.ReleasedFontCount() - 1)}";
   }
