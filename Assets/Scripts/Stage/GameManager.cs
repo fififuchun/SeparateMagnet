@@ -51,10 +51,12 @@ public class GameManager : MonoBehaviour
     public void CanInstantiate() { canInstantiate = true; }
 
     //Unitaskキャンセル周り
-    //ループ以外のCancellationTokenSource
+    //ループとFinish以外のCancellationTokenSource
     CancellationTokenSource cts;
     //ループ処理用のCancellationTokenSource
     CancellationTokenSource cts_loop;
+    //ゲーム終了時用のCancellationTokenSource
+    CancellationTokenSource cts_finish;
 
 
     //関数の部
@@ -65,16 +67,19 @@ public class GameManager : MonoBehaviour
 
         cts = new CancellationTokenSource();
         cts_loop = new CancellationTokenSource();
+        cts_finish = new CancellationTokenSource();
         Loop(cts_loop.Token).Forget();
 
-        //myGameObjectsを初期化
+        timeManager.countSumCoin.AddListener(UpdateSumCoin);
+
+        //myGameObjectsを初期化 GetLength(0)= 3, GetLength(1)= 6
         for (int i = 0; i < myGameObjects.GetLength(0); i++)
         {
             for (int j = 0; j < myGameObjects.GetLength(1); j++)
             {
                 if (dataManager.data.fontNumbers[j] <= 0)
                 {
-                    myGameObjects[i, j] = kentoSO.sizeData[i].kentoPrefabs[Random.Range(0, 21)];
+                    myGameObjects[i, j] = kentoSO.sizeData[i].kentoPrefabs[Random.Range(0, 20)];
                     continue;
                 }
 
@@ -88,6 +93,7 @@ public class GameManager : MonoBehaviour
         // GameObject破棄時にキャンセル実行
         cts?.Cancel();
         cts_loop?.Cancel();
+        cts_finish?.Cancel();
     }
 
     void Update()
@@ -126,11 +132,11 @@ public class GameManager : MonoBehaviour
             {
                 case Phase.StartPhase:
                     coinText.text = SumCoin().ToString();
+                    // ResetKentoPrefab();
                     Instantiate(appearEffects[timeManager.data.level[5]]);
 
                     // Debug.Log($"エフェクト出現、{timeManager.NextAppearTime}秒待機");
                     await UniTask.Delay((int)timeManager.NextAppearTime * 1000, cancellationToken: ct_loop);
-                    // Debug.Log($"待機完了");
 
                     phase = Phase.AppearPhase;
                     break;
@@ -153,10 +159,11 @@ public class GameManager : MonoBehaviour
                     break;
 
                 case Phase.PutPhase:
-                    // if (timeManager.IsAnger()) phase = Phase.End;
                     cts.Cancel();
 
-                    await UniTask.WaitUntil(() => canInstantiate, cancellationToken: ct_loop);
+                    await UniTask.WaitUntil(() => canInstantiate || readyKento.transform.position.y < -900, cancellationToken: ct_loop);
+                    ResetKentoPrefab();
+
                     phase = Phase.StartPhase;
                     break;
             }
@@ -164,11 +171,9 @@ public class GameManager : MonoBehaviour
 
         //怒りゲージMax以降の動き
         phase = Phase.End;
-        timeManager.FinishGame(cts.Token).Forget();
+        coinText.text = SumCoin().ToString();
+        timeManager.FinishGame(cts_finish.Token).Forget();
     }
-
-    //怒りゲージによってEndにする
-    public void GoEndPhase() { if (timeManager.IsAnger()) phase = Phase.End; }
 
     //現在落下準備中のkentoPrefabをPutKentoする
     [SerializeField] private GameObject readyKento;
@@ -210,12 +215,11 @@ public class GameManager : MonoBehaviour
         if (readyKento != null) placedGameObjects.Add(readyKento.GetComponent<KentoManager>());
         readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
         timeManager.EmptyTimerText();
-        ResetKentoPrefab();
         Debug.Log("Drag終了");
     }
 
     //kentoPrefabの回転
-    public void PushRotateButton() { if (readyKento != null) readyKento.transform.Rotate(new Vector3(0, 0, 45)); }
+    public void PushRotateButton() { if (phase == Phase.AppearPhase) readyKento.transform.Rotate(new Vector3(0, 0, 45)); }
 
     //置かれた検討の数とそれに応じたスピード
     private int putKentoCount;
@@ -235,5 +239,10 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < placedGameObjects.Count(); i++) sum += placedGameObjects[i].score;
         timeManager.sumCoin = sum;
         return sum;
+    }
+
+    public void UpdateSumCoin()
+    {
+        timeManager.sumCoin = SumCoin();
     }
 }

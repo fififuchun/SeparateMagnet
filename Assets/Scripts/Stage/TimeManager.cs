@@ -6,6 +6,7 @@ using System.IO;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using UnityEngine.Events;
 
 //ゲームオーバー管理
 public class TimeManager : MonoBehaviour
@@ -63,7 +64,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private GameObject resultObject;
 
     //Unitaskキャンセル周り
-    private CancellationTokenSource cts;
+    // private CancellationTokenSource cts;
 
 
     //関数の部
@@ -80,7 +81,7 @@ public class TimeManager : MonoBehaviour
         nextAppearTime = (float)(10 - data.level[5]) / 10;
         rareRate = 100 - data.level[6];
 
-        cts = new CancellationTokenSource();
+        // cts = new CancellationTokenSource();
     }
 
     SaveData Load(string path)
@@ -99,6 +100,7 @@ public class TimeManager : MonoBehaviour
         InvokeRepeating("MakeAngry", angryLateTime, angryTime);
 
         resultManager.InitializeResult();
+        resultManager.countSumCoin.AddListener(CountSumCoin);
     }
 
     void Update()
@@ -143,6 +145,12 @@ public class TimeManager : MonoBehaviour
         Debug.Log("TIME OVER");
         EmptyTimerText();
         IsEndDrag(true);
+    }
+
+    public UnityEvent countSumCoin;
+    public void CountSumCoin()
+    {
+        countSumCoin?.Invoke();
     }
 
     public async UniTask FinishGame(CancellationToken ct)

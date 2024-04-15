@@ -6,14 +6,8 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    private GameManager gameManager;
-
-    void Start()
-    {
-        gameManager = GetComponent<GameManager>();
-    }
-
-
+    [SerializeField] private GameManager gameManager;
+    
     public void PushGoHomeButton()
     {
         PlayerPrefs.SetInt("TmpCoin", gameManager.SumCoin() * MainManager.stageNum);

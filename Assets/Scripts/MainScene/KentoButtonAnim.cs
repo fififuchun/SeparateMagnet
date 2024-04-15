@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//「検討を重ねる」ボタンの上下に動くアニメーション
 public class KentoButtonAnim : MonoBehaviour
 {
     [SerializeField] private GameObject mainViewContent;

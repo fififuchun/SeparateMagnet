@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-// using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Events;
 
 public class ResultManager : MonoBehaviour
 {
@@ -19,11 +19,11 @@ public class ResultManager : MonoBehaviour
     //床のゲームオブジェクト
     [SerializeField] private GameObject[] floorObjects;
 
-    //Canvas
-    [SerializeField] private GameObject canvas;
+    //Floorの親オブジェクト
+    [SerializeField] private GameObject floorObj;
 
     //床のオブジェクト
-    public static GameObject floorObject;
+    [SerializeField] private GameObject floorObject;
 
 
     void Start()
@@ -31,7 +31,8 @@ public class ResultManager : MonoBehaviour
         InitializeResult();
         stageNum = MainManager.stageNum;
 
-        floorObject = Instantiate(floorObjects[stageNum - 1], canvas.transform);
+        if (stageNum > 0) floorObject = Instantiate(floorObjects[stageNum - 1], floorObj.transform);
+        else floorObject = Instantiate(floorObjects[0], floorObj.transform);
     }
 
     public void InitializeResult()
@@ -43,6 +44,8 @@ public class ResultManager : MonoBehaviour
         resultImage.transform.GetChild(4).gameObject.SetActive(false);
     }
 
+    public UnityEvent countSumCoin;
+
     public async UniTask AppearResult(int sumCoin)
     {
         await UniTask.Delay(500);
@@ -51,6 +54,7 @@ public class ResultManager : MonoBehaviour
 
         await UniTask.Delay(1000);
         resultImage.transform.GetChild(1).gameObject.SetActive(true);
+        countSumCoin?.Invoke();
         resultImage.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{sumCoin}";
 
         await UniTask.Delay(1000);
