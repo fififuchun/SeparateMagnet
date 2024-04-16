@@ -24,7 +24,7 @@ public class MainManager : MonoBehaviour
   [SerializeField] private ScrollRect scrollRect;
 
   //ステージ増加の際は要変更
-  private const int stageCount = 4;
+  public static int stageCount = 4;
   [SerializeField] private Image[] lockImages = new Image[stageCount];
 
   //「検討を重ねる」のテキスト
@@ -148,6 +148,7 @@ public class MainManager : MonoBehaviour
       }
     }
 
+    //fontNumbersに0(フォント枠解放済みだが、フォント未記入)が存在するなら、一番手前のfontNumbersにi番目を代入
     if (dataManager.data.fontNumbers.Contains(0)) dataManager.data.fontNumbers[Library.SearchNumberIndex(dataManager.data.fontNumbers, 0)] = i;
     ShowFontImage();
   }

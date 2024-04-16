@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-// using UnityEngine.SceneManagement;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using System.Threading;
@@ -20,7 +19,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject kentos;
 
     //ゲームごとの使い捨てのゲームオブジェクトをここに入れる
-    // [SerializeField] private List<List<KentoData>> myGameObjects = new List<List<KentoData>>();
     private GameObject[,] myGameObjects = new GameObject[3, 6];
 
     //検討の元データ
@@ -58,6 +56,9 @@ public class GameManager : MonoBehaviour
     //ゲーム終了時用のCancellationTokenSource
     CancellationTokenSource cts_finish;
 
+    //
+    List<int> debugIntList = new List<int>();
+
 
     //関数の部
     async void Start()
@@ -70,21 +71,32 @@ public class GameManager : MonoBehaviour
         cts_finish = new CancellationTokenSource();
         Loop(cts_loop.Token).Forget();
 
-        timeManager.countSumCoin.AddListener(UpdateSumCoin);
+        timeManager.resultManager.countSumCoin.AddListener(UpdateSumCoin);
 
-        //myGameObjectsを初期化 GetLength(0)= 3, GetLength(1)= 6
-        for (int i = 0; i < myGameObjects.GetLength(0); i++)
+        //myGameObjectsを初期化 GetLength(1)= 6, GetLength(0)= 3
+        for (int i = 0; i < myGameObjects.GetLength(1); i++)
         {
-            for (int j = 0; j < myGameObjects.GetLength(1); j++)
+            int k = Random.Range(0, 20);
+            for (int j = 0; j < myGameObjects.GetLength(0); j++)
             {
-                if (dataManager.data.fontNumbers[j] <= 0)
+                //fontNumbersが空・未解放の場合はランダムなフォントを代入
+                if (dataManager.data.fontNumbers[i] <= 0)
                 {
-                    myGameObjects[i, j] = kentoSO.sizeData[i].kentoPrefabs[Random.Range(0, 20)];
+                    myGameObjects[j, i] = kentoSO.sizeData[j].kentoPrefabs[k];
                     continue;
                 }
 
-                myGameObjects[i, j] = kentoSO.sizeData[i].kentoPrefabs[dataManager.data.fontNumbers[j] - 1];
+                //fontNumbersが1以上ならそれを代入
+                myGameObjects[j, i] = kentoSO.sizeData[j].kentoPrefabs[dataManager.data.fontNumbers[i] - 1];
             }
+
+            if (dataManager.data.fontNumbers[i] <= 0) debugIntList.Add(k);
+            else debugIntList.Add(dataManager.data.fontNumbers[i] - 1);
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            Debug.Log($"List[{i}]: " + debugIntList[i]);
         }
     }
 
@@ -186,7 +198,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (Random.Range(0, timeManager.RareRate) == 0)
+        if (Random.Range(0, 2/*timeManager.RareRate*/) == 0)
         {
             readyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].kentoPrefabs[MainManager.stageNum - 1], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
             //ミッション用
@@ -209,6 +221,8 @@ public class GameManager : MonoBehaviour
         if (timeManager.IsAnger())
         {
             readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
+            if (readyKento != null) placedGameObjects.Add(readyKento.GetComponent<KentoManager>());
+            Debug.Log("Drag強制終了");
             return;
         }
         if (Random.Range(0, timeManager.AngerRate) == 0) timeManager.MakeAngry();

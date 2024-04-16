@@ -45,7 +45,7 @@ public class TimeManager : MonoBehaviour
 
     [Header("以下はアタッチが必要")]
     //インスタンス
-    [SerializeField] private ResultManager resultManager;
+    public ResultManager resultManager;
 
     //怒りイメージ配列・初期は[2]から実装
     [SerializeField] private Sprite[] angryImages = new Sprite[7];
@@ -55,9 +55,9 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private ParticleSystem angryEffect;
 
     //Header
-    [SerializeField] private Slider slider;
+    [SerializeField] private Slider angerSlider;
     [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private TextMeshProUGUI resultCoinText;
+    // [SerializeField] private TextMeshProUGUI resultCoinText;
     [SerializeField] private TextMeshProUGUI finishText;
 
     //結果表示
@@ -80,8 +80,6 @@ public class TimeManager : MonoBehaviour
         angerRate = data.level[4] + 2;
         nextAppearTime = (float)(10 - data.level[5]) / 10;
         rareRate = 100 - data.level[6];
-
-        // cts = new CancellationTokenSource();
     }
 
     SaveData Load(string path)
@@ -100,12 +98,6 @@ public class TimeManager : MonoBehaviour
         InvokeRepeating("MakeAngry", angryLateTime, angryTime);
 
         resultManager.InitializeResult();
-        resultManager.countSumCoin.AddListener(CountSumCoin);
-    }
-
-    void Update()
-    {
-        slider.value = (float)AngerGauge / (float)angerGaugeMax;
     }
 
     //angerGauge操作はここだけ
@@ -115,6 +107,7 @@ public class TimeManager : MonoBehaviour
         if (IsAnger()) return;
         Instantiate(angryEffect);
         angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
+        angerSlider.value = (float)AngerGauge / (float)angerGaugeMax;
         Debug.Log("今の怒り:" + AngerGauge);
     }
 
@@ -145,12 +138,6 @@ public class TimeManager : MonoBehaviour
         Debug.Log("TIME OVER");
         EmptyTimerText();
         IsEndDrag(true);
-    }
-
-    public UnityEvent countSumCoin;
-    public void CountSumCoin()
-    {
-        countSumCoin?.Invoke();
     }
 
     public async UniTask FinishGame(CancellationToken ct)

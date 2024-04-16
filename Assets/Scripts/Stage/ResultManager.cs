@@ -35,6 +35,11 @@ public class ResultManager : MonoBehaviour
         else floorObject = Instantiate(floorObjects[0], floorObj.transform);
     }
 
+    void Update()
+    {
+        // countSumCoin?.Invoke();
+    }
+
     public void InitializeResult()
     {
         resultImage.transform.parent.gameObject.SetActive(false);
