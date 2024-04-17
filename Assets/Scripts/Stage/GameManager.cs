@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
             }
 
             if (dataManager.data.fontNumbers[i] <= 0) debugIntList.Add(k);
-            else debugIntList.Add(dataManager.data.fontNumbers[i] - 1);
+            else debugIntList.Add(dataManager.data.fontNumbers[i]);
         }
 
         for (int i = 0; i < 6; i++)
