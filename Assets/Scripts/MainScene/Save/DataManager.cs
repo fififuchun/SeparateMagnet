@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+// using UnityEngine.Events;
 
 public class DataManager : MonoBehaviour
 {
@@ -89,4 +90,6 @@ public class DataManager : MonoBehaviour
         }
         return i;
     }
+
+    // [HideInInspector] public UnityEvent showFontImage;
 }

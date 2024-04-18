@@ -8,6 +8,7 @@ public class Footer : MonoBehaviour
 {
     //
     [SerializeField] private MissionManager missionManager;
+    [SerializeField] private MainManager mainManager;
 
     //FooterAnimationインスタンス
     [SerializeField] private FooterAnimation[] footerAnimations = new FooterAnimation[5];
@@ -79,6 +80,7 @@ public class Footer : MonoBehaviour
                 else if (i == 2)
                 {
                     footerImagesRects[i].sizeDelta = new Vector2(300, 150);
+                    mainManager.Start();
                 }
                 else if (i == 3)
                 {
@@ -97,7 +99,13 @@ public class Footer : MonoBehaviour
                 buttonsRects[i].sizeDelta = new Vector2(200, 200);
                 buttonsRects[i].GetComponent<Image>().color = new Color32(13, 92, 167, 255);
                 footerImagesRects[i].sizeDelta = new Vector2(100, 100);
-                if (i == 2) footerImagesRects[i].sizeDelta = new Vector2(200, 100);
+
+                if (i == 2)
+                {
+                    footerImagesRects[i].sizeDelta = new Vector2(200, 100);
+                    mainManager.PushNOTMainButton();
+                }
+
                 footerImagesRects[i].gameObject.transform.localPosition = new Vector2(footerImagesRects[i].gameObject.transform.localPosition.x, 10);
                 footerTexts[i].gameObject.transform.localPosition = new Vector3(200 * i - 400 + 40 * Mathf.Sign(i - index), 0);
                 menuObjects[i].SetActive(false);

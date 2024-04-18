@@ -17,21 +17,21 @@ public class MainManager : MonoBehaviour
   //メインシーンのアニメーション用
   [SerializeField] private GameObject mainViewContent;
   [SerializeField] private RectTransform[] stageImages;
-  [SerializeField] private RectTransform[] outlineImages = new RectTransform[stageCount];
+  [SerializeField] private RectTransform[] outlineImages = new RectTransform[STAGECOUNT];
 
 
   //一旦オフにしてスクロールのスピードを殺す
   [SerializeField] private ScrollRect scrollRect;
 
   //ステージ増加の際は要変更
-  public static int stageCount = 4;
-  [SerializeField] private Image[] lockImages = new Image[stageCount];
+  public const int STAGECOUNT = 4;
+  [SerializeField] private Image[] lockImages = new Image[STAGECOUNT];
 
   //「検討を重ねる」のテキスト
   [SerializeField] private TextMeshProUGUI repeatKentoText;
 
 
-  void Start()
+  public void Start()
   {
     if (Library.CharacteristicFanction(dataManager.data.haveFonts) < 2)
     {
@@ -43,6 +43,7 @@ public class MainManager : MonoBehaviour
     for (int i = 0; i <= Mathf.CeilToInt(rankManager.Rank / 5); i++) lockImages[i].enabled = false;
 
     outlineImages[0].DOSizeDelta(new Vector3(600, 600), 0.5f);
+    // dataManager.showFontImage.AddListener(ShowFontImage);
     ShowFontImage();
   }
 
@@ -59,7 +60,7 @@ public class MainManager : MonoBehaviour
       else repeatKentoText.text = $"検討を重ねる";
 
       //アニメーション
-      for (int i = 0; i < stageCount; i++)
+      for (int i = 0; i < STAGECOUNT; i++)
       {
         if (i == stageNum - 1) outlineImages[i].DOSizeDelta(new Vector3(600, 600), 0.5f);
         else outlineImages[i].sizeDelta = new Vector3(525, 525);
@@ -83,12 +84,21 @@ public class MainManager : MonoBehaviour
     else editButtonText.text = "編集完了";
   }
 
+  public void PushNOTMainButton()
+  {
+    canEdit = false;
+    mainViewContent.transform.parent.parent.gameObject.SetActive(!canEdit);
+    fontViewObject.SetActive(canEdit);
+  }
+
   //持ちフォントの表示用
+  public const int NUMofFONTS = 20;
+
   //メイン
   [SerializeField] private Image[] fontImages = new Image[6];
   [SerializeField] private Sprite lockImage;
   [SerializeField] private Sprite transparencyImage;
-  [SerializeField] private Sprite[] kentoImages = new Sprite[20];
+  [SerializeField] private Sprite[] kentoImages = new Sprite[NUMofFONTS];
 
   //ショッピング
   [SerializeField] private Image fontFrameImage;
