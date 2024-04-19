@@ -6,6 +6,9 @@ using DG.Tweening;
 using TMPro;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using FuchunLibrary;
 
 public class MainManager : MonoBehaviour
 {
@@ -111,7 +114,7 @@ public class MainManager : MonoBehaviour
   {
     for (int i = 0; i < dataManager.ReleasedFontCount(); i++)
     {
-      if (dataManager.data.fontNumbers[i] > 0) fontImages[i].sprite = kentoImages[dataManager.data.fontNumbers[i]];
+      if (dataManager.data.fontNumbers[i] > 0) fontImages[i].sprite = kentoImages[dataManager.data.fontNumbers[i] - 1];
       else if (dataManager.data.fontNumbers[i] == 0) fontImages[i].sprite = transparencyImage;
       else fontImages[i].sprite = lockImage;
 
@@ -120,7 +123,6 @@ public class MainManager : MonoBehaviour
 
     if (dataManager.ReleasedFontCount() == 6)
     {
-      // Debug.Log(dataManager.ReleasedFontCount() - 3);
       fontFrameImage.sprite = buyFontFrameImages[dataManager.ReleasedFontCount() - 3];
       buyFontFrameText.text = "すべてのフォント枠を開放しました";
       requireCoinText.text = "Max";
@@ -151,7 +153,7 @@ public class MainManager : MonoBehaviour
   {
     for (int j = 0; j < dataManager.ReleasedFontCount(); j++)
     {
-      if (dataManager.data.fontNumbers[j] == i)
+      if (dataManager.data.fontNumbers[j] == i + 1)
       {
         //警告
         return;
@@ -159,7 +161,7 @@ public class MainManager : MonoBehaviour
     }
 
     //fontNumbersに0(フォント枠解放済みだが、フォント未記入)が存在するなら、一番手前のfontNumbersにi番目を代入
-    if (dataManager.data.fontNumbers.Contains(0)) dataManager.data.fontNumbers[Library.SearchNumberIndex(dataManager.data.fontNumbers, 0)] = i;
+    if (dataManager.data.fontNumbers.Contains(0)) dataManager.data.fontNumbers[Library.SearchNumberIndex(dataManager.data.fontNumbers, 0)] = i + 1;
     ShowFontImage();
   }
 
@@ -171,6 +173,8 @@ public class MainManager : MonoBehaviour
 
   //ステージ番号
   public static int stageNum;
+  //ブラックイメージ
+  [SerializeField] private Image shiftStageImage;
   //ステージ遷移
   public void PushRepeatKentoButton()
   {
@@ -184,6 +188,7 @@ public class MainManager : MonoBehaviour
       WarnManager.instance.AppearWarning("ランクが足りません！", $"ステージ{stageNum}に挑戦するには\nランクを{(stageNum - 1) * 5}に\nしてください");
       return;
     }
-    SceneManager.LoadScene($"Stage");
+    shiftStageImage.gameObject.SetActive(true);
+    shiftStageImage.DOFade(1f, 1f).OnComplete(() => SceneManager.LoadScene($"Stage"));
   }
 }

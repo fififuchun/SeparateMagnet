@@ -104,11 +104,24 @@ public class TimeManager : MonoBehaviour
     public void MakeAngry()
     {
         angerGauge++;
-        if (IsAnger()) return;
-        Instantiate(angryEffect);
-        angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
-        angerSlider.value = (float)AngerGauge / (float)angerGaugeMax;
         Debug.Log("今の怒り:" + AngerGauge);
+        Instantiate(angryEffect);
+        angerSlider.value = (float)AngerGauge / (float)angerGaugeMax;
+
+        if (7 - AngerGaugeMax + AngerGauge == 6)
+        {
+            angryImage.sprite = angryImages[6];
+            angryImage.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 130);
+        }
+        else if (7 - AngerGaugeMax + AngerGauge == 7)
+        {
+            angryImage.sprite = angryImages[7];
+            angryImage.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(240, 200);
+        }
+        else
+        {
+            angryImage.sprite = angryImages[7 - AngerGaugeMax + AngerGauge];
+        }
     }
 
     //gameManagerで使う用

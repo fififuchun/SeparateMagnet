@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-// using Unity.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
 //Missionの中でもゲーム特有のものをここに書きたい(詳細な値設定とかオブジェクトの管理とか)
 [ExecuteAlways]
@@ -36,6 +36,8 @@ public class MissionManager : MonoBehaviour
 
         InstantiateMissions();
         UpdateMissions();
+
+        // ReceiveDiamond(5, new Vector2(200, 200), new Vector2(500, 500), new Vector2(1500, 1500));
     }
 
     public void SetMissionInformation()
@@ -129,6 +131,8 @@ public class MissionManager : MonoBehaviour
             diamondCount.GetDiamond(mission.missionGroupDatas[i].missionDatas[missionDataManager.data.receivedMissionCounts[i]].reward);
 
             missionDataManager.data.receivedMissionCounts[i]++;
+
+            //
             Debug.Log("報酬を受け取りました");
 
             if (missionDataManager.data.receivedMissionCounts[i] == mission.missionGroupDatas[i].missionDatas.Count()) mission.missionGroupDatas[i].missionObject.SetActive(false);
@@ -186,5 +190,28 @@ public class MissionManager : MonoBehaviour
                 mission.missionGroupDatas[i].missionObject.transform.GetChild(3).gameObject.GetComponent<Image>().color = new Color32(200, 200, 200, 255);
             }
         }
+    }
+
+    [SerializeField] private GameObject diamondImageObj;
+
+    //Diamondアニメーション
+    /// <summary>
+    /// ダイヤが出現するアニメーション
+    /// </summary>
+    /// <param name="emission">放出数</param>
+    /// <param name="randomSize">ランダムな出現場所の半径</param>
+    /// <param name="startPos"></param>
+    /// <param name="endPos"></param>
+    public void ReceiveDiamond(int emission, Vector2 randomSize, Vector2 startPos, Vector2 endPos)
+    {
+        GameObject[] emittedDiamonds = new GameObject[emission];
+        for (int i = 0; i < emission; i++)
+        {
+            Vector2 randomVector = new Vector2(Random.Range(-randomSize.x, randomSize.x), Random.Range(-randomSize.y, randomSize.y));
+            emittedDiamonds[i] = Instantiate(diamondImageObj, startPos + randomVector, Quaternion.identity, GameObject.Find("Canvas").transform);
+            emittedDiamonds[i].transform.DOMove(endPos, 1.0f);
+        }
+
+        //
     }
 }

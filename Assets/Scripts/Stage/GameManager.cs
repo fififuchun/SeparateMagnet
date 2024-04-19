@@ -144,10 +144,7 @@ public class GameManager : MonoBehaviour
             {
                 case Phase.StartPhase:
                     coinText.text = SumCoin().ToString();
-                    // ResetKentoPrefab();
                     Instantiate(appearEffects[timeManager.data.level[5]]);
-
-                    // Debug.Log($"エフェクト出現、{timeManager.NextAppearTime}秒待機");
                     await UniTask.Delay((int)timeManager.NextAppearTime * 1000, cancellationToken: ct_loop);
 
                     phase = Phase.AppearPhase;
@@ -161,7 +158,6 @@ public class GameManager : MonoBehaviour
                     float currentTime = Time.time;
 
                     cts = new CancellationTokenSource();
-
                     //動きなし:Count10Seconds / 動きあり: cts.TokenをStartPhaseでCancel & isEndDrag= true
                     timeManager.Count10Seconds(cts.Token).Forget();
                     await UniTask.WaitUntil(() => timeManager.isEndDrag || currentTime + timeManager.CanHoldTime < Time.time, cancellationToken: ct_loop);
@@ -183,6 +179,7 @@ public class GameManager : MonoBehaviour
 
         //怒りゲージMax以降の動き
         phase = Phase.End;
+        // Debug.Log($"現在の怒り：{timeManager.AngerGauge}");
         coinText.text = SumCoin().ToString();
         timeManager.FinishGame(cts_finish.Token).Forget();
     }
@@ -198,7 +195,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (Random.Range(0, 2/*timeManager.RareRate*/) == 0)
+        if (Random.Range(0, timeManager.RareRate) == 0)
         {
             readyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].kentoPrefabs[MainManager.stageNum - 1], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
             //ミッション用
