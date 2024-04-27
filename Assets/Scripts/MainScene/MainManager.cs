@@ -15,7 +15,7 @@ public class MainManager : MonoBehaviour
   //データ管理
   [SerializeField] private DataManager dataManager;
   [SerializeField] private DiamondCount diamondCount;
-  [SerializeField] private RankManager rankManager;
+  // [SerializeField] private RankManager rankManager;
 
   //メインシーンのアニメーション用
   [SerializeField] private GameObject mainViewContent;
@@ -43,7 +43,7 @@ public class MainManager : MonoBehaviour
     }
     for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
 
-    for (int i = 0; i <= Mathf.CeilToInt(rankManager.Rank / 5); i++) lockImages[i].enabled = false;
+    for (int i = 0; i <= Mathf.CeilToInt(RankManager.Rank / 5); i++) lockImages[i].enabled = false;
 
     outlineImages[0].DOSizeDelta(new Vector3(600, 600), 0.5f);
     // dataManager.showFontImage.AddListener(ShowFontImage);
@@ -59,7 +59,7 @@ public class MainManager : MonoBehaviour
       mainViewContent.transform.DOMove(new Vector2(Mathf.Floor((mainViewContent.transform.position.x + 415) / 830) * 830, mainViewContent.transform.position.y), 0.5f);
 
       int stageNum = (int)(1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830));
-      if (rankManager.Rank < (stageNum - 1) * 5) repeatKentoText.text = $"ランク{(stageNum - 1) * 5}で解放";
+      if (RankManager.Rank < (stageNum - 1) * 5) repeatKentoText.text = $"ランク{(stageNum - 1) * 5}で解放";
       else repeatKentoText.text = $"検討を重ねる";
 
       //アニメーション
@@ -156,6 +156,7 @@ public class MainManager : MonoBehaviour
       if (dataManager.data.fontNumbers[j] == i + 1)
       {
         //警告
+        WarnManager.instance.AppearWarning("既にスタメンです！", $"このフォントは既に\n通常国会に連れていく\nフォントとして\n選ばれています");
         return;
       }
     }
@@ -183,7 +184,7 @@ public class MainManager : MonoBehaviour
     PlayerPrefs.Save();
 
     //ステージ遷移処理
-    if (rankManager.Rank < (stageNum - 1) * 5)
+    if (RankManager.Rank < (stageNum - 1) * 5)
     {
       WarnManager.instance.AppearWarning("ランクが足りません！", $"ステージ{stageNum}に挑戦するには\nランクを{(stageNum - 1) * 5}に\nしてください");
       return;

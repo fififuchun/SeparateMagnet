@@ -21,8 +21,8 @@ public class RankManager : MonoBehaviour
                                                 250000, 300000, 375000, 475000, 600000, 750000, 950000, 1200000, 1500000, 2000000 };
 
     //ランク、Max40
-    private int rank;
-    public int Rank { get => rank; }
+    private static int rank;
+    public static int Rank { get => rank; }
 
     //集めたコインの総計
     private int coinSum;

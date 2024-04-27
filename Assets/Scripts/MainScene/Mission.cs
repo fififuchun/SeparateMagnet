@@ -226,62 +226,22 @@ public class MissionDatas
 #if UNITY_EDITOR
 [CanEditMultipleObjects]
 [CustomEditor(typeof(Mission), true)]
-public class MissionEditor : Editor
+public class MissionEditor : Editor//Library下部に一部移管
 {
     public Mission mission;
 
     private SerializedProperty _missionGroupDatas;
-
-
-    // private SerializedProperty[] _throughCurrentValueProperties;
-
-    // private SerializedProperty _id;
-    // private SerializedProperty _currentValue;
-    // private SerializedProperty _goalValue;
-    // private SerializedProperty _missionState;
 
     private void OnEnable()
     {
         mission = target as Mission;
 
         _missionGroupDatas = serializedObject.FindProperty("missionGroupDatas");
-
-        // _missionGroupDatas= serializedObject.FindProperty("missionGroupDatas");
-
-        // _throughCurrentValueProperties = new SerializedProperty[mission.missionGroupDatas.Count()];
-        // for (int i = 0; i < _throughCurrentValueProperties.Length; i++)
-        // {
-        //     // _throughCurrentValueProperties[i]= mission.missionGroupDatas[i].throughCurrentValue;
-        // }
-
-        // _id = serializedObject.FindProperty("id");
-        // _currentValue = serializedObject.FindProperty("currentValue");
-        // _goalValue = serializedObject.FindProperty("goalValue");
-        // _missionState = serializedObject.FindProperty("goalValue");
     }
 
     public override void OnInspectorGUI()
     {
-        // EditorGUILayout.PropertyField(_missionGroupDatas);
-
         base.OnInspectorGUI();
-
-
-        // serializedObject.Update();
-
-        // for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
-        // {
-        //     switch (mission.missionGroupDatas[i].missionType)
-        //     {
-        //         case MissionType.Through:
-        //             // EditorGUILayout.IntField("currentValue", mission.missionGroupDatas[i].throughCurrentValue);
-        //             EditorGUILayout.HelpBox("表示するテキスト", MessageType.Info);
-        //             break;
-        //     }
-        // }
-        // EditorGUILayout.HelpBox("表示するテキスト", MessageType.Info);
-
-        // serializedObject.ApplyModifiedProperties();
     }
 }
 #endif

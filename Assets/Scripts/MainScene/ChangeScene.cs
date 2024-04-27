@@ -5,32 +5,19 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using System.Linq;
 
 public class ChangeScene : MonoBehaviour
 {
-    //インスタンス
-    // [SerializeField] private RankManager rankManager;
+    // List<Vector2Int>[] vector2Ints = new List<Vector2Int>[7];
 
-    //ステージ選択のScrollView
-    // [SerializeField] private GameObject mainViewContent;
-
-    //「検討を重ねる」のテキスト
-    // [SerializeField] private TextMeshProUGUI repeatKentoText;
-
-
-    //ステージ遷移
-    // public void PushRepeatKentoButton()
+    // void Start()
     // {
-    //     int stageNum = (int)(1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830));
-    //     PlayerPrefs.Save();
+    //     for (int i = 0; i < vector2Ints.Length; i++) vector2Ints[i] = new List<Vector2Int>();
 
-    //     Debug.Log(stageNum);
+    //     vector2Ints[4].Add(new Vector2Int(1, 2));
 
-    //     if (rankManager.Rank < (stageNum - 1) * 5)
-    //     {
-    //         repeatKentoText.text = $"ランク{(stageNum - 1) * 5}にしてね";
-    //         return;
-    //     }
-    //     SceneManager.LoadScene($"Stage_{1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830)}");
+    //     Debug.Log(vector2Ints[4].Count());
+    //     Debug.Log(vector2Ints[5].Count());
     // }
 }
