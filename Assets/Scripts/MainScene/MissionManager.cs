@@ -22,13 +22,13 @@ public class MissionManager : MonoBehaviour
     //Missionクラスをいじるだけ
     void OnValidate()
     {
-        SetMissionInformation();
+        // SetMissionInformation();
     }
 
     //Destroy・Instantiateはここだけ
     void Start()
     {
-        SetMissionInformation();
+        // SetMissionInformation();
         mission.RefreshAllMissions(missionDataManager.data.receivedMissionCounts);
         mission.onValidate.AddListener(UpdateMissions);
         mission.toYellow.AddListener(ToYellow);
@@ -40,41 +40,53 @@ public class MissionManager : MonoBehaviour
         // ReceiveDiamond(5, new Vector2(200, 200), new Vector2(500, 500), new Vector2(1500, 1500));
     }
 
-    public void SetMissionInformation()
-    {
-        for (int j = 0; j < mission.missionGroupDatas[0].missionDatas.Count(); j++)
-        {
-            mission.missionGroupDatas[0].missionDatas[j].goalValue = j + 2;
-            mission.missionGroupDatas[0].missionDatas[j].reward = (j + 2) * 10;
-            mission.missionGroupDatas[0].missionDatas[j].missionMessage = $"ランク{j + 2}にする";
-        }
+    //Missionクラスの値を手動で設定するのがめんどくさいので自動で設定したい・用は済んだ
+    // public void SetMissionInformation()
+    // {
+    //     for (int j = 0; j < mission.missionGroupDatas[0].missionDatas.Count(); j++)
+    //     {
+    //         mission.missionGroupDatas[0].missionDatas[j].goalValue = j + 2;
+    //         mission.missionGroupDatas[0].missionDatas[j].reward = (j + 2) * 10;
+    //         mission.missionGroupDatas[0].missionDatas[j].missionMessage = $"ランク{j + 2}にする";
+    //     }
 
-        for (int j = 0; j < mission.missionGroupDatas[1].missionDatas.Count(); j++)
-        {
-            mission.missionGroupDatas[1].missionDatas[j].goalValue = (j + 1) * 5;
-            mission.missionGroupDatas[1].missionDatas[j].reward = (j + 1) * 10;
-            mission.missionGroupDatas[1].missionDatas[j].missionMessage = $"国民の怒りづらさ\nレベルを{(j + 1) * 5}にする";
-        }
+    //     for (int j = 0; j < mission.missionGroupDatas[1].missionDatas.Count(); j++)
+    //     {
+    //         mission.missionGroupDatas[1].missionDatas[j].goalValue = (j + 1) * 5;
+    //         mission.missionGroupDatas[1].missionDatas[j].reward = (j + 1) * 10;
+    //         mission.missionGroupDatas[1].missionDatas[j].missionMessage = $"国民の怒りづらさ\nレベルを{(j + 1) * 5}にする";
+    //     }
 
-        for (int j = 0; j < mission.missionGroupDatas[2].missionDatas.Count(); j++)
-        {
-            mission.missionGroupDatas[2].missionDatas[j].missionMessage = $"検討を重ねた時に\n怒る確率を{mission.missionGroupDatas[2].missionDatas[j].goalValue}回下げる";
-        }
+    //     for (int j = 0; j < mission.missionGroupDatas[2].missionDatas.Count(); j++)
+    //     {
+    //         mission.missionGroupDatas[2].missionDatas[j].missionMessage = $"検討を重ねた時に\n怒る確率を{mission.missionGroupDatas[2].missionDatas[j].goalValue}回下げる";
+    //     }
 
-        for (int j = 0; j < mission.missionGroupDatas[3].missionDatas.Count(); j++)
-        {
-            mission.missionGroupDatas[3].missionDatas[j].missionMessage = $"国民の怒りゲージ\n上限を{mission.missionGroupDatas[3].missionDatas[j].goalValue + 3}にする";
-        }
+    //     for (int j = 0; j < mission.missionGroupDatas[3].missionDatas.Count(); j++)
+    //     {
+    //         mission.missionGroupDatas[3].missionDatas[j].missionMessage = $"国民の怒りゲージ\n上限を{mission.missionGroupDatas[3].missionDatas[j].goalValue + 3}にする";
+    //     }
 
-        for (int j = 0; j < mission.missionGroupDatas[4].missionDatas.Count(); j++)
-        {
-            mission.missionGroupDatas[4].missionDatas[j].missionMessage = $"{mission.missionGroupDatas[4].missionDatas[j].goalValue}円稼げ";
-        }
-    }
+    //     for (int j = 0; j < mission.missionGroupDatas[4].missionDatas.Count(); j++)
+    //     {
+    //         mission.missionGroupDatas[4].missionDatas[j].missionMessage = $"{mission.missionGroupDatas[4].missionDatas[j].goalValue}円稼げ";
+    //     }
+    // }
 
     public void InstantiateMissions()
     {
         for (int i = 0; i < mission.missionGroupDatas.Count(); i++) InstantiateMission(i);
+    }
+
+    //MissionクラスのMissionGroupのi番目のGameObjectがいなかったら生成
+    public void InstantiateMission(int i)
+    {
+        if (mission.missionGroupDatas[i].missionObject != null) return;
+
+        GameObject missionObject = Instantiate(missionPrefab, missionContent.transform);
+        mission.missionGroupDatas[i].missionObject = missionObject;
+
+        UpdateMission(i);
     }
 
     public void UpdateMissions()
@@ -88,17 +100,6 @@ public class MissionManager : MonoBehaviour
         mission.SetID();
         notificationImage.SetActive(ExistAchievedMission());
         Debug.Log("ミッションを更新しました");
-    }
-
-    //MissionクラスのMissionGroupのi番目のGameObjectがいなかったら生成
-    public void InstantiateMission(int i)
-    {
-        if (mission.missionGroupDatas[i].missionObject != null) return;
-
-        GameObject missionObject = Instantiate(missionPrefab, missionContent.transform);
-        mission.missionGroupDatas[i].missionObject = missionObject;
-
-        UpdateMission(i);
     }
 
     //MissionクラスのMissionGroupのi番目のGameObjectを動的に変更

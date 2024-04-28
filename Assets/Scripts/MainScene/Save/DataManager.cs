@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
-// using UnityEngine.Events;
 
 public class DataManager : MonoBehaviour
 {
@@ -91,5 +90,11 @@ public class DataManager : MonoBehaviour
         return i;
     }
 
-    // [HideInInspector] public UnityEvent showFontImage;
+    public void ResetDataManager()
+    {
+        data.level = new int[SaveData.levelCount];
+        data.fontNumbers = new int[6] { 0, 0, 0, -1, -1, -1 };
+        for (int i = 0; i < data.isRareFonts.Length; i++) data.isRareFonts[i] = false;
+        for (int i = 0; i < data.haveFonts.Length; i++) data.haveFonts[i] = false;
+    }
 }

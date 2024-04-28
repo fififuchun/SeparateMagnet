@@ -58,9 +58,9 @@ public class Uidirector : MonoBehaviour
         PlayerPrefs.SetInt("Coin", coinCount.Coin);
     }
 
-    public void AllResetButton()
-    {
-        PlayerPrefs.DeleteAll();
-        SceneManager.LoadScene("StageScene");
-    }
+    // public void AllResetButton()
+    // {
+    //     PlayerPrefs.DeleteAll();
+    //     SceneManager.LoadScene("StageScene");
+    // }
 }

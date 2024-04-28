@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
@@ -36,7 +35,8 @@ public class Mission : MonoBehaviour
     //Missionクラスの情報が少しでも変更されたら走る
     void OnValidate()
     {
-        Start(); //debug??
+        //debug??
+        Start();
         CheckMission();
 
         //GameObject側を変更
@@ -46,8 +46,7 @@ public class Mission : MonoBehaviour
 
     void Start()
     {
-        // SetMission(new Vector2Int(0, 1), new Vector2Int(0, 0));
-
+        CheckMission();
         SetID();
     }
 
@@ -60,7 +59,8 @@ public class Mission : MonoBehaviour
 
             for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
             {
-                if (missionGroupDatas[i].missionType == MissionType.Through) missionGroupDatas[i].missionDatas[j].currentValue = missionGroupDatas[i].throughCurrentValue;
+                /*if (missionGroupDatas[i].missionType == MissionType.Through)*/ 
+                missionGroupDatas[i].missionDatas[j].currentValue = missionGroupDatas[i].throughCurrentValue;
                 missionGroupDatas[i].missionDatas[j].bottomId = Library.LastTwoDigits(j);
                 missionGroupDatas[i].missionDatas[j].id = missionGroupDatas[i].headId + missionGroupDatas[i].missionDatas[j].bottomId;
 
@@ -104,7 +104,6 @@ public class Mission : MonoBehaviour
                 if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Achieved)
                 {
                     toYellow?.Invoke();
-                    // Debug.Log($"{i},{j}: ミッションクリア");
                     break;
                 }
                 else if (j == missionGroupDatas[i].missionDatas.Count() - 1) toGray?.Invoke();
@@ -113,6 +112,7 @@ public class Mission : MonoBehaviour
         }
     }
 
+    //すでに報酬受け取り済みのMissionのEnumをRecievedにする
     public void RefreshAllMissions(int[] missionGroupCount)
     {
         for (int i = 0; i < missionGroupCount.Count(); i++)
@@ -160,7 +160,7 @@ public class MissionGroupDatas
     [HideInInspector] public string headId;
 
     //ミッションのタイプ・貫通or分別
-    public MissionType missionType;
+    // private MissionType missionType;
 
     //missionTypeが貫通のとき、全missionDataを通して共通の値
     public int throughCurrentValue;

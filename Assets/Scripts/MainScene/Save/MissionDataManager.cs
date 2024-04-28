@@ -66,4 +66,9 @@ public class MissionDataManager : MonoBehaviour
 
         isChanged.Invoke();
     }
+
+    public void ResetMissionDataManager()
+    {
+
+    }
 }

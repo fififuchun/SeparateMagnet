@@ -29,12 +29,9 @@ public class RPGManager : MonoBehaviour
     //関数
     void Start()
     {
-        // for (int i = 0; i < 7; i++) dataManager.data.level[i] = dataManager.InitLevel[i];
         UpdateAcquireCoin();
 
         missionDataManager.ChangeMissionValue(5, Library.FirstFalseIndex(dataManager.data.isRareFonts));
-
-        // missionDataManager.ChangeMissionValue(5, 0);
     }
 
     public void UpdateAcquireCoin()
