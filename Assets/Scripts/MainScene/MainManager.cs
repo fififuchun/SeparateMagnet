@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 using TMPro;
-using System.Linq;
-using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
-using System.Threading;
+// using System.Threading;
 using FuchunLibrary;
+using System.Threading;
 
 public class MainManager : MonoBehaviour
 {
@@ -48,6 +49,9 @@ public class MainManager : MonoBehaviour
     outlineImages[0].DOSizeDelta(new Vector3(600, 600), 0.5f);
     // dataManager.showFontImage.AddListener(ShowFontImage);
     ShowFontImage();
+
+    cts = new CancellationTokenSource();
+    repeatKentoButton.onClickCallback += () => PushRepeatKentoButton(cts.Token);
   }
 
   void Update()
@@ -174,10 +178,17 @@ public class MainManager : MonoBehaviour
 
   //ステージ番号
   public static int stageNum;
+  //kentoButton
+  [SerializeField] private CustomButton repeatKentoButton;
   //ブラックイメージ
   [SerializeField] private Image shiftStageImage;
+  //AudioManagerのインスタンス化
+  [SerializeField] private AudioManager audioManager;
+  //検討を重ねるボタンを押した後のUnitask破棄
+  CancellationTokenSource cts;
+
   //ステージ遷移
-  public void PushRepeatKentoButton()
+  async public void PushRepeatKentoButton(CancellationToken ct)
   {
     //現在最前面にあるステージのナンバー
     stageNum = (int)(1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830));
@@ -190,6 +201,16 @@ public class MainManager : MonoBehaviour
       return;
     }
     shiftStageImage.gameObject.SetActive(true);
-    shiftStageImage.DOFade(1f, 1f).OnComplete(() => SceneManager.LoadScene($"Stage"));
+
+    await UniTask.WhenAll(
+      shiftStageImage.DOFade(1f, 1f).ToUniTask(cancellationToken: ct),
+      audioManager.backBGM.DOFade(0f, 1f).ToUniTask(cancellationToken: ct)
+    );
+    SceneManager.LoadScene("Stage");
+  }
+
+  void OnDestroy()
+  {
+    cts?.Cancel();
   }
 }

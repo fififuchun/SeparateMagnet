@@ -38,7 +38,7 @@ public class Footer : MonoBehaviour
     [SerializeField] private GameObject notificationImage;
 
     //チュートリアル用
-    [SerializeField] private TutorialManager tutorialManager;
+    // [SerializeField] private TutorialManager tutorialManager;
 
     //bannar広告の下部間隔
     private int bottomAdPadding = 100;
@@ -71,11 +71,11 @@ public class Footer : MonoBehaviour
 
                 if (i == 0)
                 {
-                    tutorialManager.InstantiateTutorial(1, (int)TutorialImage.Cheak);
+                    TutorialManager.InstantiateTutorial(1, (int)TutorialImage.Cheak);
                 }
                 else if (i == 1)
                 {
-                    tutorialManager.InstantiateTutorial(2, (int)TutorialImage.Good);
+                    TutorialManager.InstantiateTutorial(2, (int)TutorialImage.Good);
                 }
                 else if (i == 2)
                 {
@@ -86,7 +86,7 @@ public class Footer : MonoBehaviour
                 {
                     notificationImage.SetActive(false);
                     missionManager.UpdateMissions();
-                    tutorialManager.InstantiateTutorial(3, (int)TutorialImage.Info);
+                    TutorialManager.InstantiateTutorial(3, (int)TutorialImage.Info);
                 }
 
                 footerImagesRects[i].gameObject.transform.localPosition = new Vector2(footerImagesRects[i].gameObject.transform.localPosition.x, 10);

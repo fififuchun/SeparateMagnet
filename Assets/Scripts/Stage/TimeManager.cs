@@ -103,6 +103,7 @@ public class TimeManager : MonoBehaviour
     //angerGauge操作はここだけ
     public void MakeAngry()
     {
+        if (IsAnger()) return;
         angerGauge++;
         Debug.Log("今の怒り:" + AngerGauge);
         Instantiate(angryEffect);

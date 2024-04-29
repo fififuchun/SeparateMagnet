@@ -69,6 +69,7 @@ public class MissionDataManager : MonoBehaviour
 
     public void ResetMissionDataManager()
     {
-
+        data.receivedMissionCounts = new int[MissionSaveData.missionGroupCount];
+        data.missionValues = new int[MissionSaveData.missionGroupCount];
     }
 }

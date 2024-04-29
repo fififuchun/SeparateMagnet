@@ -5,13 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
-// using Cysharp.Threading.Tasks;
-
-//Load用
-// public struct MatrixTextDatas
-// {
-
-// }
 
 public class MatrixText : MonoBehaviour
 {
@@ -26,9 +19,6 @@ public class MatrixText : MonoBehaviour
     [SerializeField] private int matrixRowNum;
     //列
     [SerializeField, ReadOnly] private int matrixColumnNum;
-
-    // json変換するデータのクラス
-    // [HideInInspector] public MatrixTextData[] matrixTextDatas;
 
     // jsonファイルのパス
     string filepath;

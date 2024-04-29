@@ -18,15 +18,20 @@ public class WarnManager : MonoBehaviour
     //警告の解決法
     [SerializeField] private TextMeshProUGUI warningText;
 
+    //閉じるボタン
+    [SerializeField] private CustomButton closeWarningButton;
+
     public void AppearWarning(string title, string resolve)
     {
+        closeWarningButton.onClickCallback += DisappearWarning;
+
         warningTitleText.text = title;
         warningText.text = resolve;
-        
+
         warningObject.SetActive(true);
     }
 
-    public void DisappeaWarning()
+    public void DisappearWarning()
     {
         warningObject.SetActive(false);
     }

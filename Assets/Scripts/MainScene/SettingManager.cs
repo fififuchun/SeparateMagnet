@@ -8,7 +8,14 @@ public class SettingManager : MonoBehaviour
 {
     [SerializeField] private DataManager dataManager;
     [SerializeField] private MissionDataManager missionDataManager;
-    [SerializeField] private TutorialDataManager tutorialDataManager;
+    // [SerializeField] private TutorialDataManager tutorialDataManager;
+
+    [SerializeField] private CustomButton allResetButton;
+
+    void Start()
+    {
+        allResetButton.onClickCallback += PushAllResetButton;
+    }
 
 
     // public void PushAllInitializeButton()
@@ -22,8 +29,9 @@ public class SettingManager : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         dataManager.ResetDataManager();
-        // missionDataManager.
-        
+        missionDataManager.ResetMissionDataManager();
+        TutorialDataManager.ResetTutorialData();
+
         SceneManager.LoadScene("StageScene");
     }
 }

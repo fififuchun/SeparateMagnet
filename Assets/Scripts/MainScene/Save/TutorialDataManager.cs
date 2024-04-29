@@ -6,17 +6,17 @@ using System.IO;
 public class TutorialDataManager : MonoBehaviour
 {
     //json変換したTutorialSaveData
-    [HideInInspector] public TutorialSaveData data;
+    [HideInInspector] public static TutorialSaveData data;
 
     // jsonファイルのパス
-    string filepath;
+    private string filepath;
 
     // jsonファイル名
-    string fileName = "TutorialData.json";
+    private string fileName = "TutorialData.json";
 
     //-------------------------------------------------------------------
     // 開始時にファイルチェック、読み込み
-    void Awake()
+    private void Awake()
     {
         // パス名取得
         filepath = Application.dataPath + "/" + fileName;
@@ -39,7 +39,7 @@ public class TutorialDataManager : MonoBehaviour
     }
 
     // jsonファイル読み込み
-    TutorialSaveData Load(string path)
+    private TutorialSaveData Load(string path)
     {
         StreamReader rd = new StreamReader(path);
         string json = rd.ReadToEnd();
@@ -50,8 +50,13 @@ public class TutorialDataManager : MonoBehaviour
 
     //-------------------------------------------------------------------
     // ゲーム終了時に保存
-    void OnDestroy()
+    private void OnDestroy()
     {
         Save(data);
+    }
+
+    public static void ResetTutorialData()
+    {
+        data.isFinishedTutorial = new bool[TutorialSaveData.tutorialCount];
     }
 }

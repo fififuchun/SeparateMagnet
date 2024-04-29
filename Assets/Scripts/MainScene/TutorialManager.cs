@@ -22,14 +22,14 @@ public class TutorialManager : MonoBehaviour
     [SerializeField, Header("RowNumber?")] private int matrixRowNum;
 
     //tutorial用のMatrixText
-    [SerializeField] private MatrixText tutorial;
+    [SerializeField] private static MatrixText tutorial;
 
     //チュートリアルの女性
-    [SerializeField] private Sprite[] ladySprites = new Sprite[8];
-    [SerializeField] private Image ladyImage;
+    public static Sprite[] ladySprites = new Sprite[8];
+    public static Image ladyImage;
 
     //セーブデータ
-    [SerializeField] private TutorialDataManager tutorialDataManager;
+    // [SerializeField] private TutorialDataManager TutorialDataManager;
 
     //mainフッターの指のナビゲーション
     [SerializeField] private GameObject fingerNavi;
@@ -38,20 +38,20 @@ public class TutorialManager : MonoBehaviour
     void Start()
     {
         //isFinishedTutorial[0]がfalseなら、チュートリアルを出現させる
-        if (!tutorialDataManager.data.isFinishedTutorial[0]) InstantiateTutorial(0, 3);
-        //isFinishedTutorial[4]がfalseなら、MainのfingerNaviをtrueにする
-        if (!tutorialDataManager.data.isFinishedTutorial[4]) fingerNavi.SetActive(true);
+        if (!TutorialDataManager.data.isFinishedTutorial[0]) InstantiateTutorial(0, 3);
+        //isFinishedTutorial[4]がfalse(GameSceneでのチュートリアルを視聴済み)なら、MainのfingerNaviをtrueにする
+        if (!TutorialDataManager.data.isFinishedTutorial[4]) fingerNavi.SetActive(true);
 
         shoppingTutorialButton.onClickCallback += PushShoppingTutorialButton;
         rpgTutorialButton.onClickCallback += PushRPGTutorialButton;
         missionTutorialButton.onClickCallback += PushMissionTutorialButton;
     }
 
-    public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
+    public static void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
     {
         //既にチュートリアルを見ているなら返す
-        if (tutorialDataManager.data.isFinishedTutorial[_matrixRowNum]) return;
-        else tutorialDataManager.data.isFinishedTutorial[_matrixRowNum] = true;
+        if (TutorialDataManager.data.isFinishedTutorial[_matrixRowNum]) return;
+        else TutorialDataManager.data.isFinishedTutorial[_matrixRowNum] = true;
 
         tutorial.Initialize(_matrixRowNum);
         ladyImage.sprite = ladySprites[_ladyNum];

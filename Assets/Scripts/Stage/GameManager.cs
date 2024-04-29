@@ -94,6 +94,8 @@ public class GameManager : MonoBehaviour
             else debugIntList.Add(dataManager.data.fontNumbers[i]);
         }
 
+        // if (!TutorialDataManager.data.isFinishedTutorial[4]) TutorialManager.InstantiateTutorial(4, (int)TutorialImage.Go);
+
         for (int i = 0; i < 6; i++)
         {
             Debug.Log($"List[{i}]: " + debugIntList[i]);
