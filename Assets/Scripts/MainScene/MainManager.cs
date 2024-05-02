@@ -7,9 +7,8 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using TMPro;
 using Cysharp.Threading.Tasks;
-// using System.Threading;
-using FuchunLibrary;
 using System.Threading;
+using FuchunLibrary;
 
 public class MainManager : MonoBehaviour
 {
