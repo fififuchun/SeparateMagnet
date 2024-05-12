@@ -71,11 +71,11 @@ public class Footer : MonoBehaviour
 
                 if (i == 0)
                 {
-                    TutorialManager.InstantiateTutorial(1, (int)TutorialImage.Cheak);
+                    // TutorialManager.InstantiateTutorial(1, (int)TutorialImage.Cheak);
                 }
                 else if (i == 1)
                 {
-                    TutorialManager.InstantiateTutorial(2, (int)TutorialImage.Good);
+                    // TutorialManager.InstantiateTutorial(2, (int)TutorialImage.Good);
                 }
                 else if (i == 2)
                 {
@@ -86,7 +86,7 @@ public class Footer : MonoBehaviour
                 {
                     notificationImage.SetActive(false);
                     missionManager.UpdateMissions();
-                    TutorialManager.InstantiateTutorial(3, (int)TutorialImage.Info);
+                    // TutorialManager.InstantiateTutorial(3, (int)TutorialImage.Info);
                 }
 
                 footerImagesRects[i].gameObject.transform.localPosition = new Vector2(footerImagesRects[i].gameObject.transform.localPosition.x, 10);

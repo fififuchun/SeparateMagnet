@@ -19,11 +19,11 @@ public class TutorialInGame : MonoBehaviour
 
     void Start()
     {
-        if (!TutorialDataManager.data.isFinishedTutorial[4])
-        {
+        // if (!TutorialDataManager.data.isFinishedTutorial[4])
+        // {
             InstantiateTutorial(4, 3);
             fingerNavi.SetActive(true);
-        }
+        // }
     }
 
     public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
