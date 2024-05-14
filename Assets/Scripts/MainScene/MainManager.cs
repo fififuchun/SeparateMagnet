@@ -43,7 +43,13 @@ public class MainManager : MonoBehaviour
     }
     for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
 
-    for (int i = 0; i <= Mathf.CeilToInt(RankManager.Rank / 5); i++) lockImages[i].enabled = false;
+    for (int i = 0; i <= Mathf.CeilToInt(RankManager.Rank / 5); i++)
+    {
+      if (i >= STAGECOUNT) break;
+      lockImages[i].enabled = false;
+    }
+
+    editButton.onClickCallback += () => PushEditButton(!canEdit); Debug.Log("a");
 
     outlineImages[0].DOSizeDelta(new Vector3(600, 600), 0.5f);
     // dataManager.showFontImage.AddListener(ShowFontImage);
@@ -78,16 +84,17 @@ public class MainManager : MonoBehaviour
   //持ちフォントの編集
   [SerializeField] private TextMeshProUGUI editButtonText;
   [SerializeField] private GameObject fontViewObject;
-  private bool canEdit;
-  public void PushEditButton()
+  [SerializeField] private CustomButton editButton;
+  [SerializeField] private bool canEdit;
+  public void PushEditButton(bool _canEdit)
   {
-    canEdit = !canEdit;
+    canEdit = !_canEdit;
 
-    mainViewContent.transform.parent.parent.gameObject.SetActive(canEdit);
-    fontViewObject.SetActive(!canEdit);
+    mainViewContent.transform.parent.parent.gameObject.SetActive(!canEdit);
+    fontViewObject.SetActive(canEdit);
 
-    if (canEdit) editButtonText.text = "編集する";
-    else editButtonText.text = "編集完了";
+    if (canEdit) editButtonText.text = "編集完了";
+    else editButtonText.text = "編集する";
   }
 
   public void PushNOTMainButton()

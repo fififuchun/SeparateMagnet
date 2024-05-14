@@ -39,7 +39,8 @@ public class TutorialManager : MonoBehaviour
     void Start()
     {
         //isFinishedTutorial[0]がfalseなら、チュートリアルを出現させる
-        if (!TutorialDataManager.data.isFinishedTutorial[0]) InstantiateTutorial(0, 3);
+        /*if (!TutorialDataManager.data.isFinishedTutorial[0])*/
+        InstantiateTutorial(0, 3);
         // isFinishedTutorial[4]がfalse(GameSceneでのチュートリアルを視聴済み)なら、MainのfingerNaviをtrueにする
         if (!TutorialDataManager.data.isFinishedTutorial[4]) fingerNavi.SetActive(true);
 

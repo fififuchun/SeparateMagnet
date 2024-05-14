@@ -38,6 +38,7 @@ public class RankManager : MonoBehaviour
     void Awake()
     {
         GetCoinSum(PlayerPrefs.GetInt("Sum", PlayerPrefs.GetInt("Coin", 0)));
+        GetCoinSum(10000);
     }
 
     public void UpdateExp()

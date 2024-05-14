@@ -41,7 +41,7 @@ public class Footer : MonoBehaviour
     // [SerializeField] private TutorialManager tutorialManager;
 
     //bannar広告の下部間隔
-    private int bottomAdPadding = 100;
+    // private int bottomAdPadding = 100;
 
     void Start()
     {
@@ -51,7 +51,7 @@ public class Footer : MonoBehaviour
         canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();
         backgroundRect = canvasRect.gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
         backgroundRect.sizeDelta = canvasRect.sizeDelta;
-        footer.transform.localPosition = new Vector3(0, (1920 - canvasRect.sizeDelta.y) / 2 + bottomAdPadding);
+        // footer.transform.localPosition = new Vector3(0, (1920 - canvasRect.sizeDelta.y) / 2 + bottomAdPadding);
 
         PushFooterButton(2);
     }
@@ -69,15 +69,17 @@ public class Footer : MonoBehaviour
                 buttonsRects[i].GetComponent<Image>().color = new Color32(236, 193, 0, 255);
                 footerImagesRects[i].sizeDelta = new Vector2(200, 200);
 
-                if (i == 0)
-                {
-                    // TutorialManager.InstantiateTutorial(1, (int)TutorialImage.Cheak);
-                }
-                else if (i == 1)
-                {
-                    // TutorialManager.InstantiateTutorial(2, (int)TutorialImage.Good);
-                }
-                else if (i == 2)
+                // /*
+                // if (i == 0)
+                // {
+                //     // TutorialManager.InstantiateTutorial(1, (int)TutorialImage.Cheak);
+                // }
+                // else if (i == 1)
+                // {
+                //     // TutorialManager.InstantiateTutorial(2, (int)TutorialImage.Good);
+                // }
+                // else */
+                if (i == 2)
                 {
                     footerImagesRects[i].sizeDelta = new Vector2(300, 150);
                     mainManager.Start();

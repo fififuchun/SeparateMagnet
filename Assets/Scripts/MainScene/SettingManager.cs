@@ -30,7 +30,7 @@ public class SettingManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
         dataManager.ResetDataManager();
         missionDataManager.ResetMissionDataManager();
-        TutorialDataManager.ResetTutorialData();
+        TutorialDataManager.ResetTutorialDataManager();
 
         SceneManager.LoadScene("StageScene");
     }

@@ -55,7 +55,7 @@ public class TutorialDataManager : MonoBehaviour
         Save(data);
     }
 
-    public static void ResetTutorialData()
+    public static void ResetTutorialDataManager()
     {
         data.isFinishedTutorial = new bool[TutorialSaveData.tutorialCount];
     }

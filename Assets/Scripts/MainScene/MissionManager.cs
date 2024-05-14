@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
 //Missionの中でもゲーム特有のものをここに書きたい(詳細な値設定とかオブジェクトの管理とか)
 [ExecuteAlways]
@@ -36,8 +37,6 @@ public class MissionManager : MonoBehaviour
 
         InstantiateMissions();
         UpdateMissions();
-
-        // ReceiveDiamond(5, new Vector2(200, 200), new Vector2(500, 500), new Vector2(1500, 1500));
     }
 
     //Missionクラスの値を手動で設定するのがめんどくさいので自動で設定したい・用は済んだ
@@ -131,11 +130,13 @@ public class MissionManager : MonoBehaviour
             mission.missionGroupDatas[i].missionDatas[missionDataManager.data.receivedMissionCounts[i]].ReceiveMissionState();
             diamondCount.GetDiamond(mission.missionGroupDatas[i].missionDatas[missionDataManager.data.receivedMissionCounts[i]].reward);
 
-            missionDataManager.data.receivedMissionCounts[i]++;
+            ReceiveDiamond(mission.missionGroupDatas[i].missionDatas[missionDataManager.data.receivedMissionCounts[i]].reward / 10, new Vector2(100, 100), new Vector2(225, mission.missionGroupDatas[i].missionObject.transform.position.y), headerDiamondImage.transform.position);
+            TurnOverDiamond(i);
 
-            //
+            missionDataManager.data.receivedMissionCounts[i]++;
             Debug.Log("報酬を受け取りました");
 
+            //mission列の最後のミッションをクリアしたらそのミッション列を削除
             if (missionDataManager.data.receivedMissionCounts[i] == mission.missionGroupDatas[i].missionDatas.Count()) mission.missionGroupDatas[i].missionObject.SetActive(false);
         }
         else
@@ -194,6 +195,7 @@ public class MissionManager : MonoBehaviour
     }
 
     [SerializeField] private GameObject diamondImageObj;
+    [SerializeField] private GameObject headerDiamondImage;
 
     //Diamondアニメーション
     /// <summary>
@@ -203,16 +205,35 @@ public class MissionManager : MonoBehaviour
     /// <param name="randomSize">ランダムな出現場所の半径</param>
     /// <param name="startPos"></param>
     /// <param name="endPos"></param>
-    public void ReceiveDiamond(int emission, Vector2 randomSize, Vector2 startPos, Vector2 endPos)
+    async public void ReceiveDiamond(int emission, Vector2 randomSize, Vector2 startPos, Vector2 endPos)
     {
         GameObject[] emittedDiamonds = new GameObject[emission];
         for (int i = 0; i < emission; i++)
         {
             Vector2 randomVector = new Vector2(Random.Range(-randomSize.x, randomSize.x), Random.Range(-randomSize.y, randomSize.y));
             emittedDiamonds[i] = Instantiate(diamondImageObj, startPos + randomVector, Quaternion.identity, GameObject.Find("Canvas").transform);
-            emittedDiamonds[i].transform.DOMove(endPos, 1.0f);
+            emittedDiamonds[i].GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+
+            await UniTask.Delay(100);
+
+            if (i == emission - 1) await emittedDiamonds[i].transform.DOMove(endPos, 1.0f).ToUniTask();
+            else emittedDiamonds[i].transform.DOMove(endPos, 1.0f).ToUniTask().Forget();
         }
 
-        //
+        for (int i = 0; i < emittedDiamonds.Length; i++) Destroy(emittedDiamonds[i]);
+    }
+
+    async public void TurnOverDiamond(int i)
+    {
+        Transform rewardImageTransform = missionContent.transform.GetChild(i).GetChild(2);
+
+        rewardImageTransform.DOScaleX(-1, 0.5f).ToUniTask().Forget();
+        rewardImageTransform.GetChild(0).gameObject.SetActive(false);
+        rewardImageTransform.GetChild(1).gameObject.SetActive(false);
+
+        await UniTask.Delay(500);
+        rewardImageTransform.DOScaleX(1, 0).ToUniTask().Forget();
+        rewardImageTransform.GetChild(0).gameObject.SetActive(true);
+        rewardImageTransform.GetChild(1).gameObject.SetActive(true);
     }
 }
