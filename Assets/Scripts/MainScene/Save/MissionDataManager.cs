@@ -23,7 +23,7 @@ public class MissionDataManager : MonoBehaviour
     void Awake()
     {
         // パス名取得
-        filepath = Application.dataPath + "/" + fileName;
+        filepath = Application.persistentDataPath + "/" + fileName;
 
         // ファイルがないとき、ファイル作成
         if (!File.Exists(filepath)) Save(data);

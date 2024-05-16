@@ -6,7 +6,7 @@ using System.IO;
 public class TutorialDataManager : MonoBehaviour
 {
     //json変換したTutorialSaveData
-    [HideInInspector] public static TutorialSaveData data;
+    [HideInInspector] public TutorialSaveData data;
 
     // jsonファイルのパス
     private string filepath;
@@ -19,7 +19,7 @@ public class TutorialDataManager : MonoBehaviour
     private void Awake()
     {
         // パス名取得
-        filepath = Application.dataPath + "/" + fileName;
+        filepath = Application.persistentDataPath + "/" + fileName;
 
         // ファイルがないとき、ファイル作成
         if (!File.Exists(filepath)) Save(data);
@@ -55,7 +55,7 @@ public class TutorialDataManager : MonoBehaviour
         Save(data);
     }
 
-    public static void ResetTutorialDataManager()
+    public void ResetTutorialDataManager()
     {
         data.isFinishedTutorial = new bool[TutorialSaveData.tutorialCount];
     }

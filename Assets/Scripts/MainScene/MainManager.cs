@@ -49,14 +49,15 @@ public class MainManager : MonoBehaviour
       lockImages[i].enabled = false;
     }
 
-    editButton.onClickCallback += () => PushEditButton(!canEdit); Debug.Log("a");
-
+    editButton.onClickCallback += () => PushEditButton(!canEdit);
     outlineImages[0].DOSizeDelta(new Vector3(600, 600), 0.5f);
-    // dataManager.showFontImage.AddListener(ShowFontImage);
-    ShowFontImage();
 
     cts = new CancellationTokenSource();
     repeatKentoButton.onClickCallback += () => PushRepeatKentoButton(cts.Token);
+    textMeshProUGUI.text = "途中";
+
+    ShowFontImage();
+    textMeshProUGUI.text = "Start完了";
   }
 
   void Update()
@@ -86,22 +87,17 @@ public class MainManager : MonoBehaviour
   [SerializeField] private GameObject fontViewObject;
   [SerializeField] private CustomButton editButton;
   [SerializeField] private bool canEdit;
+
+  //trueを入れると編集可能にする、falseなら逆挙動
   public void PushEditButton(bool _canEdit)
   {
-    canEdit = !_canEdit;
+    canEdit = _canEdit;
 
     mainViewContent.transform.parent.parent.gameObject.SetActive(!canEdit);
     fontViewObject.SetActive(canEdit);
 
     if (canEdit) editButtonText.text = "編集完了";
     else editButtonText.text = "編集する";
-  }
-
-  public void PushNOTMainButton()
-  {
-    canEdit = false;
-    mainViewContent.transform.parent.parent.gameObject.SetActive(!canEdit);
-    fontViewObject.SetActive(canEdit);
   }
 
   //持ちフォントの表示用
@@ -206,6 +202,7 @@ public class MainManager : MonoBehaviour
       WarnManager.instance.AppearWarning("ランクが足りません！", $"ステージ{stageNum}に挑戦するには\nランクを{(stageNum - 1) * 5}に\nしてください");
       return;
     }
+
     shiftStageImage.gameObject.SetActive(true);
 
     await UniTask.WhenAll(
@@ -214,6 +211,8 @@ public class MainManager : MonoBehaviour
     );
     SceneManager.LoadScene("Stage");
   }
+
+  [SerializeField] TextMeshProUGUI textMeshProUGUI;
 
   void OnDestroy()
   {

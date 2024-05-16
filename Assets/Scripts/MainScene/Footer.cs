@@ -38,10 +38,7 @@ public class Footer : MonoBehaviour
     [SerializeField] private GameObject notificationImage;
 
     //チュートリアル用
-    // [SerializeField] private TutorialManager tutorialManager;
-
-    //bannar広告の下部間隔
-    // private int bottomAdPadding = 100;
+    [SerializeField] private TutorialManager tutorialManager;
 
     void Start()
     {
@@ -51,7 +48,6 @@ public class Footer : MonoBehaviour
         canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();
         backgroundRect = canvasRect.gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
         backgroundRect.sizeDelta = canvasRect.sizeDelta;
-        // footer.transform.localPosition = new Vector3(0, (1920 - canvasRect.sizeDelta.y) / 2 + bottomAdPadding);
 
         PushFooterButton(2);
     }
@@ -64,40 +60,36 @@ public class Footer : MonoBehaviour
             {
                 footerAnimations[i].PlayAnimation();
 
-                buttonsRects[i].gameObject.transform.localPosition = new Vector3(200 * index - 400, -820);
+                buttonsRects[i].gameObject.transform.localPosition = new Vector3(200 * index - 400, 0);
                 buttonsRects[i].sizeDelta = new Vector2(280, 280);
                 buttonsRects[i].GetComponent<Image>().color = new Color32(236, 193, 0, 255);
                 footerImagesRects[i].sizeDelta = new Vector2(200, 200);
 
-                // /*
-                // if (i == 0)
-                // {
-                //     // TutorialManager.InstantiateTutorial(1, (int)TutorialImage.Cheak);
-                // }
-                // else if (i == 1)
-                // {
-                //     // TutorialManager.InstantiateTutorial(2, (int)TutorialImage.Good);
-                // }
-                // else */
-                if (i == 2)
+                if (i == 0)
+                {
+                    tutorialManager.InstantiateTutorial(1, (int)TutorialImage.Cheak);
+                }
+                else if (i == 1)
+                {
+                    tutorialManager.InstantiateTutorial(2, (int)TutorialImage.Good);
+                }
+                else if (i == 2)
                 {
                     footerImagesRects[i].sizeDelta = new Vector2(300, 150);
-                    mainManager.Start();
                 }
                 else if (i == 3)
                 {
                     notificationImage.SetActive(false);
                     missionManager.UpdateMissions();
-                    // TutorialManager.InstantiateTutorial(3, (int)TutorialImage.Info);
+                    tutorialManager.InstantiateTutorial(3, (int)TutorialImage.Info);
                 }
 
-                footerImagesRects[i].gameObject.transform.localPosition = new Vector2(footerImagesRects[i].gameObject.transform.localPosition.x, 10);
                 footerTexts[i].gameObject.transform.localPosition = new Vector3(200 * index - 400, 0);
                 menuObjects[i].SetActive(true);
             }
             else if (i != index)
             {
-                buttonsRects[i].gameObject.transform.localPosition = new Vector3(200 * i - 400 + 40 * Mathf.Sign(i - index), -860);
+                buttonsRects[i].gameObject.transform.localPosition = new Vector3(200 * i - 400 + 40 * Mathf.Sign(i - index), 0);
                 buttonsRects[i].sizeDelta = new Vector2(200, 200);
                 buttonsRects[i].GetComponent<Image>().color = new Color32(13, 92, 167, 255);
                 footerImagesRects[i].sizeDelta = new Vector2(100, 100);
@@ -105,10 +97,9 @@ public class Footer : MonoBehaviour
                 if (i == 2)
                 {
                     footerImagesRects[i].sizeDelta = new Vector2(200, 100);
-                    mainManager.PushNOTMainButton();
+                    mainManager.PushEditButton(false);
                 }
 
-                footerImagesRects[i].gameObject.transform.localPosition = new Vector2(footerImagesRects[i].gameObject.transform.localPosition.x, 10);
                 footerTexts[i].gameObject.transform.localPosition = new Vector3(200 * i - 400 + 40 * Mathf.Sign(i - index), 0);
                 menuObjects[i].SetActive(false);
             }

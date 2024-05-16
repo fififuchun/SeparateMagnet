@@ -12,7 +12,7 @@ public class KentoButtonAnim : MonoBehaviour
     void Update()
     {
         float kentoButtonPosYRatio = Mathf.Abs(1 - 2 * (Mathf.Abs(-mainViewContent.transform.localPosition.x / 830) % 1));
-        gameObject.transform.localPosition = new Vector3(0, 500 * kentoButtonPosYRatio - 900);
+        gameObject.transform.localPosition = new Vector3(0, 400 * kentoButtonPosYRatio - 800);
 
         // float kentoButtonPosYRatio_reverse = Mathf.Abs(kentoButtonPosYRatio - 1);
         // kentoButtonRect.localScale = new Vector3(kentoButtonPosYRatio_reverse, kentoButtonPosYRatio_reverse);

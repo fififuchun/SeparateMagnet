@@ -20,7 +20,7 @@ public class DataManager : MonoBehaviour
     void Awake()
     {
         // パス名取得
-        filepath = Application.dataPath + "/" + fileName;
+        filepath = Application.persistentDataPath + "/" + fileName;
 
         // ファイルがないとき、ファイル作成
         if (!File.Exists(filepath)) Save(data);
@@ -29,7 +29,7 @@ public class DataManager : MonoBehaviour
         data = Load(filepath);
         CheakSaveData();
 
-        Debug.Log(data.fontNumbers[0]);
+        // Debug.Log(data.fontNumbers[0]);
     }
 
     //-------------------------------------------------------------------

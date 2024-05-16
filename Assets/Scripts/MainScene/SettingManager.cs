@@ -8,7 +8,7 @@ public class SettingManager : MonoBehaviour
 {
     [SerializeField] private DataManager dataManager;
     [SerializeField] private MissionDataManager missionDataManager;
-    // [SerializeField] private TutorialDataManager tutorialDataManager;
+    [SerializeField] private TutorialDataManager tutorialDataManager;
 
     [SerializeField] private CustomButton allResetButton;
 
@@ -17,20 +17,13 @@ public class SettingManager : MonoBehaviour
         allResetButton.onClickCallback += PushAllResetButton;
     }
 
-
-    // public void PushAllInitializeButton()
-    // {
-    //     for (int i = 0; i < dataManager.data.level.Count(); i++) dataManager.data.level[i] = 0;
-    //     dataManager.data.fontNumbers = new int[] { 0, 0, 0, -1, -1, -1 };
-    //     for (int i = 0; i < dataManager.data.haveFonts.Count(); i++) dataManager.data.haveFonts[i] = false;
-    // }
-
     public void PushAllResetButton()
     {
         PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
         dataManager.ResetDataManager();
         missionDataManager.ResetMissionDataManager();
-        TutorialDataManager.ResetTutorialDataManager();
+        tutorialDataManager.ResetTutorialDataManager();
 
         SceneManager.LoadScene("StageScene");
     }
