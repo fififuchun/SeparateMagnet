@@ -59,7 +59,7 @@ public class Mission : MonoBehaviour
 
             for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
             {
-                /*if (missionGroupDatas[i].missionType == MissionType.Through)*/ 
+                /*if (missionGroupDatas[i].missionType == MissionType.Through)*/
                 missionGroupDatas[i].missionDatas[j].currentValue = missionGroupDatas[i].throughCurrentValue;
                 missionGroupDatas[i].missionDatas[j].bottomId = Library.LastTwoDigits(j);
                 missionGroupDatas[i].missionDatas[j].id = missionGroupDatas[i].headId + missionGroupDatas[i].missionDatas[j].bottomId;
@@ -230,13 +230,13 @@ public class MissionEditor : Editor//Library下部に一部移管
 {
     public Mission mission;
 
-    private SerializedProperty _missionGroupDatas;
+    // private SerializedProperty _missionGroupDatas;
 
     private void OnEnable()
     {
         mission = target as Mission;
 
-        _missionGroupDatas = serializedObject.FindProperty("missionGroupDatas");
+        // _missionGroupDatas = serializedObject.FindProperty("missionGroupDatas");
     }
 
     public override void OnInspectorGUI()

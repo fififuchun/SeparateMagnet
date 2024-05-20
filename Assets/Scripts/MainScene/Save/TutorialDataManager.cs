@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Text;
 
 public class TutorialDataManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class TutorialDataManager : MonoBehaviour
     private void Awake()
     {
         // パス名取得
-        filepath = Application.persistentDataPath + "/" + fileName;
+        filepath = Application.dataPath + "/" + fileName;
 
         // ファイルがないとき、ファイル作成
         if (!File.Exists(filepath)) Save(data);
@@ -33,7 +34,7 @@ public class TutorialDataManager : MonoBehaviour
     public void Save(TutorialSaveData data)
     {
         string json = JsonUtility.ToJson(data);
-        StreamWriter wr = new StreamWriter(filepath, false);
+        StreamWriter wr = new StreamWriter(filepath, false, Encoding.GetEncoding("Shift_JIS"));
         wr.WriteLine(json);
         wr.Close();
     }

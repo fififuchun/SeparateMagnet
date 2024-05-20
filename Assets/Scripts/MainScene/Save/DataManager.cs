@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 public class DataManager : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class DataManager : MonoBehaviour
     void Awake()
     {
         // パス名取得
-        filepath = Application.persistentDataPath + "/" + fileName;
+        filepath = Application.dataPath + "/" + fileName;
 
         // ファイルがないとき、ファイル作成
         if (!File.Exists(filepath)) Save(data);
@@ -36,10 +37,10 @@ public class DataManager : MonoBehaviour
     // jsonとしてデータを保存
     public void Save(SaveData data)
     {
-        string json = JsonUtility.ToJson(data);                 // jsonとして変換
-        StreamWriter wr = new StreamWriter(filepath, false);    // ファイル書き込み指定
-        wr.WriteLine(json);                                     // json変換した情報を書き込み
-        wr.Close();                                             // ファイル閉じる
+        string json = JsonUtility.ToJson(data);                                                    // jsonとして変換
+        StreamWriter wr = new StreamWriter(filepath, false, Encoding.GetEncoding("Shift_JIS"));    // ファイル書き込み指定
+        wr.WriteLine(json);                                                                        // json変換した情報を書き込み
+        wr.Close();                                                                                // ファイル閉じる
     }
 
     // jsonファイル読み込み

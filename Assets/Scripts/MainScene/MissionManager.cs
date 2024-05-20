@@ -21,10 +21,10 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private GameObject notificationImage;
 
     //Missionクラスをいじるだけ
-    void OnValidate()
-    {
-        // SetMissionInformation();
-    }
+    // void OnValidate()
+    // {
+    //     // SetMissionInformation();
+    // }
 
     //Destroy・Instantiateはここだけ
     void Start()

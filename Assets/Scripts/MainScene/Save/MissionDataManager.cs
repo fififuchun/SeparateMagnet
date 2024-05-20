@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.IO;
+// using System.Text;
 
 public class MissionDataManager : MonoBehaviour
 {
@@ -23,19 +24,21 @@ public class MissionDataManager : MonoBehaviour
     void Awake()
     {
         // パス名取得
-        filepath = Application.persistentDataPath + "/" + fileName;
+        filepath = Application.dataPath + "/" + fileName;
 
         // ファイルがないとき、ファイル作成
         if (!File.Exists(filepath)) Save(data);
 
         // ファイルを読み込んでdataに格納
         data = Load(filepath);
+        Debug.Log(File.Exists(filepath));
     }
 
     //-------------------------------------------------------------------
     // jsonとしてデータを保存
     public void Save(MissionSaveData data)
     {
+        Debug.Log("save mission data");
         string json = JsonUtility.ToJson(data);
         StreamWriter wr = new StreamWriter(filepath, false);
         wr.WriteLine(json);
@@ -45,6 +48,7 @@ public class MissionDataManager : MonoBehaviour
     // jsonファイル読み込み
     MissionSaveData Load(string path)
     {
+        Debug.Log("load mission data");
         StreamReader rd = new StreamReader(path);
         string json = rd.ReadToEnd();
         rd.Close();
@@ -64,6 +68,7 @@ public class MissionDataManager : MonoBehaviour
         data.missionValues[i] = (int)changedValue;
         Debug.Log($"missionDataの{i}番目を{changedValue}に変更しました");
 
+        Save(data);
         isChanged.Invoke();
     }
 
