@@ -6,7 +6,7 @@ using TMPro;
 
 public class RankManager : MonoBehaviour
 {
-    [SerializeField] private MissionDataManager missionDataManager;
+    [SerializeField] private DataManager dataManager;
 
     //rank i-1からrank iになるためにはexpTable[i-1]が必要（rank 1からrank 2になるためにはexpTable[2-1]、0 + 100が必要）
     private int[] expTable = new int[40] { 0,     100,   200,   300,    400,    500,    600,    700,    800,    900,
@@ -54,8 +54,8 @@ public class RankManager : MonoBehaviour
         rankText.text = rank.ToString();
 
         //ミッションのクリア状況を即位反映
-        missionDataManager.ChangeMissionValue(0, rank);
-        missionDataManager.ChangeMissionValue(4, coinSum);
+        dataManager.ChangeMissionValue(0, rank);
+        dataManager.ChangeMissionValue(4, coinSum);
     }
 
     public void GetCoinSum(int coin)

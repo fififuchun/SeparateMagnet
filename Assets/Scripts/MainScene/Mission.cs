@@ -36,8 +36,8 @@ public class Mission : MonoBehaviour
     void OnValidate()
     {
         //debug??
-        Start();
         CheckMission();
+        // SetID();
 
         //GameObject側を変更
         onValidate?.Invoke();
@@ -230,13 +230,9 @@ public class MissionEditor : Editor//Library下部に一部移管
 {
     public Mission mission;
 
-    // private SerializedProperty _missionGroupDatas;
-
     private void OnEnable()
     {
         mission = target as Mission;
-
-        // _missionGroupDatas = serializedObject.FindProperty("missionGroupDatas");
     }
 
     public override void OnInspectorGUI()

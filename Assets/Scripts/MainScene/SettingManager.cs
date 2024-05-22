@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class SettingManager : MonoBehaviour
 {
     [SerializeField] private DataManager dataManager;
-    [SerializeField] private MissionDataManager missionDataManager;
-    [SerializeField] private TutorialDataManager tutorialDataManager;
+    // [SerializeField] private MissionDataManager missionDataManager;
+    // [SerializeField] private TutorialDataManager tutorialDataManager;
 
     [SerializeField] private CustomButton allResetButton;
 
@@ -22,8 +22,6 @@ public class SettingManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
         dataManager.ResetDataManager();
-        missionDataManager.ResetMissionDataManager();
-        tutorialDataManager.ResetTutorialDataManager();
 
         SceneManager.LoadScene("StageScene");
     }

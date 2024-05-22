@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.IO;
-// using System.Text;
 
 public class MissionDataManager : MonoBehaviour
 {

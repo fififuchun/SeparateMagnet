@@ -7,7 +7,7 @@ using FuchunLibrary;
 public class RPGManager : MonoBehaviour
 {
     // インスタンス
-    [SerializeField] private MissionDataManager missionDataManager;
+    // [SerializeField] private MissionDataManager dataManager;
     [SerializeField] private Mission mission;
 
     [SerializeField] private CoinCount coinCount;
@@ -31,7 +31,7 @@ public class RPGManager : MonoBehaviour
     {
         UpdateAcquireCoin();
 
-        missionDataManager.ChangeMissionValue(5, Library.FirstFalseIndex(dataManager.data.isRareFonts));
+        dataManager.ChangeMissionValue(5, Library.FirstFalseIndex(dataManager.data.isRareFonts));
     }
 
     public void UpdateAcquireCoin()
@@ -59,11 +59,11 @@ public class RPGManager : MonoBehaviour
         {
             coinCount.GetCoin(-acquireCoin);
             dataManager.data.level[i]++;
-            
+
             //ミッションのクリア状況を即位反映
-            missionDataManager.ChangeMissionValue(1, dataManager.data.level[1]);
-            missionDataManager.ChangeMissionValue(2, dataManager.data.level[4]);
-            missionDataManager.ChangeMissionValue(3, dataManager.data.level[0]);
+            dataManager.ChangeMissionValue(1, dataManager.data.level[1]);
+            dataManager.ChangeMissionValue(2, dataManager.data.level[4]);
+            dataManager.ChangeMissionValue(3, dataManager.data.level[0]);
         }
         else
         {

@@ -17,22 +17,22 @@ public class TutorialInGame : MonoBehaviour
     //指のナビゲーション
     [SerializeField] private GameObject fingerNavi;
 
-    [SerializeField] private TutorialDataManager tutorialDataManager;
+    [SerializeField] private DataManager dataManager;
 
     void Start()
     {
-        // if (!TutorialDataManager.data.isFinishedTutorial[4])
-        // {
-        InstantiateTutorial(4, 3);
-        fingerNavi.SetActive(true);
-        // }
+        if (!dataManager.data.isFinishedTutorial[4])
+        {
+            InstantiateTutorial(4, 3);
+            fingerNavi.SetActive(true);
+        }
     }
 
     public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
     {
         //既にチュートリアルを見ているなら返す
-        if (tutorialDataManager.data.isFinishedTutorial[_matrixRowNum]) return;
-        else tutorialDataManager.data.isFinishedTutorial[_matrixRowNum] = true;
+        if (dataManager.data.isFinishedTutorial[_matrixRowNum]) return;
+        else dataManager.data.isFinishedTutorial[_matrixRowNum] = true;
 
         tutorial.Initialize(_matrixRowNum);
         // ladyImage.sprite = TutorialManager.ladySprites[_ladyNum];

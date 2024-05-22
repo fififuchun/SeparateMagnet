@@ -30,7 +30,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private Image ladyImage;
 
     //セーブデータ
-    [SerializeField] private TutorialDataManager tutorialDataManager;
+    // [SerializeField] private TutorialDataManager tutorialDataManager;
+    [SerializeField] private DataManager dataManager;
 
     //mainフッターの指のナビゲーション
     [SerializeField] private GameObject fingerNavi;
@@ -42,7 +43,7 @@ public class TutorialManager : MonoBehaviour
         /*if (!TutorialDataManager.data.isFinishedTutorial[0])*/
         InstantiateTutorial(0, 3);
         // isFinishedTutorial[4]がfalse(GameSceneでのチュートリアルを視聴済み)なら、MainのfingerNaviをtrueにする
-        if (!tutorialDataManager.data.isFinishedTutorial[4]) fingerNavi.SetActive(true);
+        if (!dataManager.data.isFinishedTutorial[4]) fingerNavi.SetActive(true);
 
         for (int i = 0; i < ladySprites.Length; i++) ladySprites[i] = ladies[i];
 
@@ -54,8 +55,8 @@ public class TutorialManager : MonoBehaviour
     public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
     {
         //既にチュートリアルを見ているなら返す
-        if (tutorialDataManager.data.isFinishedTutorial[_matrixRowNum]) return;
-        else tutorialDataManager.data.isFinishedTutorial[_matrixRowNum] = true;
+        if (dataManager.data.isFinishedTutorial[_matrixRowNum]) return;
+        else dataManager.data.isFinishedTutorial[_matrixRowNum] = true;
 
         tutorial.Initialize(_matrixRowNum);
         ladyImage.sprite = ladySprites[_ladyNum];

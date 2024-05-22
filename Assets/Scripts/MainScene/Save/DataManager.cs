@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
 using System.Linq;
 using System.Text;
+using UnityEngine;
+using UnityEngine.Events;
 
 public class DataManager : MonoBehaviour
 {
@@ -33,24 +34,57 @@ public class DataManager : MonoBehaviour
         // Debug.Log(data.fontNumbers[0]);
     }
 
-    //-------------------------------------------------------------------
     // jsonとしてデータを保存
     public void Save(SaveData data)
     {
-        string json = JsonUtility.ToJson(data);                                                    // jsonとして変換
-        StreamWriter wr = new StreamWriter(filepath, false, Encoding.GetEncoding("Shift_JIS"));    // ファイル書き込み指定
-        wr.WriteLine(json);                                                                        // json変換した情報を書き込み
-        wr.Close();                                                                                // ファイル閉じる
+        // jsonとして変換
+        string json = JsonUtility.ToJson(data, true);
+
+        // ファイル書き込み指定
+        StreamWriter wr = new StreamWriter(filepath, false, Encoding.GetEncoding("Shift_JIS"));
+
+        // json変換した情報を書き込み
+        wr.WriteLine(json);
+
+        // ファイル閉じる
+        wr.Close();
     }
 
     // jsonファイル読み込み
     SaveData Load(string path)
     {
-        StreamReader rd = new StreamReader(path);               // ファイル読み込み指定
-        string json = rd.ReadToEnd();                           // ファイル内容全て読み込む
-        rd.Close();                                             // ファイル閉じる
+        // ファイル読み込み指定
+        StreamReader rd = new StreamReader(path);
 
-        return JsonUtility.FromJson<SaveData>(json);            // jsonファイルを型に戻して返す
+        // ファイル内容全て読み込む
+        string json = rd.ReadToEnd();
+
+        // ファイル閉じる
+        rd.Close();
+
+        // jsonファイルを型に戻して返す
+        return JsonUtility.FromJson<SaveData>(json);
+    }
+
+    public void ResetDataManager()
+    {
+        //General
+        data.rank = 0;
+        data.diamond = 0;
+        data.coin = 0;
+
+        //RPG
+        data.level = new int[SaveData.levelCount];
+        data.fontNumbers = new int[6] { 0, 0, 0, -1, -1, -1 };
+        for (int i = 0; i < data.isRareFonts.Length; i++) data.isRareFonts[i] = false;
+        for (int i = 0; i < data.haveFonts.Length; i++) data.haveFonts[i] = false;
+
+        //Mission
+        data.receivedMissionCounts = new int[SaveData.missionGroupCount];
+        data.missionValues = new int[SaveData.missionGroupCount];
+
+        //Tutorial
+        data.isFinishedTutorial = new bool[SaveData.tutorialCount];
     }
 
     //-------------------------------------------------------------------
@@ -91,11 +125,14 @@ public class DataManager : MonoBehaviour
         return i;
     }
 
-    public void ResetDataManager()
+    //update mission
+    public UnityEvent isChanged = new UnityEvent();
+    public void ChangeMissionValue(int i, float changedValue)
     {
-        data.level = new int[SaveData.levelCount];
-        data.fontNumbers = new int[6] { 0, 0, 0, -1, -1, -1 };
-        for (int i = 0; i < data.isRareFonts.Length; i++) data.isRareFonts[i] = false;
-        for (int i = 0; i < data.haveFonts.Length; i++) data.haveFonts[i] = false;
+        data.missionValues[i] = (int)changedValue;
+        Debug.Log($"missionDataの{i}番目を{changedValue}に変更しました");
+
+        Save(data);
+        isChanged.Invoke();
     }
 }
