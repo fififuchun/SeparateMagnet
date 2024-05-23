@@ -6,6 +6,7 @@ using TMPro;
 
 public class RankManager : MonoBehaviour
 {
+    //dataManagerインスタンス
     [SerializeField] private DataManager dataManager;
 
     //rank i-1からrank iになるためにはexpTable[i-1]が必要（rank 1からrank 2になるためにはexpTable[2-1]、0 + 100が必要）
@@ -25,7 +26,7 @@ public class RankManager : MonoBehaviour
     public static int Rank { get => rank; }
 
     //集めたコインの総計
-    private int coinSum;
+    // private int coinSum;
 
     //経験値のバー
     [SerializeField] private Slider expSlider;
@@ -37,36 +38,50 @@ public class RankManager : MonoBehaviour
     //関数
     void Awake()
     {
-        GetCoinSum(PlayerPrefs.GetInt("Sum", PlayerPrefs.GetInt("Coin", 0)));
+        // GetCoinSum(PlayerPrefs.GetInt("Sum", PlayerPrefs.GetInt("Coin", 0)));
+        // GetCoinSum(10000);
 
-        GetCoinSum(10000);
+        // dataManager.data.sumcoin += dataManager.data.getcoin;
+        // dataManager.data.getcoin = 0;
+
+        // GetSumCoin(10000);
+
+        // dataManager.Save(dataManager.data);
+    }
+
+    void Start()
+    {
+        // GetSumCoin(10000);
     }
 
     public void UpdateExp()
     {
-        for (int i = 0; i < expTotalTable.Length; i++) if (coinSum < expTotalTable[i])
+        for (int i = 0; i < expTotalTable.Length; i++) if (dataManager.data.sumcoin < expTotalTable[i])
             {
                 rank = i;
                 break;
             }
-        // Debug.Log("rank: " + rank);
-        expSlider.value = (float)(coinSum - expTotalTable[rank - 1]) / (float)expTable[rank];
+
+        expSlider.value = (float)(dataManager.data.sumcoin - expTotalTable[rank - 1]) / (float)expTable[rank];
         rankText.text = rank.ToString();
 
         //ミッションのクリア状況を即位反映
         dataManager.ChangeMissionValue(0, rank);
-        dataManager.ChangeMissionValue(4, coinSum);
+        dataManager.ChangeMissionValue(4, dataManager.data.sumcoin);
     }
 
-    public void GetCoinSum(int coin)
+    public void GetSumCoin(int coin)
     {
-        coinSum += coin;
+        dataManager.data.sumcoin += coin;
         UpdateExp();
-        PlayerPrefs.SetInt("Sum", coinSum);
+        // PlayerPrefs.SetInt("Sum", coinSum);
+        // dataManager.data.sumcoin = coinSum;
+
+        Debug.Log(dataManager.data.sumcoin);
     }
 
     public void PushTestGetExpButton()
     {
-        GetCoinSum(50);
+        GetSumCoin(50);
     }
 }

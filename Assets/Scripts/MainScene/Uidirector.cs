@@ -8,17 +8,13 @@ using TMPro;
 public class Uidirector : MonoBehaviour
 {
     //コイン・ダイアモンド計数スクリプトのインスタンス化
-    private CoinCount coinCount;
-    private DiamondCount diamondCount;
-    private RankManager rankManager;
+    [SerializeField] private CoinCount coinCount;
+    [SerializeField] private DiamondCount diamondCount;
+    [SerializeField] private RankManager rankManager;
 
     void Start()
     {
-        coinCount = GameObject.Find("UiDirector").GetComponent<CoinCount>();
-        diamondCount = GameObject.Find("UiDirector").GetComponent<DiamondCount>();
-        rankManager = GameObject.Find("UiDirector").GetComponent<RankManager>();
-
-        GetTax();
+        // GetTax();
         UpdateHeader();
     }
 
@@ -42,25 +38,15 @@ public class Uidirector : MonoBehaviour
         UpdateHeader();
     }
 
-    public void DebugButton()
-    {
-        coinCount.GetCoin(100);
-        diamondCount.GetDiamond(100);
-    }
-
     public void GetTax()
     {
-        int stageCoin = PlayerPrefs.GetInt("TmpCoin", 0);
-        coinCount.GetCoin(stageCoin);
-        rankManager.GetCoinSum(stageCoin);
-        PlayerPrefs.SetInt("TmpCoin", 0);
 
-        PlayerPrefs.SetInt("Coin", coinCount.Coin);
+
+        // int stageCoin = PlayerPrefs.GetInt("TmpCoin", 0);
+        // coinCount.GetCoin(stageCoin);
+        // rankManager.GetSumCoin(stageCoin);
+        // PlayerPrefs.SetInt("TmpCoin", 0);
+
+        // PlayerPrefs.SetInt("Coin", coinCount.Coin);
     }
-
-    // public void AllResetButton()
-    // {
-    //     PlayerPrefs.DeleteAll();
-    //     SceneManager.LoadScene("StageScene");
-    // }
 }

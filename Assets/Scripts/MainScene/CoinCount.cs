@@ -5,24 +5,23 @@ using TMPro;
 
 public class CoinCount : MonoBehaviour
 {
+    //dataManagerインスタンス
+    [SerializeField] private DataManager dataManager;
+
     //コインプロパティ
-    private int coin;
-    public int Coin { get => coin; }
+    // private int coin;
+    public int Coin { get => dataManager.data.coin; }
 
     //ヘッダーのコインテキスト
     [SerializeField] private TextMeshProUGUI coinText;
 
-    void Awake()
-    {
-        GetCoin(PlayerPrefs.GetInt("Coin", 0));
-        //
-    }
-    
+
     public void GetCoin(int i)
     {
-        coin += i;
+        dataManager.data.coin += i;
         UpdateCoin();
-        PlayerPrefs.SetInt("Coin", Coin);
+
+        dataManager.Save();
     }
 
     public void UpdateCoin()

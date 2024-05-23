@@ -7,9 +7,11 @@ public class SaveData
 {
     #region "General"
 
-    public int rank;
+    // public int rank;
     public int diamond;
     public int coin;
+    public int sumcoin;
+    public int tax;
 
     #endregion
 

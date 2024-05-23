@@ -55,7 +55,7 @@ public class RPGManager : MonoBehaviour
         if (dataManager.data.level[i] >= dataManager.MaxLevel[i]) return;
 
         int acquireCoin = rpgData.AcquireCoin(i, dataManager.data.level[i]);
-        if (acquireCoin < coinCount.Coin)
+        if (acquireCoin <= coinCount.Coin)
         {
             coinCount.GetCoin(-acquireCoin);
             dataManager.data.level[i]++;

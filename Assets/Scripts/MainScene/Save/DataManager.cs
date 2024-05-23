@@ -32,6 +32,12 @@ public class DataManager : MonoBehaviour
         CheakSaveData();
 
         // Debug.Log(data.fontNumbers[0]);
+        if (data.tax >= 0)
+        {
+            data.coin += data.tax;
+            data.sumcoin += data.tax;
+            data.tax = 0;
+        }
     }
 
     // jsonとしてデータを保存
@@ -41,13 +47,18 @@ public class DataManager : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
 
         // ファイル書き込み指定
-        StreamWriter wr = new StreamWriter(filepath, false, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter wr = new StreamWriter(filepath, false, Encoding.GetEncoding("Shift_JIS"), 32);
 
         // json変換した情報を書き込み
         wr.WriteLine(json);
 
         // ファイル閉じる
         wr.Close();
+    }
+
+    public void Save()
+    {
+        Save(data);
     }
 
     // jsonファイル読み込み
@@ -69,9 +80,11 @@ public class DataManager : MonoBehaviour
     public void ResetDataManager()
     {
         //General
-        data.rank = 0;
+        // data.rank = 0;
         data.diamond = 0;
         data.coin = 0;
+        data.sumcoin = 0;
+        data.tax = 0;
 
         //RPG
         data.level = new int[SaveData.levelCount];

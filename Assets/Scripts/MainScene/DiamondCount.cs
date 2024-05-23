@@ -5,29 +5,23 @@ using TMPro;
 
 public class DiamondCount : MonoBehaviour
 {
+    //dataManagerインスタンス
+    [SerializeField] private DataManager dataManager;
+
     //ダイアモンドプロパティ
-    private int diamond;
-    public int Diamond { get => diamond; }
+    // private int diamond;
+    public int Diamond { get => dataManager.data.diamond; }
 
     //ヘッダーのダイアモンドテキスト
     [SerializeField] private TextMeshProUGUI diamondText;
 
-    void Awake()
-    {
-        GetDiamond(PlayerPrefs.GetInt("Diamond", 0));
-        GetDiamond(100);
-    }
-
-    void Update()
-    {
-
-    }
 
     public void GetDiamond(int i)
     {
-        diamond += i;
+        dataManager.data.diamond += i;
         UpdateDiamond();
-        PlayerPrefs.SetInt("Diamond", diamond);
+
+        dataManager.Save();
     }
 
     public void UpdateDiamond()
