@@ -54,7 +54,7 @@ public class MainManager : MonoBehaviour
 
     cts = new CancellationTokenSource();
     repeatKentoButton.onClickCallback += () => PushRepeatKentoButton(cts.Token);
-    textMeshProUGUI.text = "途中";
+    // textMeshProUGUI.text = "途中";
 
     ShowFontImage();
     textMeshProUGUI.text = "Start完了";

@@ -71,7 +71,16 @@ public class TimeManager : MonoBehaviour
     [HideInInspector] public SaveData data;
     void Awake()
     {
+#if UNITY_EDITOR
         data = Load(Application.dataPath + "/Data.json");
+
+#elif UNITY_ANDROID
+        data = Load(Application.persistentDataPath + "/Data.json");
+
+#else
+        data = Load(Application.dataPath + "/Data.json");
+
+#endif
 
         angerGaugeMax = data.level[0] + 4;
         angryTime = data.level[1] + 10;
@@ -84,11 +93,11 @@ public class TimeManager : MonoBehaviour
 
     SaveData Load(string path)
     {
-        StreamReader rd = new StreamReader(path);               // ファイル読み込み指定
-        string json = rd.ReadToEnd();                           // ファイル内容全て読み込む
-        rd.Close();                                             // ファイル閉じる
+        StreamReader rd = new StreamReader(path);
+        string json = rd.ReadToEnd();
+        rd.Close();
 
-        return JsonUtility.FromJson<SaveData>(json);            // jsonファイルを型に戻して返す
+        return JsonUtility.FromJson<SaveData>(json);
     }
 
     void Start()

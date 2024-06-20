@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
+// using UnityEngine.Networking;
 
 public class DataManager : MonoBehaviour
 {
@@ -17,12 +17,28 @@ public class DataManager : MonoBehaviour
     // jsonファイル名
     string fileName = "Data.json";
 
+    //
+    // public static int earnCoin;
+
     //-------------------------------------------------------------------
     // 開始時にファイルチェック、読み込み
     void Awake()
     {
         // パス名取得
+#if UNITY_EDITOR
         filepath = Application.dataPath + "/" + fileName;
+        // Debug.Log("UnityEditor");
+
+#elif UNITY_ANDROID
+        // filepath = Application.persistentDataPath + "/" + fileName;
+        filepath = Application.persistentDataPath + "/" + fileName;
+        // Debug.Log("Android");
+
+#else
+        filepath = Application.dataPath + "/" + fileName;
+        // Debug.Log("Other");
+
+#endif
 
         // ファイルがないとき、ファイル作成
         if (!File.Exists(filepath)) Save(data);
@@ -31,14 +47,14 @@ public class DataManager : MonoBehaviour
         data = Load(filepath);
         CheakSaveData();
 
-        // Debug.Log(data.fontNumbers[0]);
-        if (data.tax >= 0)
+        if (SaveData.tax >= 0)
         {
-            data.coin += data.tax;
-            data.sumcoin += data.tax;
-            data.tax = 0;
+            data.coin += SaveData.tax;
+            data.sumcoin += SaveData.tax;
+            SaveData.tax = 0;
         }
     }
+
 
     // jsonとしてデータを保存
     public void Save(SaveData data)
@@ -47,7 +63,7 @@ public class DataManager : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
 
         // ファイル書き込み指定
-        StreamWriter wr = new StreamWriter(filepath, false, Encoding.GetEncoding("Shift_JIS"), 32);
+        StreamWriter wr = new StreamWriter(filepath, false);
 
         // json変換した情報を書き込み
         wr.WriteLine(json);
@@ -56,10 +72,7 @@ public class DataManager : MonoBehaviour
         wr.Close();
     }
 
-    public void Save()
-    {
-        Save(data);
-    }
+    public void Save() { Save(data); }
 
     // jsonファイル読み込み
     SaveData Load(string path)
@@ -84,7 +97,7 @@ public class DataManager : MonoBehaviour
         data.diamond = 0;
         data.coin = 0;
         data.sumcoin = 0;
-        data.tax = 0;
+        SaveData.tax = 0;
 
         //RPG
         data.level = new int[SaveData.levelCount];
