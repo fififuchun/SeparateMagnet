@@ -53,6 +53,8 @@ public class ResultManager : MonoBehaviour
 
     public async UniTask AppearResult(int sumCoin)
     {
+        SaveData.tax = sumCoin * stageNum;
+
         await UniTask.Delay(500);
         Debug.Log("Result");
         resultImage.transform.parent.gameObject.SetActive(true);
@@ -72,6 +74,5 @@ public class ResultManager : MonoBehaviour
         await UniTask.Delay(1000);
         resultImage.transform.GetChild(4).gameObject.SetActive(true);
         resultImage.transform.GetChild(4).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{sumCoin * stageNum}";
-        SaveData.tax = sumCoin * stageNum;
     }
 }

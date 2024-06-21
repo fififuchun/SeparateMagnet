@@ -21,6 +21,11 @@ public class WarnManager : MonoBehaviour
     //閉じるボタン
     [SerializeField] private CustomButton closeWarningButton;
 
+    /// <summary>
+    /// 警告を出す
+    /// </summary>
+    /// <param name="title">警告上部のタイトル</param>
+    /// <param name="resolve">警告内部の解決方法</param>
     public void AppearWarning(string title, string resolve)
     {
         closeWarningButton.onClickCallback += DisappearWarning;

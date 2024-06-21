@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Shapes2D;
 using UnityEngine;
 using FuchunLibrary;
+using System.Linq;
 
 public class FontManager : MonoBehaviour
 {
@@ -17,17 +18,17 @@ public class FontManager : MonoBehaviour
     [SerializeField] private CustomButton[] buyFontButtons = new CustomButton[MainManager.NUMofFONTS];
 
     //全部フォントを買ってるなら知らせたい
-    [SerializeField] private GameObject alreadyBuyAllFont;
+    // [SerializeField] private GameObject alreadyBuyAllFont;
 
-    //名前の昇順からフォント販売順への変換配列
-    // [SerializeField] private int[] changeNameToFontNum = new int[20] { 9, 10, 1, 0, 2, 4, 11, 8, 12, 3, 5, 13, 14, 15, 16, 6, 7, 17, 18, 19 };
-    // [SerializeField] private int[] changeFontNumToName = new int[20] { 3, 2, 4, 9, 5, 10, 15, 16, 7, 0, 1, 6, 8, 11, 12, 13, 14, 17, 18, 19 };
 
     void Start()
     {
-        for (int i = 0; i < buyFontButtons.Length; i++) buyFontButtons[i].gameObject.SetActive(!dataManager.data.haveFonts[i]);
+        // for (int i = 0; i < buyFontButtons.Length; i++) buyFontButtons[i].gameObject.SetActive(!dataManager.data.haveFonts[i]);
 
-        //あほくさい
+        //ショッピングビューのフォント購入ボタンに下の関数をアタッチ
+        // for (int i = 0; i < buyFontButtons.Length; i++) buyFontButtons[i].onClickCallback += () => { PushBuyFontButton(i); };
+
+        //forでまとめたい
         buyFontButtons[0].onClickCallback += () => { PushBuyFontButton(0); };
         buyFontButtons[1].onClickCallback += () => { PushBuyFontButton(1); };
         buyFontButtons[2].onClickCallback += () => { PushBuyFontButton(2); };
@@ -49,22 +50,23 @@ public class FontManager : MonoBehaviour
         buyFontButtons[18].onClickCallback += () => { PushBuyFontButton(18); };
         buyFontButtons[19].onClickCallback += () => { PushBuyFontButton(19); };
 
-        if (Library.CharacteristicFanction(dataManager.data.haveFonts) == dataManager.data.haveFonts.Length) alreadyBuyAllFont.SetActive(true);
-        buyFontView.GetComponent<RectTransform>().sizeDelta = new Vector2(880, 430 * Mathf.Ceil(((float)(dataManager.data.haveFonts.Length - Library.CharacteristicFanction(dataManager.data.haveFonts))) / 3f) - 10);
+        // if (Library.CharacteristicFanction(dataManager.data.haveFonts) == dataManager.data.haveFonts.Length) alreadyBuyAllFont.SetActive(true);
+        // buyFontView.GetComponent<RectTransform>().sizeDelta = new Vector2(880, 430 * Mathf.Ceil(((float)(dataManager.data.haveFonts.Length - Library.CharacteristicFanction(dataManager.data.haveFonts))) / 3f) - 10);
     }
 
     public void PushBuyFontButton(int i)
     {
         if (diamondCount.Diamond < 25)
         {
-            //警告
+            WarnManager.instance.AppearWarning("ダイヤが足りません！", "このフォントを買うには\n25ダイヤ稼いできてください！");
             return;
         }
+
         diamondCount.GetDiamond(-25);
-        // Debug.Log(i);
-        // dataManager.showFontImage?.Invoke();
+        Debug.Log(i);
         dataManager.data.haveFonts[i] = true;
-        dataManager.Save(dataManager.data);
-        Start();
+        dataManager.Save();
+
+
     }
 }
