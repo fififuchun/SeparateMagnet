@@ -76,6 +76,7 @@ public class Footer : MonoBehaviour
                 else if (i == 2)
                 {
                     footerImagesRects[i].sizeDelta = new Vector2(300, 150);
+                    mainManager.ShowFontImage();
                 }
                 else if (i == 3)
                 {

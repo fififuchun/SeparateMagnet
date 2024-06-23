@@ -41,7 +41,7 @@ public class MainManager : MonoBehaviour
       dataManager.data.haveFonts[(int)KentoFont.Dot - 1] = true;
       dataManager.data.haveFonts[(int)KentoFont.Gyosho - 1] = true;
     }
-    for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
+    // for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
 
     for (int i = 0; i <= Mathf.CeilToInt(RankManager.Rank / 5); i++)
     {
@@ -57,7 +57,7 @@ public class MainManager : MonoBehaviour
     // textMeshProUGUI.text = "途中";
 
     ShowFontImage();
-    textMeshProUGUI.text = "Start完了";
+    // textMeshProUGUI.text = "Start完了";
   }
 
   void Update()
@@ -118,13 +118,15 @@ public class MainManager : MonoBehaviour
 
   public void ShowFontImage()
   {
+    for (int i = 0; i < fontViewContent.transform.childCount; i++) fontViewContent.transform.GetChild(i).gameObject.SetActive(dataManager.data.haveFonts[i]);
+
     for (int i = 0; i < dataManager.ReleasedFontCount(); i++)
     {
       if (dataManager.data.fontNumbers[i] > 0) fontImages[i].sprite = kentoImages[dataManager.data.fontNumbers[i] - 1];
       else if (dataManager.data.fontNumbers[i] == 0) fontImages[i].sprite = transparencyImage;
       else fontImages[i].sprite = lockImage;
 
-      dataManager.Save(dataManager.data);
+      // dataManager.Save();
     }
 
     if (dataManager.ReleasedFontCount() == 6)
