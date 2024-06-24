@@ -13,6 +13,6 @@ public class tmp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.gameObject.transform.position -= new Vector3(5, 0);
+        this.gameObject.transform.position -= new Vector3(500, 0) * Time.deltaTime;
     }
 }

@@ -54,10 +54,9 @@ public class MainManager : MonoBehaviour
 
     cts = new CancellationTokenSource();
     repeatKentoButton.onClickCallback += () => PushRepeatKentoButton(cts.Token);
-    // textMeshProUGUI.text = "途中";
 
     ShowFontImage();
-    // textMeshProUGUI.text = "Start完了";
+    diamondCount.GetDiamond(11100);
   }
 
   void Update()
@@ -129,6 +128,9 @@ public class MainManager : MonoBehaviour
       // dataManager.Save();
     }
 
+    dataManager.Save();
+
+    //全開放されてるなら返す、されてないならショップに変更を加える
     if (dataManager.ReleasedFontCount() == 6)
     {
       fontFrameImage.sprite = buyFontFrameImages[dataManager.ReleasedFontCount() - 3];
@@ -147,7 +149,17 @@ public class MainManager : MonoBehaviour
   //編集できるフォントの数を増やす・ショッピングシーンのフォント枠解放ボタンにアタッチ
   public void IncreaseFontCount()
   {
-    if (diamondCount.Diamond < Mathf.Pow(10, dataManager.ReleasedFontCount() - 1) || dataManager.ReleasedFontCount() == 6) return;
+    //ダイヤが足りない、または全開放済なら返す
+    if (dataManager.ReleasedFontCount() == 6)
+    {
+      WarnManager.instance.AppearWarning("おめでとう！", "もう全てのフォント枠を\n開放していますよ！");
+      return;
+    }
+    else if (diamondCount.Diamond < Mathf.Pow(10, dataManager.ReleasedFontCount() - 1))
+    {
+      WarnManager.instance.AppearWarning("ダイヤが足りません！", $"このフォントを買うには\n{Mathf.Pow(10, dataManager.ReleasedFontCount() - 1)}ダイヤ稼いできてください！");
+      return;
+    }
 
     diamondCount.GetDiamond(-(int)Mathf.Pow(10, dataManager.ReleasedFontCount() - 1));
     dataManager.data.fontNumbers[dataManager.ReleasedFontCount()] = 0;
