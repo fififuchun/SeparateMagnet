@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     //検討出現時のエフェクト
     [SerializeField] private ParticleSystem[] appearEffects = new ParticleSystem[6];
-    // [SerializeField] private Transform kentoEffectParentObj;
+    [SerializeField] private Transform kentoEffectParentObj;
 
     //音楽
     [SerializeField] private AudioSource audioSource;
@@ -131,7 +131,9 @@ public class GameManager : MonoBehaviour
             {
                 case Phase.StartPhase:
                     coinText.text = SumCoin().ToString();
-                    Instantiate(appearEffects[timeManager.data.level[5]], new Vector3(0, 600) + canvas.transform.position, Quaternion.identity);
+                    ParticleSystem effect = Instantiate(appearEffects[timeManager.data.level[5]], new Vector3(0, 0), Quaternion.identity, kentoEffectParentObj.transform);
+                    effect.transform.localPosition = new Vector3(0, 600);
+
                     await UniTask.Delay((int)timeManager.NextAppearTime * 1000, cancellationToken: ct_loop);
 
                     phase = Phase.AppearPhase;
