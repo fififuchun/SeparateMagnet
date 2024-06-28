@@ -18,29 +18,29 @@ public class SaveData
 
     #region "RPG"
 
-    public const int levelCount = 7;
+    public const int LEVEL_COUNT = 7;
 
-    public int[] level = new int[levelCount];
+    public int[] level = new int[LEVEL_COUNT];
     public int[] fontNumbers = new int[6];
-    public bool[] isRareFonts = new bool[MainManager.STAGECOUNT];
-    public bool[] haveFonts = new bool[MainManager.NUMofFONTS];
+    public bool[] isRareFonts = new bool[MainManager.STAGE_COUNT];
+    public bool[] haveFonts = new bool[MainManager.FONT_COUNT];
 
     #endregion
 
 
     #region "Mission"
 
-    public const int missionGroupCount = 6;
-    public int[] receivedMissionCounts = new int[missionGroupCount];
-    public int[] missionValues = new int[missionGroupCount];
+    public const int MISSIONGROUP_COUNT = 6;
+    public int[] receivedMissionCounts = new int[MISSIONGROUP_COUNT];
+    public int[] missionValues = new int[MISSIONGROUP_COUNT];
 
     #endregion
 
 
     #region "Tutorial"
 
-    public const int tutorialCount = 5;
-    public bool[] isFinishedTutorial = new bool[tutorialCount];
+    public const int TUTORIAL_COUNT = 5;
+    public bool[] isFinishedTutorial = new bool[TUTORIAL_COUNT];
 
     #endregion
 }

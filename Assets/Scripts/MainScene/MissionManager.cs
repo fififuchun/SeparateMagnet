@@ -92,13 +92,19 @@ public class MissionManager : MonoBehaviour
     {
         for (int i = 0; i < mission.missionGroupDatas.Count(); i++)
         {
+            if (mission.CurrentMissionNum(i) < 0)
+            {
+                mission.missionGroupDatas[i].missionObject.SetActive(false);
+                continue;
+            }
+
             mission.missionGroupDatas[i].throughCurrentValue = dataManager.data.missionValues[i];
             UpdateMission(i);
         }
         mission.CheckMission();
         mission.SetID();
         notificationImage.SetActive(ExistAchievedMission());
-        Debug.Log("ミッションを更新しました");
+        Debug.Log("Update Missions");
     }
 
     //MissionクラスのMissionGroupのi番目のGameObjectを動的に変更

@@ -12,10 +12,16 @@ public class Uidirector : MonoBehaviour
     [SerializeField] private DiamondCount diamondCount;
     [SerializeField] private RankManager rankManager;
 
+    [SerializeField] private CustomButton[] buyCoinButtons = new CustomButton[3];
+
     void Start()
     {
         // GetTax();
         UpdateHeader();
+
+        buyCoinButtons[0].onClickCallback += () => BuyCoinDiamond(1);
+        buyCoinButtons[1].onClickCallback += () => BuyCoinDiamond(3);
+        buyCoinButtons[2].onClickCallback += () => BuyCoinDiamond(5);
     }
 
     public void UpdateHeader()
@@ -36,17 +42,5 @@ public class Uidirector : MonoBehaviour
         coinCount.GetCoin(i * 100 + (i - 1) * 25);
         diamondCount.GetDiamond(-i * 10);
         UpdateHeader();
-    }
-
-    public void GetTax()
-    {
-
-
-        // int stageCoin = PlayerPrefs.GetInt("TmpCoin", 0);
-        // coinCount.GetCoin(stageCoin);
-        // rankManager.GetSumCoin(stageCoin);
-        // PlayerPrefs.SetInt("TmpCoin", 0);
-
-        // PlayerPrefs.SetInt("Coin", coinCount.Coin);
     }
 }

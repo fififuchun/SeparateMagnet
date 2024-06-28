@@ -16,7 +16,7 @@ public class FontManager : MonoBehaviour
     [SerializeField] private GameObject buyFontView;
 
     //FontViewContentの20個の子オブジェクト
-    [SerializeField] private CustomButton[] buyFontButtons = new CustomButton[MainManager.NUMofFONTS];
+    [SerializeField] private CustomButton[] buyFontButtons = new CustomButton[MainManager.FONT_COUNT];
 
     //全部フォントを買ってるなら知らせたい
     // [SerializeField] private GameObject alreadyBuyAllFont;

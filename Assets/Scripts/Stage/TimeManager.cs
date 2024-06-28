@@ -118,8 +118,6 @@ public class TimeManager : MonoBehaviour
 
         //エフェクト
         Instantiate(angryEffect, angryImage.transform.parent);
-        // angryEffect.gameObject.SetActive(false);
-        // angryEffect.gameObject.SetActive(true);
 
         //スライダー更新
         angerSlider.value = (float)AngerGauge / (float)angerGaugeMax;

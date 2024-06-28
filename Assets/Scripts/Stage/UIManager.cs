@@ -6,11 +6,16 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
-    
+    //ステージ選択画面に戻るボタン
+    [SerializeField] private CustomButton returnButton;
+
+    void Start()
+    {
+        returnButton.onClickCallback += PushGoHomeButton;
+    }
+
     public void PushGoHomeButton()
     {
-        PlayerPrefs.SetInt("TmpCoin", gameManager.SumCoin() * MainManager.stageNum);
         SceneManager.LoadScene("StageScene");
     }
 }

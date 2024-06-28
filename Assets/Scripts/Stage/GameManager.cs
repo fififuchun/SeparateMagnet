@@ -184,6 +184,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        //レア検討の出現
         if (Random.Range(0, timeManager.RareRate) == 0)
         {
             readyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].kentoPrefabs[MainManager.stageNum - 1], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);

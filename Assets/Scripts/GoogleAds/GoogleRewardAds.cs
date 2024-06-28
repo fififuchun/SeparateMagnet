@@ -4,150 +4,243 @@ using UnityEngine;
 using UnityEngine.UI;
 using GoogleMobileAds;
 using GoogleMobileAds.Api;
+using UnityEngine.SceneManagement;
+using TMPro;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using Unity.VisualScripting;
+
 
 public class GoogleRewardAds : MonoBehaviour
 {
-    //プラットホームごとのUNIT ID
     // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
-    private string _adUnitId = "ca-app-pub-3940256099942544/5224354917";//変えた、テスト環境、検討
+    private const string _adUnitId = "ca-app-pub-3940256099942544/5224354917";//テスト用のユニットID
 #elif UNITY_IPHONE
-    private string _adUnitId = "ca-app-pub-3940256099942544/5224354917";//変えてない、検討
+    private const string _adUnitId = "ca-app-pub-3940256099942544/1712485313";//テスト用のユニットID
 #else
-    private string _adUnitId = "unused";
+    private const string _adUnitId = "unused";
 #endif
 
-    //リワード広告
-    private RewardedAd rewardedAd;
+    //インスタンス
+    [SerializeField] private CoinCount coinCount;
 
-    public void Start()
+    //コインのイメージ
+    [SerializeField] private GameObject coinObj;
+    [SerializeField] private GameObject headerCoin;
+
+    //ショップで500コイン獲得、広告見るボタン
+    [SerializeField] private CustomButton watchRewardAdButton;
+
+    //広告準備中を表示するためのcts
+    CancellationTokenSource cts;
+
+
+    //リワード広告
+    private RewardedAd _rewardedAd;
+
+    //-------------------------------------------------------------------------------------
+    void Start()
     {
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize((InitializationStatus initStatus) =>
         {
             // This callback is called once the MobileAds SDK is initialized.
         });
+
+        LoadAd();
+
+        watchRewardAdButton.onClickCallback += ShowAd;
+        cts = new CancellationTokenSource();
     }
 
-    //動画をロードする
+    void Update()
+    {
+        // if (_rewardedAd.CanShowAd()) testText.text = "読込完了";
+        // else testText.text = "0";
+    }
+
     /// <summary>
-    /// Loads the rewarded ad.
+    /// Loads the ad.
     /// </summary>
-    public void LoadRewardedAd()
+    public void LoadAd()
     {
         // Clean up the old ad before loading a new one.
-        if (rewardedAd != null)
+        if (_rewardedAd != null)
         {
-            rewardedAd.Destroy();
-            rewardedAd = null;
+            DestroyAd();
         }
 
-        Debug.Log("Loading the rewarded ad.");
+        Debug.Log("Loading rewarded ad.");
 
-        // create our request used to load the ad.
+        // Create our request used to load the ad.
         var adRequest = new AdRequest();
-        adRequest.Keywords.Add("unity-admob-sample");
 
-        // send the request to load the ad.
-        RewardedAd.Load(_adUnitId, adRequest,
-            (RewardedAd ad, LoadAdError error) =>
+        // Send the request to load the ad.
+        RewardedAd.Load(_adUnitId, adRequest, (RewardedAd ad, LoadAdError error) =>
+        {
+            // If the operation failed with a reason.
+            // 何らかの理由で操作が失敗した場合、通信エラーなど。---------------※①
+            if (error != null)
             {
-                // if error is not null, the load request failed.
-                if (error != null || ad == null)
-                {
-                    Debug.LogError("Rewarded ad failed to load an ad " +
-                                    "with error : " + error);
-                    return;
-                }
+                Debug.LogError("Rewarded ad failed to load an ad with error : " + error);
+                return;
+            }
 
-                Debug.Log("Rewarded ad loaded with response : "
-                        + ad.GetResponseInfo());
+            // If the operation failed for unknown reasons.
+            // 不明な理由で操作が失敗した場合。
+            // This is an unexpected error, please report this bug if it happens.
+            // これは予期しないエラーです。発生した場合はこのバグを報告してください。----------※②
+            if (ad == null)
+            {
+                Debug.LogError("Unexpected error: Rewarded load event fired with null ad and null error.");
+                return;
+            }
 
-                rewardedAd = ad;
-            });
+            // The operation completed successfully.
+            // 操作は正常に完了しました。
+            Debug.Log("Rewarded ad loaded with response : " + ad.GetResponseInfo());
+            _rewardedAd = ad;
+
+            // Register to ad events to extend functionality.
+            // 機能を拡張するには広告イベントに登録します。
+            RegisterEventHandlers(ad);//---------------※③
+        });
     }
 
-    public void ShowRewardedAd()
+    /// <summary>
+    /// Shows the ad.
+    /// </summary>
+    public void ShowAd()
     {
-        const string rewardMsg = "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
+        watchRewardAdButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "広告準備中";
 
-        if (rewardedAd != null && rewardedAd.CanShowAd())
+        if (_rewardedAd != null && _rewardedAd.CanShowAd())
         {
-            rewardedAd.Show((Reward reward) =>
+            Debug.Log("Showing rewarded ad.");//---------------※④
+            _rewardedAd.Show((Reward reward) =>
             {
-                // TODO: Reward the user.
-                HandleUserEarnedReward(reward);
-                Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
+                Debug.Log(string.Format("Rewarded ad granted a reward: {0} {1}", reward.Amount, reward.Type));
+
+                //---------------※⑤
+                //報酬受け取り
+                if (SceneManager.GetActiveScene().name == "StageScene")
+                {
+                    coinCount.GetCoin(500);
+                    EmissionAnimation.Receive(coinObj, 5, new Vector2(100, 100), watchRewardAdButton.transform.position, headerCoin.transform.position);
+                    LoadAd();
+                }
+                else if (SceneManager.GetActiveScene().name == "Stage")
+                {
+                    SaveData.tax *= 2;
+                    LoadAd();
+                    SceneManager.LoadScene("StageScene");
+                }
             });
+        }
+        else
+        {
+            Debug.LogError("Rewarded ad is not ready yet.");
+        }
+    }
+
+    private bool isShown;
+
+    // public string AdPreparingText()
+    // {
+    //     string initialText = "広告準備中";
+
+    // }
+
+    ///「.」を演出するループ
+    async public UniTask RewardAdsRepairing(string text, CancellationToken cts)
+    {
+        string initialText = "広告準備中";
+        text = initialText;
+
+        int i = 0;
+
+        async UniTask AddPeriod(CancellationToken cts)
+        {
+            await UniTask.Delay(500);
+            i++;
+            text += ".";
+        }
+
+        while (isShown)
+        {
+            if (i >= 3)
+            {
+                text = initialText;
+                await AddPeriod(cts);
+            }
+            else await AddPeriod(cts);
+        }
+    }
+
+    void OnDestroy()
+    {
+        cts?.Cancel();
+    }
+
+    /// <summary>
+    /// Destroys the ad.
+    /// </summary>
+    public void DestroyAd()
+    {
+        if (_rewardedAd != null)
+        {
+            Debug.Log("Destroying rewarded ad.");
+            _rewardedAd.Destroy();
+            _rewardedAd = null;
         }
     }
 
     private void RegisterEventHandlers(RewardedAd ad)
     {
         // Raised when the ad is estimated to have earned money.
+        // 広告が収益を上げたと推定される場合に発生します。
         ad.OnAdPaid += (AdValue adValue) =>
         {
-            // Debug.Log(String.Format("Rewarded ad paid {0} {1}.",
-            //     adValue.Value,
-            //     adValue.CurrencyCode));
+            Debug.Log(string.Format("Rewarded ad paid {0} {1}.", adValue.Value, adValue.CurrencyCode));
         };
+
         // Raised when an impression is recorded for an ad.
+        // 広告のインプレッションが記録されるときに発生します。
         ad.OnAdImpressionRecorded += () =>
         {
             Debug.Log("Rewarded ad recorded an impression.");
         };
+
         // Raised when a click is recorded for an ad.
+        // 広告のクリックが記録されたときに発生します。
         ad.OnAdClicked += () =>
         {
             Debug.Log("Rewarded ad was clicked.");
         };
-        // Raised when an ad opened full screen content.
+
+        // Raised when the ad opened full screen content.
+        // 広告が全画面コンテンツを開いたときに発生します。
         ad.OnAdFullScreenContentOpened += () =>
         {
             Debug.Log("Rewarded ad full screen content opened.");
         };
+
         // Raised when the ad closed full screen content.
+        // 広告が全画面コンテンツを閉じたときに発生します。
+        // Unityエディター上では、_rewardedAd.Showよりも先に行われるので注意
+        //---------------※⑥
         ad.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("Rewarded ad full screen content closed.");
-            // Debug.Log("a");
+            // CheckEarnReward();
         };
+
         // Raised when the ad failed to open full screen content.
+        // 広告が全画面コンテンツを開けなかった場合に発生します。
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
-            Debug.LogError("Rewarded ad failed to open full screen content " +
-                        "with error : " + error);
+            Debug.LogError("Rewarded ad failed to open full screen content with error : " + error);
         };
-    }
-
-    // 終わったら
-    // rewardedAd.Destroy();
-
-    //次の広告の準備
-    private void RegisterReloadHandler(RewardedAd ad)
-    {
-        // Raised when the ad closed full screen content.
-        ad.OnAdFullScreenContentClosed += () =>
-        {
-            Debug.Log("Rewarded Ad full screen content closed.");
-
-            // Reload the ad so that we can show another as soon as possible.
-            LoadRewardedAd();
-        };
-        // Raised when the ad failed to open full screen content.
-        ad.OnAdFullScreenContentFailed += (AdError error) =>
-        {
-            Debug.LogError("Rewarded ad failed to open full screen content " +
-                        "with error : " + error);
-
-            // Reload the ad so that we can show another as soon as possible.
-            LoadRewardedAd();
-        };
-    }
-
-    public void HandleUserEarnedReward(Reward args)
-    {
-        Debug.Log("広告終わったよ");
-        //
     }
 }

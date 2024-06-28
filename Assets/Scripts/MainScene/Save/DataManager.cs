@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-// using UnityEngine.Networking;
 
 public class DataManager : MonoBehaviour
 {
@@ -27,16 +26,12 @@ public class DataManager : MonoBehaviour
         // パス名取得
 #if UNITY_EDITOR
         filepath = Application.dataPath + "/" + fileName;
-        // Debug.Log("UnityEditor");
 
 #elif UNITY_ANDROID
-        // filepath = Application.persistentDataPath + "/" + fileName;
         filepath = Application.persistentDataPath + "/" + fileName;
-        // Debug.Log("Android");
 
 #else
         filepath = Application.dataPath + "/" + fileName;
-        // Debug.Log("Other");
 
 #endif
 
@@ -100,17 +95,17 @@ public class DataManager : MonoBehaviour
         SaveData.tax = 0;
 
         //RPG
-        data.level = new int[SaveData.levelCount];
+        data.level = new int[SaveData.LEVEL_COUNT];
         data.fontNumbers = new int[6] { 0, 0, 0, -1, -1, -1 };
         for (int i = 0; i < data.isRareFonts.Length; i++) data.isRareFonts[i] = false;
         for (int i = 0; i < data.haveFonts.Length; i++) data.haveFonts[i] = false;
 
         //Mission
-        data.receivedMissionCounts = new int[SaveData.missionGroupCount];
-        data.missionValues = new int[SaveData.missionGroupCount];
+        data.receivedMissionCounts = new int[SaveData.MISSIONGROUP_COUNT];
+        data.missionValues = new int[SaveData.MISSIONGROUP_COUNT];
 
         //Tutorial
-        data.isFinishedTutorial = new bool[SaveData.tutorialCount];
+        data.isFinishedTutorial = new bool[SaveData.TUTORIAL_COUNT];
     }
 
     //-------------------------------------------------------------------
@@ -152,13 +147,14 @@ public class DataManager : MonoBehaviour
     }
 
     //update mission
-    public UnityEvent isChanged = new UnityEvent();
+    public UnityEvent updateMissions = new UnityEvent();
     public void ChangeMissionValue(int i, float changedValue)
     {
         data.missionValues[i] = (int)changedValue;
         Debug.Log($"missionDataの{i}番目を{changedValue}に変更しました");
 
         Save(data);
-        isChanged.Invoke();
+
+        updateMissions?.Invoke();
     }
 }

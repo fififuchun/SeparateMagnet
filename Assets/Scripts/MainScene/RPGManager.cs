@@ -8,7 +8,7 @@ public class RPGManager : MonoBehaviour
 {
     // インスタンス
     // [SerializeField] private MissionDataManager dataManager;
-    [SerializeField] private Mission mission;
+    // [SerializeField] private Mission mission;
 
     [SerializeField] private CoinCount coinCount;
     [SerializeField] private DataManager dataManager;
@@ -17,7 +17,7 @@ public class RPGManager : MonoBehaviour
     // private string[] rankNames = { "AngerLimit", "AngerTime", "LateAngerTime", "HoldTime", "AngerRate", "NextKentoTime", "RareRate" };
 
     // 保存データ数、現時点では7
-    private const int levelCount = SaveData.levelCount;
+    private const int levelCount = SaveData.LEVEL_COUNT;
 
     // ステータス確認用のTextObject
     [SerializeField] private TextMeshProUGUI[] nextLevelAcquire = new TextMeshProUGUI[levelCount];
@@ -31,7 +31,7 @@ public class RPGManager : MonoBehaviour
     {
         UpdateAcquireCoin();
 
-        dataManager.ChangeMissionValue(5, Library.FirstFalseIndex(dataManager.data.isRareFonts));
+        dataManager.ChangeMissionValue(5, FoundRareFontCount(Library.FirstFalseIndex(dataManager.data.isRareFonts)));
     }
 
     public void UpdateAcquireCoin()
@@ -47,7 +47,7 @@ public class RPGManager : MonoBehaviour
             nextLevelAcquire[i].color = Color.black;
             nextLevelAcquire[i].text = rpgData.AcquireCoin(i, dataManager.data.level[i]).ToString();
         }
-        dataManager.Save(dataManager.data);
+        dataManager.Save();
     }
 
     public void PushPowerUpButton(int i)
@@ -73,4 +73,9 @@ public class RPGManager : MonoBehaviour
         UpdateAcquireCoin();
     }
 
+    private int FoundRareFontCount(int i)
+    {
+        if (i < 0) return MainManager.STAGE_COUNT;
+        return i;
+    }
 }
