@@ -55,10 +55,6 @@ public class GoogleBannerAds : MonoBehaviour
         // create our request used to load the ad.
         var adRequest = new AdRequest();
 
-        // var adRequest = new AdRequest.Builder()
-        //     .AddKeyword("unity-admob-sample")
-        //     .Build();
-
         // send the request to load the ad.
         Debug.Log("Loading banner ad.");
         _bannerView.LoadAd(adRequest);
@@ -77,6 +73,11 @@ public class GoogleBannerAds : MonoBehaviour
         }
     }
 
+    // void OnDestroy()
+    // {
+    //     DestroyAd();
+    // }
+
     // 広告を自分でカスタマイズしたかったら使う、今は使ってない
     /// <summary>
     /// listen to events the banner may raise.
@@ -92,8 +93,7 @@ public class GoogleBannerAds : MonoBehaviour
         // Raised when an ad fails to load into the banner view.
         _bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>
         {
-            Debug.LogError("Banner view failed to load an ad with error : "
-                + error);
+            Debug.LogError("Banner view failed to load an ad with error : " + error);
         };
 
         // Raised when the ad is estimated to have earned money.

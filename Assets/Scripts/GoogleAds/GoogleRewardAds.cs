@@ -32,6 +32,9 @@ public class GoogleRewardAds : MonoBehaviour
     //ショップで500コイン獲得、広告見るボタン
     [SerializeField] private CustomButton watchRewardAdButton;
 
+    //広告準備中を表示するUI
+    private TextMeshProUGUI prepairingText;
+
     //広告準備中を表示するためのcts
     CancellationTokenSource cts;
 
@@ -52,12 +55,12 @@ public class GoogleRewardAds : MonoBehaviour
 
         watchRewardAdButton.onClickCallback += ShowAd;
         cts = new CancellationTokenSource();
+        prepairingText = watchRewardAdButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
     {
-        // if (_rewardedAd.CanShowAd()) testText.text = "読込完了";
-        // else testText.text = "0";
+        // prepairingText.text += ".";
     }
 
     /// <summary>
@@ -66,11 +69,7 @@ public class GoogleRewardAds : MonoBehaviour
     public void LoadAd()
     {
         // Clean up the old ad before loading a new one.
-        if (_rewardedAd != null)
-        {
-            DestroyAd();
-        }
-
+        if (_rewardedAd != null) DestroyAd();
         Debug.Log("Loading rewarded ad.");
 
         // Create our request used to load the ad.
@@ -113,7 +112,9 @@ public class GoogleRewardAds : MonoBehaviour
     /// </summary>
     public void ShowAd()
     {
-        watchRewardAdButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "広告準備中";
+        prepairingText.text = "広告準備中";
+        isShown = true;
+        RewardAdsRepairing(cts.Token).Forget();
 
         if (_rewardedAd != null && _rewardedAd.CanShowAd())
         {
@@ -121,6 +122,7 @@ public class GoogleRewardAds : MonoBehaviour
             _rewardedAd.Show((Reward reward) =>
             {
                 Debug.Log(string.Format("Rewarded ad granted a reward: {0} {1}", reward.Amount, reward.Type));
+                isShown = false;
 
                 //---------------※⑤
                 //報酬受け取り
@@ -129,11 +131,14 @@ public class GoogleRewardAds : MonoBehaviour
                     coinCount.GetCoin(500);
                     EmissionAnimation.Receive(coinObj, 5, new Vector2(100, 100), watchRewardAdButton.transform.position, headerCoin.transform.position);
                     LoadAd();
+                    cts?.Cancel();
+                    prepairingText.text = "広告を見る";
                 }
                 else if (SceneManager.GetActiveScene().name == "Stage")
                 {
                     SaveData.tax *= 2;
                     LoadAd();
+                    cts?.Cancel();
                     SceneManager.LoadScene("StageScene");
                 }
             });
@@ -146,35 +151,23 @@ public class GoogleRewardAds : MonoBehaviour
 
     private bool isShown;
 
-    // public string AdPreparingText()
-    // {
-    //     string initialText = "広告準備中";
-
-    // }
-
     ///「.」を演出するループ
-    async public UniTask RewardAdsRepairing(string text, CancellationToken cts)
+    async public UniTask RewardAdsRepairing(CancellationToken ct)
     {
-        string initialText = "広告準備中";
-        text = initialText;
-
-        int i = 0;
-
-        async UniTask AddPeriod(CancellationToken cts)
-        {
-            await UniTask.Delay(500);
-            i++;
-            text += ".";
-        }
+        Debug.Log("発動");
+        string initialText = prepairingText.text;
 
         while (isShown)
         {
-            if (i >= 3)
-            {
-                text = initialText;
-                await AddPeriod(cts);
-            }
-            else await AddPeriod(cts);
+            await UniTask.Delay(500, cancellationToken: ct);
+            prepairingText.text += ".";
+            await UniTask.Delay(500, cancellationToken: ct);
+            prepairingText.text += ".";
+            await UniTask.Delay(500, cancellationToken: ct);
+            prepairingText.text += ".";
+
+            await UniTask.Delay(500, cancellationToken: ct);
+            prepairingText.text = initialText;
         }
     }
 
