@@ -7,22 +7,29 @@ using UnityEngine.SceneManagement;
 public class SettingManager : MonoBehaviour
 {
     [SerializeField] private DataManager dataManager;
-    // [SerializeField] private MissionDataManager missionDataManager;
-    // [SerializeField] private TutorialDataManager tutorialDataManager;
 
     [SerializeField] private CustomButton allResetButton;
+    // [SerializeField] private CustomButton informationButton;
+    // [SerializeField] private CustomButton mailButton;
+    // [SerializeField] private CustomButton postButton;
+    // [SerializeField] private CustomButton settingButton;
+    [SerializeField] private CustomButton returnButton;
 
     void Start()
     {
         allResetButton.onClickCallback += PushAllResetButton;
+
+        returnButton.onClickCallback += PushReturnButton;
     }
 
     public void PushAllResetButton()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
         dataManager.ResetDataManager();
-
         SceneManager.LoadScene("StageScene");
+    }
+
+    public void PushReturnButton()
+    {
+        SceneManager.LoadScene("StartScene");
     }
 }
