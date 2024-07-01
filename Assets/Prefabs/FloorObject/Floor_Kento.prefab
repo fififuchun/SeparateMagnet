@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1302946370801911913}
   - component: {fileID: 2533690695653851532}
   - component: {fileID: 8671678778942879848}
-  - component: {fileID: 1634522373237476470}
   - component: {fileID: 8246748330137949146}
   m_Layer: 5
   m_Name: Kento_Gyosho_0
@@ -105,7 +104,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!60 &8671678778942879848
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -258,19 +257,6 @@ PolygonCollider2D:
       - {x: -5.696364, y: -0.30953598}
       - {x: 8.486045, y: -5.0213966}
   m_UseDelaunayMesh: 0
---- !u!114 &1634522373237476470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2392859095872204505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc909cfa532a5e499357fa13f1b92c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
 --- !u!225 &8246748330137949146
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -296,7 +282,6 @@ GameObject:
   - component: {fileID: 1611869545152074325}
   - component: {fileID: 673129702316296906}
   - component: {fileID: 5751585712398195028}
-  - component: {fileID: 2848201021671100976}
   - component: {fileID: 1247101256042430694}
   m_Layer: 5
   m_Name: Kento_Gyosho
@@ -388,7 +373,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!60 &5751585712398195028
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -529,19 +514,6 @@ PolygonCollider2D:
       - {x: -3.259749, y: -1.8146629}
       - {x: 9.747916, y: -17.312351}
   m_UseDelaunayMesh: 0
---- !u!114 &2848201021671100976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4595245509091574353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc909cfa532a5e499357fa13f1b92c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
 --- !u!225 &1247101256042430694
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -567,7 +539,6 @@ GameObject:
   - component: {fileID: 4529593920951497169}
   - component: {fileID: 3373790271557084611}
   - component: {fileID: 2315669158791194060}
-  - component: {fileID: 858699677819535691}
   - component: {fileID: 3647268966180156224}
   m_Layer: 5
   m_Name: Floor_Kento
@@ -663,7 +634,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!60 &2315669158791194060
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -773,19 +744,6 @@ PolygonCollider2D:
       - {x: -39.57292, y: -40.240845}
       - {x: -12.325256, y: -40.327576}
   m_UseDelaunayMesh: 0
---- !u!114 &858699677819535691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4798448237052987758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc909cfa532a5e499357fa13f1b92c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
 --- !u!225 &3647268966180156224
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -811,7 +769,6 @@ GameObject:
   - component: {fileID: 8443499049121651180}
   - component: {fileID: 4153021593003632510}
   - component: {fileID: 477326232627117177}
-  - component: {fileID: 5143265302809615187}
   - component: {fileID: 7042828452190669224}
   m_Layer: 5
   m_Name: Kento_Dot
@@ -903,7 +860,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!60 &477326232627117177
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1028,19 +985,6 @@ PolygonCollider2D:
       - {x: -2.2898865, y: -24.322327}
       - {x: -2.3727875, y: 5.2697754}
   m_UseDelaunayMesh: 0
---- !u!114 &5143265302809615187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8049891358017384273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc909cfa532a5e499357fa13f1b92c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
 --- !u!225 &7042828452190669224
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1066,7 +1010,6 @@ GameObject:
   - component: {fileID: 2538717201953964413}
   - component: {fileID: 8214177583153159911}
   - component: {fileID: 3205278399378547072}
-  - component: {fileID: 8547657598977502331}
   - component: {fileID: 4625851215806457603}
   m_Layer: 5
   m_Name: Kento_Dot_0
@@ -1158,7 +1101,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!60 &3205278399378547072
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1252,19 +1195,6 @@ PolygonCollider2D:
       - {x: -21.962341, y: -19.216492}
       - {x: -19.146889, y: -19.199741}
   m_UseDelaunayMesh: 0
---- !u!114 &8547657598977502331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9003067839805127631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc909cfa532a5e499357fa13f1b92c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
 --- !u!225 &4625851215806457603
 CanvasGroup:
   m_ObjectHideFlags: 0
