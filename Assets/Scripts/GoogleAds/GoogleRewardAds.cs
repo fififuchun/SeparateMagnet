@@ -12,7 +12,7 @@ using System.Threading;
 public class GoogleRewardAds : MonoBehaviour
 {
 #if UNITY_ANDROID
-    private const string _adUnitId = "ca-app-pub-7270862051318366/5243302364";//検討を重ねろ、変更済
+    private const string _adUnitId = "ca-app-pub-7270862051318366/2830918447";//検討を重ねろ、変更済
 #elif UNITY_IPHONE
     private const string _adUnitId = "ca-app-pub-3940256099942544/1712485313";//テスト用のユニットID
 #else
