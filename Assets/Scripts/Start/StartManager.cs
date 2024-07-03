@@ -14,6 +14,8 @@ public class StartManager : MonoBehaviour
 
     [SerializeField] private RectTransform titleRect;
 
+    [SerializeField] private AudioSource backBGM;
+
     //startのcts
     CancellationTokenSource cts_start;
 
@@ -49,6 +51,7 @@ public class StartManager : MonoBehaviour
 
         titleRect.DOScale(100, needTime).ToUniTask().Forget();
         titleRect.DOLocalMove(new Vector3(-2200, 9000), needTime).ToUniTask().Forget();
+        backBGM.DOFade(0f, needTime).ToUniTask().Forget();
 
         await UniTask.Delay((int)(1000 * needTime), cancellationToken: ct_start);
 

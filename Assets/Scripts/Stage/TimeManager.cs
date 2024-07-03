@@ -6,7 +6,6 @@ using System.IO;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using UnityEngine.Events;
 
 //ゲームオーバー管理
 public class TimeManager : MonoBehaviour
@@ -57,30 +56,35 @@ public class TimeManager : MonoBehaviour
     //Header
     [SerializeField] private Slider angerSlider;
     [SerializeField] private TextMeshProUGUI timerText;
-    // [SerializeField] private TextMeshProUGUI resultCoinText;
     [SerializeField] private TextMeshProUGUI finishText;
-
-    //結果表示
-    [SerializeField] private GameObject resultObject;
-
-    //Unitaskキャンセル周り
-    // private CancellationTokenSource cts;
 
 
     //関数の部
     [HideInInspector] public SaveData data;
+
+    // jsonファイルのパス
+    string filepath;
+
+    // jsonファイル名
+    string fileName = "Data.json";
+
+
     void Awake()
     {
+        // パス名取得
 #if UNITY_EDITOR
-        data = Load(Application.dataPath + "/Data.json");
+        filepath = Application.dataPath + "/" + fileName;
 
 #elif UNITY_ANDROID
-        data = Load(Application.persistentDataPath + "/Data.json");
+        filepath = Application.persistentDataPath + "/" + fileName;
 
 #else
-        data = Load(Application.dataPath + "/Data.json");
+        filepath = Application.dataPath + "/" + fileName;
 
 #endif
+
+        // ファイルを読み込んでdataに格納
+        data = Load(filepath);
 
         angerGaugeMax = data.level[0] + 4;
         angryTime = data.level[1] + 10;
@@ -100,6 +104,25 @@ public class TimeManager : MonoBehaviour
         return JsonUtility.FromJson<SaveData>(json);
     }
 
+
+    // jsonとしてデータを保存
+    public void Save(SaveData data)
+    {
+        // jsonとして変換
+        string json = JsonUtility.ToJson(data, true);
+
+        // ファイル書き込み指定
+        StreamWriter wr = new StreamWriter(filepath, false);
+
+        // json変換した情報を書き込み
+        wr.WriteLine(json);
+
+        // ファイル閉じる
+        wr.Close();
+    }
+
+    public void Save() { Save(data); }
+
     void Start()
     {
         angryTime = 10;
@@ -114,7 +137,7 @@ public class TimeManager : MonoBehaviour
     {
         if (IsAnger()) return;
         angerGauge++;
-        Debug.Log("今の怒り:" + AngerGauge);
+        // Debug.Log("AngerGauge:" + AngerGauge);
 
         //エフェクト
         Instantiate(angryEffect, angryImage.transform.parent);
@@ -149,7 +172,7 @@ public class TimeManager : MonoBehaviour
     public void EmptyTimerText()
     {
         timerText.text = "";
-        Debug.Log("テキストを空に");
+        Debug.Log("Make Text Empty");
     }
 
     //時間切れ
@@ -170,7 +193,7 @@ public class TimeManager : MonoBehaviour
     public async UniTask FinishGame(CancellationToken ct)
     {
         IsEndDrag(true);
-        Debug.Log("ゲーム終了が起動");
+        Debug.Log("Finish Game");
         float startTimer = Time.time;
         canHoldTime = 5;
         timerText.color = Color.red;
@@ -182,6 +205,7 @@ public class TimeManager : MonoBehaviour
             await UniTask.Delay(1000, cancellationToken: ct);
         }
 
+        Save(data);
         resultManager.AppearResult(sumCoin).Forget();
     }
 }

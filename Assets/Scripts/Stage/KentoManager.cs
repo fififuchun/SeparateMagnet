@@ -8,9 +8,6 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     //親スクリプトの取得
     private GameManager gameManager;
 
-    //床のゲームオブジェクト
-    // private RectTransform floorObjectRect;
-
     //保存しておく初期position
     private Vector2 prevPos;
 
@@ -24,16 +21,6 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     {
         rectTransform = GetComponent<RectTransform>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-        //画面外対策
-        // floorObjectRect = ResultManager.floorObject.GetComponent<RectTransform>();
-    }
-
-    private void Update()
-    {
-        // 検討を画面外に出ないようにしたい
-        // if (Mathf.Abs(gameObject.transform.position.x - floorObjectRect.gameObject.transform.position.x) > floorObjectRect.sizeDelta.x / 2)
-        //     gameObject.transform.position = new Vector3(floorObjectRect.gameObject.transform.position.x + Mathf.Sign(gameObject.transform.localPosition.x) * floorObjectRect.sizeDelta.x / 2, gameObject.transform.position.y);
     }
 
     // ドラッグ開始時の処理
@@ -46,7 +33,7 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
-        if (gameManager.timeManager.isEndDrag) return;
+        if (/*gameManager.timeManager.isEndDrag || */gameManager.phase != GameManager.Phase.AppearPhase) return;
         transform.position = new Vector3(eventData.position.x, prevPos.y + gameManager.canvas.transform.position.y);
     }
 
@@ -65,6 +52,6 @@ public class KentoManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
         gameManager.timeManager.isEndDrag = false;
         gameManager.CanInstantiate();
-        Debug.Log("着地");
+        Debug.Log("To StartPhase");
     }
 }

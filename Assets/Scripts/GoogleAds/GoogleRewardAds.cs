@@ -8,14 +8,11 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using Unity.VisualScripting;
-
 
 public class GoogleRewardAds : MonoBehaviour
 {
-    // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
-    private const string _adUnitId = "ca-app-pub-3940256099942544/5224354917";//テスト用のユニットID
+    private const string _adUnitId = "ca-app-pub-7270862051318366/5243302364";//検討を重ねろ、変更済
 #elif UNITY_IPHONE
     private const string _adUnitId = "ca-app-pub-3940256099942544/1712485313";//テスト用のユニットID
 #else
@@ -58,10 +55,12 @@ public class GoogleRewardAds : MonoBehaviour
         prepairingText = watchRewardAdButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
-    void Update()
-    {
-        // prepairingText.text += ".";
-    }
+    // public TextMeshProUGUI testtext;
+
+    // void Update()
+    // {
+    //     testtext.text = $"{_rewardedAd.CanShowAd()}";
+    // }
 
     /// <summary>
     /// Loads the ad.
@@ -154,7 +153,7 @@ public class GoogleRewardAds : MonoBehaviour
     ///「.」を演出するループ
     async public UniTask RewardAdsRepairing(CancellationToken ct)
     {
-        Debug.Log("発動");
+        // Debug.Log("発動");
         string initialText = prepairingText.text;
 
         while (isShown)

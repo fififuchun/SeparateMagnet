@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         PutPhase,
 
         //怒りゲージがMaxになったらEnd
-        End
+        End,
     }
 
     async UniTask Loop(CancellationToken ct_loop)
@@ -159,7 +159,8 @@ public class GameManager : MonoBehaviour
                     cts.Cancel();
 
                     await UniTask.WaitUntil(() => canInstantiate || readyKento.transform.position.y < -900, cancellationToken: ct_loop);
-                    ResetKentoPrefab();
+                    readyKento = null;
+                    timeManager.isEndDrag = false;
 
                     phase = Phase.StartPhase;
                     break;
@@ -168,8 +169,9 @@ public class GameManager : MonoBehaviour
 
         //怒りゲージMax以降の動き
         phase = Phase.End;
-        // Debug.Log($"現在の怒り：{timeManager.AngerGauge}");
         coinText.text = SumCoin().ToString();
+        cts.Cancel();
+
         timeManager.FinishGame(cts_finish.Token).Forget();
     }
 
@@ -187,20 +189,28 @@ public class GameManager : MonoBehaviour
         //レア検討の出現
         if (Random.Range(0, timeManager.RareRate) == 0)
         {
-            readyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].kentoPrefabs[MainManager.stageNum - 1], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+            // Debug.Log(MainManager.stageNum - 1);
+            if (MainManager.stageNum - 1 < 0) MainManager.stageNum = 4;
+            readyKento = Instantiate(kentoSO.sizeData[kentoSO.sizeData.Count() - 1].kentoPrefabs[MainManager.stageNum - 1],
+                                        new Vector3(0, 600, 0) + canvas.transform.position,
+                                        Quaternion.identity,
+                                        kentos.transform);
             //ミッション用
             timeManager.data.isRareFonts[MainManager.stageNum - 1] = true;
+
+            readyKento.GetComponent<KentoManager>().score = kentoSO.sizeData[3].score;
             return;
         }
 
         //Prefabを生成してListに追加・修正
         int randomSizeNumber = Random.Range(0, 3);
-        readyKento = Instantiate(myGameObjects[randomSizeNumber, Random.Range(0, 6)], new Vector3(0, 600, 0) + canvas.transform.position, Quaternion.identity, kentos.transform);
+        readyKento = Instantiate(myGameObjects[randomSizeNumber, Random.Range(0, 6)],
+                                    new Vector3(0, 600, 0) + canvas.transform.position,
+                                    Quaternion.identity,
+                                    kentos.transform);
+
         readyKento.GetComponent<KentoManager>().score = kentoSO.sizeData[randomSizeNumber].score;
     }
-
-    //kentoPrefabの中身をnullに戻す
-    public void ResetKentoPrefab() { readyKento = null; }
 
     //ドラッグ終了
     public void EndDrag()
@@ -209,14 +219,14 @@ public class GameManager : MonoBehaviour
         {
             readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
             if (readyKento != null) placedGameObjects.Add(readyKento.GetComponent<KentoManager>());
-            Debug.Log("Drag強制終了");
+            Debug.Log("Force EndDrag");
             return;
         }
         if (Random.Range(0, timeManager.AngerRate) == 0) timeManager.MakeAngry();
         if (readyKento != null) placedGameObjects.Add(readyKento.GetComponent<KentoManager>());
         readyKento.GetComponent<Rigidbody2D>().gravityScale = KentoSpeed();
         timeManager.EmptyTimerText();
-        Debug.Log("Drag終了");
+        Debug.Log("EndDrag");
     }
 
     //kentoPrefabの回転

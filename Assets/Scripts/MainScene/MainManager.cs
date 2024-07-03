@@ -15,7 +15,6 @@ public class MainManager : MonoBehaviour
   //データ管理
   [SerializeField] private DataManager dataManager;
   [SerializeField] private DiamondCount diamondCount;
-  // [SerializeField] private RankManager rankManager;
 
   //メインシーンのアニメーション用
   [SerializeField] private GameObject mainViewContent;
@@ -54,13 +53,22 @@ public class MainManager : MonoBehaviour
 
     buyFrameButton.onClickCallback += IncreaseFontCount;
     editButton.onClickCallback += () => PushEditButton(!canEdit);
-    outlineImages[0].DOSizeDelta(new Vector3(600, 600), 0.5f);
 
+    //最後に検討したステージにゲーム開始時移動し、アニメーションを行う
+    // outlineImages[0].DOSizeDelta(new Vector3(600, 600), 0.5f);
+    mainViewContent.transform.localPosition = new Vector3(-(dataManager.data.lastStageNum - 1) * 830, mainViewContent.transform.localPosition.y);
+    for (int i = 0; i < STAGE_COUNT; i++)
+    {
+      if (i == dataManager.data.lastStageNum - 1) outlineImages[i].DOSizeDelta(new Vector3(600, 600), 0.5f);
+      else outlineImages[i].sizeDelta = new Vector3(525, 525);
+    }
+
+    //シーン遷移のUnitask
     cts = new CancellationTokenSource();
     repeatKentoButton.onClickCallback += () => PushRepeatKentoButton(cts.Token);
 
+    //保存されているデータに基づいてメイン画面に表示
     ShowFontImage();
-    diamondCount.GetDiamond(11100);
   }
 
   void Update()
@@ -212,7 +220,7 @@ public class MainManager : MonoBehaviour
   {
     //現在最前面にあるステージのナンバー
     stageNum = (int)(1 - Mathf.Floor((mainViewContent.transform.position.x + 415) / 830));
-    PlayerPrefs.Save();
+    // PlayerPrefs.Save();
 
     //ステージ遷移処理
     if (RankManager.Rank < (stageNum - 1) * 5)
@@ -227,10 +235,9 @@ public class MainManager : MonoBehaviour
       shiftStageImage.DOFade(1f, 1f).ToUniTask(cancellationToken: ct),
       audioManager.backBGM.DOFade(0f, 1f).ToUniTask(cancellationToken: ct)
     );
+    dataManager.data.lastStageNum = stageNum;
     SceneManager.LoadScene("Stage");
   }
-
-  [SerializeField] TextMeshProUGUI textMeshProUGUI;
 
   void OnDestroy()
   {

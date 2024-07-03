@@ -48,6 +48,7 @@ public class Mission : MonoBehaviour
     {
         CheckMission();
         SetID();
+        onValidate?.Invoke();
     }
 
     //IDをセット・currentValueを共通させる
@@ -142,7 +143,8 @@ public class Mission : MonoBehaviour
 
         for (int j = 0; j < missionGroupDatas[i].missionDatas.Count(); j++)
         {
-            if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Achieved || missionGroupDatas[i].missionDatas[j].missionState == MissionState.NotAchieved)
+            if (missionGroupDatas[i].missionDatas[j].missionState == MissionState.Achieved ||
+                missionGroupDatas[i].missionDatas[j].missionState == MissionState.NotAchieved)
             {
                 return j;
             }
@@ -217,7 +219,9 @@ public class MissionDatas
     //IDからクラスの位置を特定
     public Vector2Int MissionDataIndex(MissionData missionData)
     {
-        if (missionData.id.ToCharArray().Length == 4) return new Vector2Int(Mathf.FloorToInt(int.Parse(missionData.id) / 100), int.Parse(missionData.id) % 100);
+        if (missionData.id.ToCharArray().Length == 4)
+            return new Vector2Int(Mathf.FloorToInt(int.Parse(missionData.id) / 100), int.Parse(missionData.id) % 100);
+
         else return new Vector2Int(0, 0);
     }
 }

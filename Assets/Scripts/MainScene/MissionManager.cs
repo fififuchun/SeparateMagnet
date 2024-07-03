@@ -37,6 +37,8 @@ public class MissionManager : MonoBehaviour
 
         InstantiateMissions();
         UpdateMissions();
+
+        // Debug.Log(ExistAchievedMission());
     }
 
     //Missionクラスの値を手動で設定するのがめんどくさいので自動で設定したい・用は済んだ
@@ -104,7 +106,7 @@ public class MissionManager : MonoBehaviour
         mission.CheckMission();
         mission.SetID();
         notificationImage.SetActive(ExistAchievedMission());
-        Debug.Log("Update Missions");
+        Debug.Log($"Update Missions.");
     }
 
     //MissionクラスのMissionGroupのi番目のGameObjectを動的に変更

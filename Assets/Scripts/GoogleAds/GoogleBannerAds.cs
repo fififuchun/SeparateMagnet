@@ -6,7 +6,6 @@ using GoogleMobileAds.Api;
 public class GoogleBannerAds : MonoBehaviour
 {
     //広告ユニットID、androidの方は自分のやつ
-    // These ad units are configured to always serve test ads.（下の広告ユニットIDはいつもテスト広告として設定されています）
 #if UNITY_ANDROID
     private string _adUnitId = "ca-app-pub-7270862051318366/5243302364";//検討を重ねろ、変更済
 #elif UNITY_IPHONE

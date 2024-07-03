@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class TutorialInGame : MonoBehaviour
 {
-
     //チュートリアルの女性
     [SerializeField] private Image ladyImage;
     [SerializeField] private Sprite ladyImage_go;
@@ -17,11 +16,11 @@ public class TutorialInGame : MonoBehaviour
     //指のナビゲーション
     [SerializeField] private GameObject fingerNavi;
 
-    [SerializeField] private DataManager dataManager;
+    [SerializeField] private TimeManager timeManager;
 
     void Start()
     {
-        if (!dataManager.data.isFinishedTutorial[4])
+        if (!timeManager.data.isFinishedTutorial[4])
         {
             InstantiateTutorial(4, 3);
             fingerNavi.SetActive(true);
@@ -31,8 +30,8 @@ public class TutorialInGame : MonoBehaviour
     public void InstantiateTutorial(int _matrixRowNum, int _ladyNum)
     {
         //既にチュートリアルを見ているなら返す
-        if (dataManager.data.isFinishedTutorial[_matrixRowNum]) return;
-        else dataManager.data.isFinishedTutorial[_matrixRowNum] = true;
+        if (timeManager.data.isFinishedTutorial[_matrixRowNum]) return;
+        else timeManager.data.isFinishedTutorial[_matrixRowNum] = true;
 
         tutorial.Initialize(_matrixRowNum);
         // ladyImage.sprite = TutorialManager.ladySprites[_ladyNum];

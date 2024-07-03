@@ -21,6 +21,8 @@ public class WarnManager : MonoBehaviour
     //閉じるボタン
     [SerializeField] private CustomButton closeWarningButton;
 
+    [SerializeField] private CustomButton followFuchunButton;
+
     /// <summary>
     /// 警告を出す
     /// </summary>
@@ -39,5 +41,12 @@ public class WarnManager : MonoBehaviour
     public void DisappearWarning()
     {
         warningObject.SetActive(false);
+        followFuchunButton.gameObject.SetActive(false);
+    }
+
+    public void PushFollowButton()
+    {
+        followFuchunButton.gameObject.SetActive(true);
+        followFuchunButton.onClickCallback += () => Application.OpenURL("https://x.com/FuchunGames");
     }
 }

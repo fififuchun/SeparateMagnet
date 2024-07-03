@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -16,6 +17,6 @@ public class UIManager : MonoBehaviour
 
     public void PushGoHomeButton()
     {
-        SceneManager.LoadScene("StageScene");
+        DOVirtual.DelayedCall(0.24f, () => SceneManager.LoadScene("StageScene"), false);
     }
 }

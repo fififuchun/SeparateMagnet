@@ -11,6 +11,8 @@ public class SaveData
     public int diamond;
     public int coin;
     public int sumcoin;
+
+    public int lastStageNum;
     public static int tax;
 
     #endregion

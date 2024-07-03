@@ -16,9 +16,6 @@ public class DataManager : MonoBehaviour
     // jsonファイル名
     string fileName = "Data.json";
 
-    //
-    // public static int earnCoin;
-
     //-------------------------------------------------------------------
     // 開始時にファイルチェック、読み込み
     void Awake()
@@ -42,7 +39,7 @@ public class DataManager : MonoBehaviour
         data = Load(filepath);
         CheakSaveData();
 
-        if (SaveData.tax >= 0)
+        if (SaveData.tax > 0)
         {
             data.coin += SaveData.tax;
             data.sumcoin += SaveData.tax;
@@ -92,6 +89,7 @@ public class DataManager : MonoBehaviour
         data.diamond = 0;
         data.coin = 0;
         data.sumcoin = 0;
+        data.lastStageNum = 1;
         SaveData.tax = 0;
 
         //RPG
