@@ -15,7 +15,8 @@ public class Header : MonoBehaviour
 
     void Start()
     {
-        float adTopPadding = header.parent.GetComponent<RectTransform>().sizeDelta.y / 16 + 50;
+        // float adTopPadding = header.parent.GetComponent<RectTransform>().sizeDelta.y / 16 + 50;
+        float adTopPadding = 200;
 
         header.localPosition = new Vector3(header.transform.localPosition.x, header.parent.position.y - adTopPadding);
 

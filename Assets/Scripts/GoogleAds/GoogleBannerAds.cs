@@ -57,6 +57,7 @@ public class GoogleBannerAds : MonoBehaviour
         // send the request to load the ad.
         Debug.Log("Loading banner ad.");
         _bannerView.LoadAd(adRequest);
+        ListenToAdEvents();
     }
 
     /// <summary>
@@ -83,11 +84,12 @@ public class GoogleBannerAds : MonoBehaviour
     /// </summary>
     private void ListenToAdEvents()
     {
+        _bannerView.OnBannerAdLoaded += HandleOnAdLoaded;
         // Raised when an ad is loaded into the banner view.
-        _bannerView.OnBannerAdLoaded += () =>
-        {
-            Debug.Log("Banner view loaded an ad with response : " + _bannerView.GetResponseInfo());
-        };
+        // _bannerView.OnBannerAdLoaded += () =>
+        // {
+        //     Debug.Log("Banner view loaded an ad with response : " + _bannerView.GetResponseInfo());
+        // };
 
         // Raised when an ad fails to load into the banner view.
         _bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>
@@ -125,5 +127,14 @@ public class GoogleBannerAds : MonoBehaviour
             Debug.Log("Banner view full screen content closed.");
         };
     }
+    private void HandleOnAdLoaded()
+    {
+        // バナー広告の幅と高さを取得
+        float width = _bannerView.GetWidthInPixels();
+        float height = _bannerView.GetHeightInPixels();
 
+        Debug.Log($"Banner Width: {width}, Height: {height}");
+
+        // 必要に応じてUIやレイアウトを調整
+    }
 }
