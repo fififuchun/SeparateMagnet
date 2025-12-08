@@ -1,0 +1,446 @@
+Unity Editor version:    6000.2.7f2 (2b518236b676)
+Branch:                  6000.2/respin/6000.2.7f1-2eb0c79396db
+Build type:              Release
+Batch mode:              YES
+macOS version:           Version 15.5 (Build 24F74)
+Darwin version:          24.5.0
+Architecture:            arm64
+Running under Rosetta:   NO
+Available memory:        36864 MB
+Date:                    2025-12-08T12:17:05Z
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-fuchun" at "2025-12-08T12:17:05.199251Z"
+
+COMMAND LINE ARGUMENTS:
+/Applications/Unity/Hub/Editor/6000.2.7f2/Unity.app/Contents/MacOS/Unity
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker2
+-projectPath
+/Users/fuchun/Unity/UnityProjects/SeparateMagnet
+-logFile
+Logs/AssetImportWorker2.log
+-srvPort
+51403
+-licensingIpc
+LicenseClient-fuchun
+-job-worker-count
+6
+-background-job-worker-count
+8
+-gc-helper-count
+1
+-name AssetImport
+Successfully changed project path to: /Users/fuchun/Unity/UnityProjects/SeparateMagnet
+/Users/fuchun/Unity/UnityProjects/SeparateMagnet
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [8430706432]  Target information:
+
+Player connection [8430706432]  * "[IP] 10.186.203.144 [Port] 0 [Flags] 2 [Guid] 2420415881 [EditorId] 2420415881 [Version] 1048832 [Id] OSXEditor(0,Linux.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" 
+
+Player connection [8430706432]  * "[IP] 169.254.25.11 [Port] 0 [Flags] 2 [Guid] 2420415881 [EditorId] 2420415881 [Version] 1048832 [Id] OSXEditor(0,Linux.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" 
+
+Player connection [8430706432] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [8430706432] Host joined alternative multi-casting on [225.0.0.222:34997]...
+JobSystem: Creating JobQueue using job-worker-count value 6
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 1603, path: "/Applications/Unity Hub.app/Contents/Frameworks/UnityLicensingClient_V1.app/Contents/MacOS/Unity.Licensing.Client")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.3+a4e98f1
+  Session Id:              91546bab97394bdb916d299ba560914d
+  Correlation Id:          c035d5c3e84b1d3ec77ed6261a6da647
+  External correlation Id: 8246713133645670297
+  Machine Id:              mHZh5QElNnyQiNr+YyTqecEPaOI=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-fuchun" (connect: 0.00s, validation: 0.00s, handshake: 0.54s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-fuchun-notifications" at "2025-12-08T12:17:05.744843Z"
+[Licensing::Module] Licensing Background thread has ended after 0.55s
+[Licensing::Module] Licensing is initialized (took 0.25s).
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 15668568081208-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+Refreshing native plugins compatible for Editor in 1.20 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.2.7f2 (2b518236b676)
+[Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/6000.2.7f2/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Users/fuchun/Unity/UnityProjects/SeparateMagnet/Assets
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+ preferred device: Apple M3 Max (high power)
+Metal devices available: 1
+0: Apple M3 Max (high power)
+Using device Apple M3 Max (high power)
+Initializing Metal device caps: Apple M3 Max
+Mac GPU Family: 2
+Apple GPU Family: 9
+MSL Version: 3.0
+Has Float MSAA: 1
+Has Float Filtering: 1
+ReadWrite Texture Tier: 2
+Initialize mono
+Mono path[0] = '/Applications/Unity/Hub/Editor/6000.2.7f2/Unity.app/Contents/Managed'
+Mono path[1] = '/Applications/Unity/Hub/Editor/6000.2.7f2/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
+Mono config path = '/Applications/Unity/Hub/Editor/6000.2.7f2/Unity.app/Contents/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56460
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /Applications/Unity/Hub/Editor/6000.2.7f2/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: /Applications/Unity/Hub/Editor/6000.2.7f2/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: /Applications/Unity/Hub/Editor/6000.2.7f2/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+[Licensing::Client] Successfully resolved entitlement details
+Register platform support module: /Applications/Unity/Hub/Editor/6000.2.7f2/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Registered in 0.003933 seconds.
+- Loaded All Assemblies, in  0.288 seconds
+[usbmuxd] Start listen thread
+[usbmuxd] Listen thread started
+[usbmuxd] Send listen message
+[usbmuxd] Attached: 1 00008110-001931CA36D0401E
+Native extension for iOS target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 73 ms
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.403 seconds
+Domain Reload Profiling: 692ms
+	BeginReloadAssembly (101ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (0ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (30ms)
+	LoadAllAssembliesAndSetupDomain (123ms)
+		LoadAssemblies (102ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (119ms)
+			TypeCache.Refresh (118ms)
+				TypeCache.ScanAssembly (108ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (404ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (374ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (190ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (53ms)
+			ProcessInitializeOnLoadAttributes (86ms)
+			ProcessInitializeOnLoadMethodAttributes (41ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Import Worker Mode flag is 0x00
+Begin MonoManager ReloadAssembly
+[Licensing::Client] Successfully resolved entitlement details
+- Loaded All Assemblies, in  0.630 seconds
+Refreshing native plugins compatible for Editor in 0.40 ms, found 3 plugins.
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+The project currently uses the compatibility mode where the Render Graph API is disabled. Support for this mode will be removed in future Unity versions. Migrate existing ScriptableRenderPasses to the new RenderGraph API. After the migration, disable the compatibility mode in Edit > Projects Settings > Graphics > Render Graph.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogWarning (object)
+UnityEngine.Rendering.Universal.WarnUsingNonRenderGraph:EmitConsoleWarning () (at ./Library/PackageCache/com.unity.render-pipelines.universal@ba467ec059b9/Runtime/Data/UniversalRenderPipelineAsset.cs:432)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadMethodAttributes () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorAssemblies.cs:153)
+
+(Filename: ./Library/PackageCache/com.unity.render-pipelines.universal@ba467ec059b9/Runtime/Data/UniversalRenderPipelineAsset.cs Line: 432)
+
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.539 seconds
+Domain Reload Profiling: 1168ms
+	BeginReloadAssembly (100ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (28ms)
+	RebuildCommonClasses (26ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (24ms)
+	LoadAllAssembliesAndSetupDomain (470ms)
+		LoadAssemblies (326ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (187ms)
+			TypeCache.Refresh (146ms)
+				TypeCache.ScanAssembly (132ms)
+			BuildScriptInfoCaches (30ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (539ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (441ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (31ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (99ms)
+			ProcessInitializeOnLoadAttributes (228ms)
+			ProcessInitializeOnLoadMethodAttributes (79ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+WARNING: Shader Unsupported: 'Universal Render Pipeline/VR/SpatialMapping/Wireframe' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+WARNING: Shader Unsupported: 'Universal Render Pipeline/VR/SpatialMapping/Wireframe' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+Launching external process: /Applications/Unity/Hub/Editor/6000.2.7f2/Unity.app/Contents/Tools/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.03 seconds
+Refreshing native plugins compatible for Editor in 0.57 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 15 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6846 unused Assets / (3.8 MB). Loaded Objects now: 7570.
+Memory consumption went from 142.1 MB to 138.2 MB.
+Total: 6.412708 ms (FindLiveObjects: 0.718292 ms CreateObjectMapping: 0.156084 ms MarkObjects: 4.009708 ms  DeleteObjects: 1.528375 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 4712.932500 seconds.
+  path: Assets/Prefabs/1/Kento_Strong.prefab
+  artifactKey: Guid(4394db4232f2e944fa8fd4ce59c87882) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/1/Kento_Strong.prefab using Guid(4394db4232f2e944fa8fd4ce59c87882) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a9b43f95dc33a7121ad1070c46312253') in 0.021831666 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000060 seconds.
+  path: Assets/Prefabs/0.5/Kento_Strong_0.prefab
+  artifactKey: Guid(e5cecbb78f5c8304d9f119eb97a58c9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/0.5/Kento_Strong_0.prefab using Guid(e5cecbb78f5c8304d9f119eb97a58c9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '93d63af56ff8f7b4282ec5ddd436dded') in 0.001544292 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000050 seconds.
+  path: Assets/Prefabs/0.5/Kento_Kaisho_0.prefab
+  artifactKey: Guid(68aa8546a8476ab4ea1e095d5459dae1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/0.5/Kento_Kaisho_0.prefab using Guid(68aa8546a8476ab4ea1e095d5459dae1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '4ce8ca790203d4687e4071fd7b421658') in 0.00146275 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000066 seconds.
+  path: Assets/Prefabs/0.5/Kento_Gothic_Modify_0.prefab
+  artifactKey: Guid(eef9754b3eb96e84e872b5221e31d7dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/0.5/Kento_Gothic_Modify_0.prefab using Guid(eef9754b3eb96e84e872b5221e31d7dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ca8ea2421cdb397d5c500654e892b7c9') in 0.001388667 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Prefabs/1/Kento_Scary.prefab
+  artifactKey: Guid(21fc5b6844e183b488c93435b3e07d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/1/Kento_Scary.prefab using Guid(21fc5b6844e183b488c93435b3e07d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3f13029bb917b1a28709d9b75e725b57') in 0.001085792 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Prefabs/1/Kento_Mincho.prefab
+  artifactKey: Guid(0bed0961b5a4b164d9e58b2554f2a9b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/1/Kento_Mincho.prefab using Guid(0bed0961b5a4b164d9e58b2554f2a9b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '1ca82815ff9cf5f8a08f7e22dec97d2d') in 0.001114416 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Prefabs/2/Kento_Sloopy_2.prefab
+  artifactKey: Guid(6ec55ac008ea6c347b39aff3e187af9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/2/Kento_Sloopy_2.prefab using Guid(6ec55ac008ea6c347b39aff3e187af9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5a8056665425a89a68aa4308896c5c96') in 0.001396125 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000070 seconds.
+  path: Assets/Prefabs/0.5/Kento_Thin_0.prefab
+  artifactKey: Guid(4a9aad0e11e10d6499c665a80c1deb0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/0.5/Kento_Thin_0.prefab using Guid(4a9aad0e11e10d6499c665a80c1deb0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '4b3ed59fa4d76713ba1eb0fe8ca2afe3') in 0.001399042 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000062 seconds.
+  path: Assets/Prefabs/2/Kento_Gothic_Bold_2.prefab
+  artifactKey: Guid(0371648ec9bff904a946d8ec7cf7d949) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/2/Kento_Gothic_Bold_2.prefab using Guid(0371648ec9bff904a946d8ec7cf7d949) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a45f85769eb1b3f457f205d0342c6fc0') in 0.0011735 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/Prefabs/1/Kento_Kaisho.prefab
+  artifactKey: Guid(3467f87fb02ccca48b2d70b0679338c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/1/Kento_Kaisho.prefab using Guid(3467f87fb02ccca48b2d70b0679338c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b6d4ba2b2c7a4853b95c4102af3ebc44') in 0.002370667 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Prefabs/0.5/Kento_Chark_0.prefab
+  artifactKey: Guid(1926980d1f569b0488c7ec54d575455e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/0.5/Kento_Chark_0.prefab using Guid(1926980d1f569b0488c7ec54d575455e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '01aff9bd8c21d9e215a4086f31622780') in 0.001384083 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000047 seconds.
+  path: Assets/Prefabs/2/Kento_Strong_2.prefab
+  artifactKey: Guid(1b93bab0943b43e47afcd377e5583116) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/2/Kento_Strong_2.prefab using Guid(1b93bab0943b43e47afcd377e5583116) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7ecfdc18d1a83dab753303f361461a5d') in 0.001137708 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000062 seconds.
+  path: Assets/Prefabs/2/Kento_Thin_2.prefab
+  artifactKey: Guid(fab99333444f2b64689c602ded8a53f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/2/Kento_Thin_2.prefab using Guid(fab99333444f2b64689c602ded8a53f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3b1a7426d3447eb3fd3c28e2b638a527') in 0.001213375 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000045 seconds.
+  path: Assets/Prefabs/1/Kento_Gyosho.prefab
+  artifactKey: Guid(234ec1d597bbd5448808207ee2f2246b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/1/Kento_Gyosho.prefab using Guid(234ec1d597bbd5448808207ee2f2246b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7018541bb24bf3b89fdac406eeb68293') in 0.00113625 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/Prefabs/1/Kento_Textbook.prefab
+  artifactKey: Guid(f438da78eef82d3438cb57ab386fd82a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/1/Kento_Textbook.prefab using Guid(f438da78eef82d3438cb57ab386fd82a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '21766369d49c29b5ba8c5819a6d009a9') in 0.001194667 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000052 seconds.
+  path: Assets/Prefabs/2/Kento_Scary_2.prefab
+  artifactKey: Guid(ff77bfc70c78a1d45a715462037bf97d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/2/Kento_Scary_2.prefab using Guid(ff77bfc70c78a1d45a715462037bf97d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8f715a3abbbecdcfa215fa82da8909ae') in 0.000992208 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Prefabs/0.5/Kento_Dot_0.prefab
+  artifactKey: Guid(53565e7891017fc4d9f64071d6dcfa35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/0.5/Kento_Dot_0.prefab using Guid(53565e7891017fc4d9f64071d6dcfa35) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e4a9e42dac5849cb52ac3f05c16babbb') in 0.001097625 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000047 seconds.
+  path: Assets/Prefabs/0.5/Kento_Maka_0.prefab
+  artifactKey: Guid(44db4159e9832ee4aa8853f36d3f5398) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/0.5/Kento_Maka_0.prefab using Guid(44db4159e9832ee4aa8853f36d3f5398) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '43082fc537519a5604d0807e56b2cc3f') in 0.001036167 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000057 seconds.
+  path: Assets/Prefabs/2/Kento_Chark_2.prefab
+  artifactKey: Guid(b41e6d6310d4cf140a718b706e552bdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/2/Kento_Chark_2.prefab using Guid(b41e6d6310d4cf140a718b706e552bdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '75cdf092ca128bef05714b08735eac88') in 0.00121725 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.375379 seconds.
+  path: Assets/Prefabs/2/Kento_Unknown_2.prefab
+  artifactKey: Guid(2910d51b044ecda4885342a380b78a8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/2/Kento_Unknown_2.prefab using Guid(2910d51b044ecda4885342a380b78a8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a8ff8edd3a77e22d934e83e526826706') in 0.0015375 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.876059 seconds.
+  path: Assets/Scripts/GoogleAds
+  artifactKey: Guid(a5aa261cbb63be94aa6aeae701719fa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/GoogleAds using Guid(a5aa261cbb63be94aa6aeae701719fa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2d86a06e3a5237d8388699535d22b257') in 0.0003385 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.849562 seconds.
+  path: Assets/Scripts/GoogleAds/GoogleBannerAds.cs
+  artifactKey: Guid(f1037d913403caa4eac697970091fdff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/GoogleAds/GoogleBannerAds.cs using Guid(f1037d913403caa4eac697970091fdff) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f61b6a6dbd8592e0caa0e4b5b335b296') in 0.000364875 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.940916 seconds.
+  path: Assets/Scripts/GoogleAds/GoogleRewardAds.cs
+  artifactKey: Guid(39db89fce3e074bdaaf3233dab6da446) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/GoogleAds/GoogleRewardAds.cs using Guid(39db89fce3e074bdaaf3233dab6da446) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '82738b9d5ecc65f823cc66585c1a776e') in 0.000403167 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
